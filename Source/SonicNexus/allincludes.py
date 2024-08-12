@@ -3,10 +3,13 @@
 
 from pathlib import Path
 
-f = open("./Objects/All.hpp", "w")
-f.write(f"#pragma once\n\n#include \"SonicNexus.hpp\"\n")
-for path in Path("./Objects").rglob("*.hpp"):
+objects_path = "./Objects"
+game_hpp = "SonicNexus.hpp"
+
+f = open(objects_path + "/All.hpp", "w")
+f.write(f"#pragma once\n\n#include \"{game_hpp}\"\n")
+for path in Path(objects_path).rglob("*.hpp"):
     if path.name == "All.hpp":
         continue
-    f.write(f"#include \"{path.relative_to("./Objects")}\"\n")
+    f.write(f"#include \"{path.relative_to(objects_path)}\"\n")
 f.close()

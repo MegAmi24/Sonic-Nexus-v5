@@ -57,6 +57,9 @@ struct GlobalVariables {
 #if RETRO_REV0U
     static void Init(void *g);
 #endif
+
+    int32 score;
+    int32 lives;
 };
 
 // Game Helpers

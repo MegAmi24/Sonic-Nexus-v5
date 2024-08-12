@@ -158,7 +158,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)/GameAPI/CPP/;$(ProjectDir);$(ProjectDir)Objects/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/RSDKv5-GameAPI/CPP/;$(ProjectDir);$(ProjectDir)Objects/</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -171,14 +171,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\GameAPI\CPP\GameAPI\Game.cpp" />
+    <ClCompile Include="..\RSDKv5-GameAPI\CPP\GameAPI\Game.cpp" />
+    <ClCompile Include="Objects\NexusGlobals\Camera.cpp" />
+    <ClCompile Include="Objects\NexusGlobals\Music.cpp" />
+    <ClCompile Include="Objects\Players\Player.cpp" />
     <ClCompile Include="SonicNexus.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\GameAPI\CPP\GameAPI\Game.hpp" />
-    <ClInclude Include="..\GameAPI\CPP\GameAPI\GameObjects.hpp" />
-    <ClInclude Include="..\GameAPI\CPP\GameAPI\GameVariables.hpp" />
+    <ClInclude Include="..\RSDKv5-GameAPI\CPP\GameAPI\Game.hpp" />
+    <ClInclude Include="..\RSDKv5-GameAPI\CPP\GameAPI\GameObjects.hpp" />
+    <ClInclude Include="..\RSDKv5-GameAPI\CPP\GameAPI\GameVariables.hpp" />
     <ClInclude Include="Objects\All.hpp" />
+    <ClInclude Include="Objects\NexusGlobals\Camera.hpp" />
+    <ClInclude Include="Objects\NexusGlobals\Music.hpp" />
+    <ClInclude Include="Objects\Players\Player.hpp" />
     <ClInclude Include="SonicNexus.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

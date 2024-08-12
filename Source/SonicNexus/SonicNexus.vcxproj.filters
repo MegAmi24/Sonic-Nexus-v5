@@ -11,16 +11,46 @@
     <Filter Include="Source Files\Objects">
       <UniqueIdentifier>{9ea60711-b902-46e4-a0fd-554f746f5f71}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Objects\NexusIntro">
+      <UniqueIdentifier>{217af9ff-fa8b-41b8-bfc5-fa580801c1bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Objects\NexusGlobals">
+      <UniqueIdentifier>{2e09f982-cdbc-4b81-a05d-0fab5a097e76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Objects\NexusTitle">
+      <UniqueIdentifier>{d02400e7-caf5-4d32-9e11-6e463aad8341}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Objects\SSZ">
+      <UniqueIdentifier>{37b6e23e-a7a7-4617-b459-ab2a436c7197}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Objects\Players">
+      <UniqueIdentifier>{eb8f823d-9b70-4025-842a-2672fcd70c12}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\RSDKv5-GameAPI\CPP\GameAPI\Game.cpp">
-      <Filter>GameAPI</Filter>
-    </ClCompile>
     <ClCompile Include="SonicNexus.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\RSDKv5-GameAPI\CPP\GameAPI\Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Players\Player.cpp">
+      <Filter>Source Files\Objects\Players</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\NexusGlobals\Music.cpp">
+      <Filter>Source Files\Objects\NexusGlobals</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\NexusGlobals\Camera.cpp">
+      <Filter>Source Files\Objects\NexusGlobals</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SonicNexus.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\All.hpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClInclude>
     <ClInclude Include="..\RSDKv5-GameAPI\CPP\GameAPI\Game.hpp">
       <Filter>GameAPI</Filter>
     </ClInclude>
@@ -30,11 +60,14 @@
     <ClInclude Include="..\RSDKv5-GameAPI\CPP\GameAPI\GameVariables.hpp">
       <Filter>GameAPI</Filter>
     </ClInclude>
-    <ClInclude Include="SonicNexus.hpp">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="Objects\Players\Player.hpp">
+      <Filter>Source Files\Objects\Players</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\All.hpp">
-      <Filter>Source Files\Objects</Filter>
+    <ClInclude Include="Objects\NexusGlobals\Music.hpp">
+      <Filter>Source Files\Objects\NexusGlobals</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\NexusGlobals\Camera.hpp">
+      <Filter>Source Files\Objects\NexusGlobals</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
