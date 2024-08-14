@@ -29,6 +29,9 @@ void Camera::LateUpdate(void)
             SetPlayerLockedScreenPosition((Player *)this->target);
         }
     }
+
+    ScreenInfo *screen = &screenInfo[this->target->Slot()];
+    screen->position = this->scrollA;
 }
 
 void Camera::StaticUpdate(void) {}
@@ -38,12 +41,23 @@ void Camera::Draw(void) {}
 void Camera::Create(void *data)
 {
     int32 screen = VOID_TO_INT(data);
-    if (this->active != ACTIVE_ALWAYS)
+    this->target = RSDK_GET_ENTITY_GEN(screen);
+
+    if (this->active != ACTIVE_NORMAL)
         Graphics::AddCamera(&this->target->position, TO_FIXED(screenInfo[screen].center.x), TO_FIXED(screenInfo[screen].center.y), false);
 
-    this->active = ACTIVE_ALWAYS;
-
+    this->active  = ACTIVE_NORMAL;
     this->enabled = true;
+
+    this->scrollA.x = (this->target->position.x >> 16) - screenInfo[screen].center.x;
+    this->scrollB.x = (this->target->position.x >> 16) - screenInfo[screen].center.x + screenInfo[screen].size.x;
+    this->scrollA.y = (this->target->position.y >> 16) - SCREEN_SCROLL_UP;
+    this->scrollB.y = (this->target->position.y >> 16) - SCREEN_SCROLL_UP + screenInfo[screen].size.y;
+}
+
+void Camera::StageLoad(void)
+{
+    GameObject::Reset(SLOT_CAMERA1, sVars->classID, INT_TO_VOID(SLOT_PLAYER1));
 
     // Get Layer size and setup default bounds
     RSDK::SceneLayer fgLayer;
@@ -55,14 +69,7 @@ void Camera::Create(void *data)
     sVars->boundary2.y  = layerSize.y << 7;
     sVars->waterLevel   = sVars->boundary2.y + 128;
     sVars->newBoundary2 = sVars->boundary2;
-
-    this->scrollA.x = FROM_FIXED(this->target->position.x) - screenInfo[screen].center.x;
-    this->scrollB.x = FROM_FIXED(this->target->position.x) - screenInfo[screen].center.x + screenInfo[screen].size.x;
-    this->scrollA.y = FROM_FIXED(this->target->position.y) - SCREEN_SCROLL_UP;
-    this->scrollB.y = FROM_FIXED(this->target->position.y) - SCREEN_SCROLL_UP + screenInfo[screen].size.y;
 }
-
-void Camera::StageLoad(void) { GameObject::Reset(SLOT_CAMERA1, sVars->classID, INT_TO_VOID(SLOT_PLAYER1)); }
 
 void Camera::SetPlayerScreenPosition(Player *player)
 {
@@ -130,101 +137,101 @@ void Camera::SetPlayerScreenPosition(Player *player)
             sVars->boundary2.x = sVars->newBoundary2.x;
         }
     }
-    int32 xScrollA     = this->scrollA.x;
-    int32 xScrollB     = this->scrollB.x;
+    int32 xscrollA     = this->scrollA.x;
+    int32 xscrollB     = this->scrollB.x;
     int32 scrollAmount = playerXPos - (screenInfo->center.x + this->scrollA.x);
     if (abs(playerXPos - (screenInfo->center.x + this->scrollA.x)) >= 25) {
         if (scrollAmount <= 0)
-            this->scrollA.x -= 16;
+            xscrollA -= 16;
         else
-            this->scrollA.x += 16;
-        this->scrollB.x = screenInfo->size.x + this->scrollA.x;
+            xscrollA += 16;
+        xscrollB = screenInfo->size.x + xscrollA;
     }
     else {
-        if (playerXPos > SCREEN_SCROLL_RIGHT + this->scrollA.x) {
-            this->scrollA.x = playerXPos - SCREEN_SCROLL_RIGHT;
-            this->scrollB.x = screenInfo->size.x + playerXPos - SCREEN_SCROLL_RIGHT;
+        if (playerXPos > SCREEN_SCROLL_RIGHT + xscrollA) {
+            xscrollA = playerXPos - SCREEN_SCROLL_RIGHT;
+            xscrollB = screenInfo->size.x + playerXPos - SCREEN_SCROLL_RIGHT;
         }
-        if (playerXPos < SCREEN_SCROLL_LEFT + this->scrollA.x) {
-            this->scrollA.x = playerXPos - SCREEN_SCROLL_LEFT;
-            this->scrollB.x = screenInfo->size.x + playerXPos - SCREEN_SCROLL_LEFT;
+        if (playerXPos < SCREEN_SCROLL_LEFT + xscrollA) {
+            xscrollA = playerXPos - SCREEN_SCROLL_LEFT;
+            xscrollB = screenInfo->size.x + playerXPos - SCREEN_SCROLL_LEFT;
         }
     }
-    if (this->scrollA.x < sVars->boundary1.x) {
-        this->scrollA.x = sVars->boundary1.x;
-        this->scrollB.x = screenInfo->size.x + sVars->boundary1.x;
+    if (xscrollA < sVars->boundary1.x) {
+        xscrollA = sVars->boundary1.x;
+        xscrollB = screenInfo->size.x + sVars->boundary1.x;
     }
-    if (this->scrollB.x > sVars->boundary2.x) {
-        this->scrollB.x = sVars->boundary2.x;
-        this->scrollA.x = sVars->boundary2.x - screenInfo->size.x;
+    if (xscrollB > sVars->boundary2.x) {
+        xscrollB = sVars->boundary2.x;
+        xscrollA = sVars->boundary2.x - screenInfo->size.x;
     }
 
-    this->scrollA.x = this->scrollA.x;
-    this->scrollB.x = this->scrollB.x;
-    if (playerXPos <= screenInfo->center.x + this->scrollA.x) {
-        player->screenPos.x  = this->earthquake.x + playerXPos - this->scrollA.x;
-        this->scrollOffset.x = this->scrollA.x - this->earthquake.x;
+    this->scrollA.x = xscrollA;
+    this->scrollB.x = xscrollB;
+    if (playerXPos <= screenInfo->center.x + xscrollA) {
+        player->screenPos.x  = this->earthquake.x + playerXPos - xscrollA;
+        this->scrollOffset.x = xscrollA - this->earthquake.x;
     }
     else {
         this->scrollOffset.x = this->earthquake.x + playerXPos - screenInfo->center.x;
         player->screenPos.x  = screenInfo->center.x - this->earthquake.x;
-        if (playerXPos > this->scrollB.x - screenInfo->center.x) {
-            player->screenPos.x  = this->earthquake.x + screenInfo->center.x + playerXPos - (this->scrollB.x - screenInfo->center.x);
-            this->scrollOffset.x = this->scrollB.x - screenInfo->size.x - this->earthquake.x;
+        if (playerXPos > xscrollB - screenInfo->center.x) {
+            player->screenPos.x  = this->earthquake.x + screenInfo->center.x + playerXPos - (xscrollB - screenInfo->center.x);
+            this->scrollOffset.x = xscrollB - screenInfo->size.x - this->earthquake.x;
         }
     }
 
     int32 yscrollA     = this->scrollA.y;
     int32 yscrollB     = this->scrollB.y;
     int32 adjustYPos   = this->adjustY + playerYPos;
-    int32 adjustAmount = player->lookPos + adjustYPos - (this->scrollA.y + SCREEN_SCROLL_UP);
+    int32 adjustAmount = player->lookPos + adjustYPos - (yscrollA + SCREEN_SCROLL_UP);
     if (player->trackScroll) {
-        this->yScrollMove = 32;
+        yScrollMove = 32;
     }
     else {
-        if (this->yScrollMove == 32) {
-            this->yScrollMove = 2 * ((SCREEN_SCROLL_UP - player->screenPos.y - player->lookPos) >> 1);
-            if (this->yScrollMove > 32)
-                this->yScrollMove = 32;
-            if (this->yScrollMove < -32)
-                this->yScrollMove = -32;
+        if (yScrollMove == 32) {
+            yScrollMove = 2 * ((SCREEN_SCROLL_UP - player->screenPos.y - player->lookPos) >> 1);
+            if (yScrollMove > 32)
+                yScrollMove = 32;
+            if (yScrollMove < -32)
+                yScrollMove = -32;
         }
-        if (this->yScrollMove > 0)
-            this->yScrollMove -= 6;
-        this->yScrollMove += this->yScrollMove < 0 ? 6 : 0;
+        if (yScrollMove > 0)
+            yScrollMove -= 6;
+        yScrollMove += yScrollMove < 0 ? 6 : 0;
     }
 
-    if (abs(adjustAmount) >= abs(this->yScrollMove) + 17) {
+    if (abs(adjustAmount) >= abs(yScrollMove) + 17) {
         if (adjustAmount <= 0)
-            this->scrollA.y -= 16;
+            yscrollA -= 16;
         else
-            this->scrollA.y += 16;
-        this->scrollB.y = this->scrollA.y + screenInfo->size.y;
+            yscrollA += 16;
+        yscrollB = yscrollA + screenInfo->size.y;
     }
-    else if (this->yScrollMove == 32) {
-        if (player->lookPos + adjustYPos > this->scrollA.y + this->yScrollMove + SCREEN_SCROLL_UP) {
-            this->scrollA.y = player->lookPos + adjustYPos - (this->yScrollMove + SCREEN_SCROLL_UP);
-            this->scrollB.y = this->scrollA.y + screenInfo->size.y;
+    else if (yScrollMove == 32) {
+        if (player->lookPos + adjustYPos > yscrollA + yScrollMove + SCREEN_SCROLL_UP) {
+            yscrollA = player->lookPos + adjustYPos - (yScrollMove + SCREEN_SCROLL_UP);
+            yscrollB = yscrollA + screenInfo->size.y;
         }
-        if (player->lookPos + adjustYPos < this->scrollA.y + SCREEN_SCROLL_UP - this->yScrollMove) {
-            this->scrollA.y = player->lookPos + adjustYPos - (SCREEN_SCROLL_UP - this->yScrollMove);
-            this->scrollB.y = this->scrollA.y + screenInfo->size.y;
+        if (player->lookPos + adjustYPos < yscrollA + SCREEN_SCROLL_UP - yScrollMove) {
+            yscrollA = player->lookPos + adjustYPos - (SCREEN_SCROLL_UP - yScrollMove);
+            yscrollB = yscrollA + screenInfo->size.y;
         }
     }
     else {
-        this->scrollA.y = player->lookPos + adjustYPos + this->yScrollMove - SCREEN_SCROLL_UP;
-        this->scrollB.y = this->scrollA.y + screenInfo->size.y;
+        yscrollA = player->lookPos + adjustYPos + yScrollMove - SCREEN_SCROLL_UP;
+        yscrollB = yscrollA + screenInfo->size.y;
     }
-    if (this->scrollA.y < sVars->boundary1.y) {
-        this->scrollA.y = sVars->boundary1.y;
-        this->scrollB.y = sVars->boundary1.y + screenInfo->size.y;
+    if (yscrollA < sVars->boundary1.y) {
+        yscrollA = sVars->boundary1.y;
+        yscrollB = sVars->boundary1.y + screenInfo->size.y;
     }
-    if (this->scrollB.y > sVars->boundary2.y) {
-        this->scrollB.y = sVars->boundary2.y;
-        this->scrollA.y = sVars->boundary2.y - screenInfo->size.y;
+    if (yscrollB > sVars->boundary2.y) {
+        yscrollB = sVars->boundary2.y;
+        yscrollA = sVars->boundary2.y - screenInfo->size.y;
     }
-    this->scrollA.y = this->scrollA.y;
-    this->scrollB.y = this->scrollB.y;
+    this->scrollA.y = yscrollA;
+    this->scrollB.y = yscrollB;
     if (player->lookPos + adjustYPos <= this->scrollA.y + SCREEN_SCROLL_UP) {
         player->screenPos.y  = adjustYPos - this->scrollA.y - this->earthquake.y;
         this->scrollOffset.y = this->earthquake.y + this->scrollA.y;
@@ -364,68 +371,68 @@ void Camera::SetPlayerScreenPositionCDStyle(Player *player)
     }
     this->scrollA.x    = this->scrollOffset.x;
     this->scrollB.x    = screenInfo->size.x + this->scrollOffset.x;
-    int32 yScrollA     = this->scrollA.y;
-    int32 yScrollB     = this->scrollB.y;
+    int32 yscrollA     = this->scrollA.y;
+    int32 yscrollB     = this->scrollB.y;
     int32 adjustY      = this->adjustY + playerYPos;
     int32 adjustOffset = player->lookPos + adjustY - (this->scrollA.y + SCREEN_SCROLL_UP);
     if (player->trackScroll == 1) {
-        this->yScrollMove = 32;
+        yScrollMove = 32;
     }
     else {
-        if (this->yScrollMove == 32) {
-            this->yScrollMove = 2 * ((SCREEN_SCROLL_UP - player->screenPos.y - player->lookPos) >> 1);
-            if (this->yScrollMove > 32)
-                this->yScrollMove = 32;
-            if (this->yScrollMove < -32)
-                this->yScrollMove = -32;
+        if (yScrollMove == 32) {
+            yScrollMove = 2 * ((SCREEN_SCROLL_UP - player->screenPos.y - player->lookPos) >> 1);
+            if (yScrollMove > 32)
+                yScrollMove = 32;
+            if (yScrollMove < -32)
+                yScrollMove = -32;
         }
-        if (this->yScrollMove > 0)
-            this->yScrollMove -= 6;
-        this->yScrollMove += this->yScrollMove < 0 ? 6 : 0;
+        if (yScrollMove > 0)
+            yScrollMove -= 6;
+        yScrollMove += yScrollMove < 0 ? 6 : 0;
     }
 
     int32 absAdjust = abs(adjustOffset);
-    if (absAdjust >= abs(this->yScrollMove) + 17) {
+    if (absAdjust >= abs(yScrollMove) + 17) {
         if (adjustOffset <= 0)
-            this->scrollA.y -= 16;
+            yscrollA -= 16;
         else
-            this->scrollA.y += 16;
-        this->scrollB.y = this->scrollA.y + screenInfo->size.y;
+            yscrollA += 16;
+        yscrollB = yscrollA + screenInfo->size.y;
     }
-    else if (this->yScrollMove == 32) {
-        if (player->lookPos + adjustY > this->scrollA.y + this->yScrollMove + SCREEN_SCROLL_UP) {
-            this->scrollA.y = player->lookPos + adjustY - (this->yScrollMove + SCREEN_SCROLL_UP);
-            this->scrollB.y = this->scrollA.y + screenInfo->size.y;
+    else if (yScrollMove == 32) {
+        if (player->lookPos + adjustY > yscrollA + yScrollMove + SCREEN_SCROLL_UP) {
+            yscrollA = player->lookPos + adjustY - (yScrollMove + SCREEN_SCROLL_UP);
+            yscrollB = yscrollA + screenInfo->size.y;
         }
-        if (player->lookPos + adjustY < this->scrollA.y + SCREEN_SCROLL_UP - this->yScrollMove) {
-            this->scrollA.y = player->lookPos + adjustY - (SCREEN_SCROLL_UP - this->yScrollMove);
-            this->scrollB.y = this->scrollA.y + screenInfo->size.y;
+        if (player->lookPos + adjustY < yscrollA + SCREEN_SCROLL_UP - yScrollMove) {
+            yscrollA = player->lookPos + adjustY - (SCREEN_SCROLL_UP - yScrollMove);
+            yscrollB = yscrollA + screenInfo->size.y;
         }
     }
     else {
-        this->scrollA.y = player->lookPos + adjustY + this->yScrollMove - SCREEN_SCROLL_UP;
-        this->scrollB.y = this->scrollA.y + screenInfo->size.y;
+        yscrollA = player->lookPos + adjustY + yScrollMove - SCREEN_SCROLL_UP;
+        yscrollB = yscrollA + screenInfo->size.y;
     }
-    if (this->scrollA.y < sVars->boundary1.y) {
-        this->scrollA.y = sVars->boundary1.y;
-        this->scrollB.y = sVars->boundary1.y + screenInfo->size.y;
+    if (yscrollA < sVars->boundary1.y) {
+        yscrollA = sVars->boundary1.y;
+        yscrollB = sVars->boundary1.y + screenInfo->size.y;
     }
-    if (this->scrollB.y > sVars->boundary2.y) {
-        this->scrollB.y = sVars->boundary2.y;
-        this->scrollA.y = sVars->boundary2.y - screenInfo->size.y;
+    if (yscrollB > sVars->boundary2.y) {
+        yscrollB = sVars->boundary2.y;
+        yscrollA = sVars->boundary2.y - screenInfo->size.y;
     }
-    this->scrollA.y = this->scrollA.y;
-    this->scrollB.y = this->scrollB.y;
-    if (player->lookPos + adjustY <= this->scrollA.y + SCREEN_SCROLL_UP) {
-        player->screenPos.y  = adjustY - this->scrollA.y - this->earthquake.y;
-        this->scrollOffset.y = this->earthquake.y + this->scrollA.y;
+    this->scrollA.y = yscrollA;
+    this->scrollB.y = yscrollB;
+    if (player->lookPos + adjustY <= yscrollA + SCREEN_SCROLL_UP) {
+        player->screenPos.y  = adjustY - yscrollA - this->earthquake.y;
+        this->scrollOffset.y = this->earthquake.y + yscrollA;
     }
     else {
         this->scrollOffset.y = this->earthquake.y + adjustY + player->lookPos - SCREEN_SCROLL_UP;
         player->screenPos.y  = SCREEN_SCROLL_UP - player->lookPos - this->earthquake.y;
-        if (player->lookPos + adjustY > this->scrollB.y - SCREEN_SCROLL_DOWN) {
-            player->screenPos.y  = adjustY - (this->scrollB.y - SCREEN_SCROLL_DOWN) + this->earthquake.y + SCREEN_SCROLL_UP;
-            this->scrollOffset.y = this->scrollB.y - screenInfo->size.y - this->earthquake.y;
+        if (player->lookPos + adjustY > yscrollB - SCREEN_SCROLL_DOWN) {
+            player->screenPos.y  = adjustY - (yscrollB - SCREEN_SCROLL_DOWN) + this->earthquake.y + SCREEN_SCROLL_UP;
+            this->scrollOffset.y = yscrollB - screenInfo->size.y - this->earthquake.y;
         }
     }
     player->screenPos.y -= this->adjustY;
@@ -478,73 +485,73 @@ void Camera::SetPlayerHLockedScreenPosition(Player *player)
             sVars->boundary2.y = sVars->newBoundary2.y;
     }
 
-    int32 xScrollA = this->scrollA.x;
-    int32 xScrollB = this->scrollB.x;
+    int32 xscrollA = this->scrollA.x;
+    int32 xscrollB = this->scrollB.x;
     if (playerXPos <= screenInfo->center.x + this->scrollA.x) {
         player->screenPos.x  = this->earthquake.x + playerXPos - this->scrollA.x;
-        this->scrollOffset.x = this->scrollA.x - this->earthquake.x;
+        this->scrollOffset.x = xscrollA - this->earthquake.x;
     }
     else {
         this->scrollOffset.x = this->earthquake.x + playerXPos - screenInfo->center.x;
         player->screenPos.x  = screenInfo->center.x - this->earthquake.x;
-        if (playerXPos > this->scrollB.x - screenInfo->center.x) {
-            player->screenPos.x  = this->earthquake.x + screenInfo->center.x + playerXPos - (this->scrollB.x - screenInfo->center.x);
-            this->scrollOffset.x = this->scrollB.x - screenInfo->size.x - this->earthquake.x;
+        if (playerXPos > xscrollB - screenInfo->center.x) {
+            player->screenPos.x  = this->earthquake.x + screenInfo->center.x + playerXPos - (xscrollB - screenInfo->center.x);
+            this->scrollOffset.x = xscrollB - screenInfo->size.x - this->earthquake.x;
         }
     }
 
-    int32 yScrollA   = this->scrollA.y;
-    int32 yScrollB   = this->scrollB.y;
+    int32 yscrollA   = this->scrollA.y;
+    int32 yscrollB   = this->scrollB.y;
     int32 adjustY    = this->adjustY + playerYPos;
     int32 lookOffset = player->lookPos + adjustY - (this->scrollA.y + SCREEN_SCROLL_UP);
     if (player->trackScroll == 1) {
-        this->yScrollMove = 32;
+        yScrollMove = 32;
     }
     else {
-        if (this->yScrollMove == 32) {
-            this->yScrollMove = 2 * ((SCREEN_SCROLL_UP - player->screenPos.y - player->lookPos) >> 1);
-            if (this->yScrollMove > 32)
-                this->yScrollMove = 32;
-            if (this->yScrollMove < -32)
-                this->yScrollMove = -32;
+        if (yScrollMove == 32) {
+            yScrollMove = 2 * ((SCREEN_SCROLL_UP - player->screenPos.y - player->lookPos) >> 1);
+            if (yScrollMove > 32)
+                yScrollMove = 32;
+            if (yScrollMove < -32)
+                yScrollMove = -32;
         }
-        if (this->yScrollMove > 0)
-            this->yScrollMove -= 6;
-        this->yScrollMove += this->yScrollMove < 0 ? 6 : 0;
+        if (yScrollMove > 0)
+            yScrollMove -= 6;
+        yScrollMove += yScrollMove < 0 ? 6 : 0;
     }
 
     int32 absLook = abs(lookOffset);
-    if (absLook >= abs(this->yScrollMove) + 17) {
+    if (absLook >= abs(yScrollMove) + 17) {
         if (lookOffset <= 0)
-            this->scrollA.y -= 16;
+            yscrollA -= 16;
         else
-            this->scrollA.y += 16;
-        this->scrollB.y = this->scrollA.y + screenInfo->size.y;
+            yscrollA += 16;
+        yscrollB = yscrollA + screenInfo->size.y;
     }
-    else if (this->yScrollMove == 32) {
-        if (player->lookPos + adjustY > this->scrollA.y + this->yScrollMove + SCREEN_SCROLL_UP) {
-            this->scrollA.y = player->lookPos + adjustY - (this->yScrollMove + SCREEN_SCROLL_UP);
-            this->scrollB.y = this->scrollA.y + screenInfo->size.y;
+    else if (yScrollMove == 32) {
+        if (player->lookPos + adjustY > yscrollA + yScrollMove + SCREEN_SCROLL_UP) {
+            yscrollA = player->lookPos + adjustY - (yScrollMove + SCREEN_SCROLL_UP);
+            yscrollB = yscrollA + screenInfo->size.y;
         }
-        if (player->lookPos + adjustY < this->scrollA.y + SCREEN_SCROLL_UP - this->yScrollMove) {
-            this->scrollA.y = player->lookPos + adjustY - (SCREEN_SCROLL_UP - this->yScrollMove);
-            this->scrollB.y = this->scrollA.y + screenInfo->size.y;
+        if (player->lookPos + adjustY < yscrollA + SCREEN_SCROLL_UP - yScrollMove) {
+            yscrollA = player->lookPos + adjustY - (SCREEN_SCROLL_UP - yScrollMove);
+            yscrollB = yscrollA + screenInfo->size.y;
         }
     }
     else {
-        this->scrollA.y = player->lookPos + adjustY + this->yScrollMove - SCREEN_SCROLL_UP;
-        this->scrollB.y = this->scrollA.y + screenInfo->size.y;
+        yscrollA = player->lookPos + adjustY + yScrollMove - SCREEN_SCROLL_UP;
+        yscrollB = yscrollA + screenInfo->size.y;
     }
-    if (this->scrollA.y < sVars->boundary1.y) {
-        this->scrollA.y = sVars->boundary1.y;
-        this->scrollB.y = sVars->boundary1.y + screenInfo->size.y;
+    if (yscrollA < sVars->boundary1.y) {
+        yscrollA = sVars->boundary1.y;
+        yscrollB = sVars->boundary1.y + screenInfo->size.y;
     }
-    if (this->scrollB.y > sVars->boundary2.y) {
-        this->scrollB.y = sVars->boundary2.y;
-        this->scrollA.y = sVars->boundary2.y - screenInfo->size.y;
+    if (yscrollB > sVars->boundary2.y) {
+        yscrollB = sVars->boundary2.y;
+        yscrollA = sVars->boundary2.y - screenInfo->size.y;
     }
-    this->scrollA.y = this->scrollA.y;
-    this->scrollB.y = this->scrollB.y;
+    this->scrollA.y = yscrollA;
+    this->scrollB.y = yscrollB;
 
     if (this->earthquake.y) {
         if (this->earthquake.y <= 0) {
@@ -556,16 +563,16 @@ void Camera::SetPlayerHLockedScreenPosition(Player *player)
         }
     }
 
-    if (player->lookPos + adjustY <= this->scrollA.y + SCREEN_SCROLL_UP) {
-        player->screenPos.y  = adjustY - this->scrollA.y - this->earthquake.y;
-        this->scrollOffset.y = this->earthquake.y + this->scrollA.y;
+    if (player->lookPos + adjustY <= yscrollA + SCREEN_SCROLL_UP) {
+        player->screenPos.y  = adjustY - yscrollA - this->earthquake.y;
+        this->scrollOffset.y = this->earthquake.y + yscrollA;
     }
     else {
         this->scrollOffset.y = this->earthquake.y + adjustY + player->lookPos - SCREEN_SCROLL_UP;
         player->screenPos.y  = SCREEN_SCROLL_UP - player->lookPos - this->earthquake.y;
-        if (player->lookPos + adjustY > this->scrollB.y - SCREEN_SCROLL_DOWN) {
-            player->screenPos.y  = adjustY - (this->scrollB.y - SCREEN_SCROLL_DOWN) + this->earthquake.y + SCREEN_SCROLL_UP;
-            this->scrollOffset.y = this->scrollB.y - screenInfo->size.y - this->earthquake.y;
+        if (player->lookPos + adjustY > yscrollB - SCREEN_SCROLL_DOWN) {
+            player->screenPos.y  = adjustY - (yscrollB - SCREEN_SCROLL_DOWN) + this->earthquake.y + SCREEN_SCROLL_UP;
+            this->scrollOffset.y = yscrollB - screenInfo->size.y - this->earthquake.y;
         }
     }
     player->screenPos.y -= this->adjustY;
@@ -575,34 +582,34 @@ void Camera::SetPlayerLockedScreenPosition(Player *player)
 {
     int32 playerXPos = player->position.x >> 16;
     int32 playerYPos = player->position.y >> 16;
-    int32 xScrollA   = this->scrollA.x;
-    int32 xScrollB   = this->scrollB.x;
+    int32 xscrollA   = this->scrollA.x;
+    int32 xscrollB   = this->scrollB.x;
     if (playerXPos <= screenInfo->center.x + this->scrollA.x) {
         player->screenPos.x  = this->earthquake.x + playerXPos - this->scrollA.x;
-        this->scrollOffset.x = this->scrollA.x - this->earthquake.x;
+        this->scrollOffset.x = xscrollA - this->earthquake.x;
     }
     else {
         this->scrollOffset.x = this->earthquake.x + playerXPos - screenInfo->center.x;
         player->screenPos.x  = screenInfo->center.x - this->earthquake.x;
-        if (playerXPos > this->scrollB.x - screenInfo->center.x) {
-            player->screenPos.x  = this->earthquake.x + screenInfo->center.x + playerXPos - (this->scrollB.x - screenInfo->center.x);
-            this->scrollOffset.x = this->scrollB.x - screenInfo->size.x - this->earthquake.x;
+        if (playerXPos > xscrollB - screenInfo->center.x) {
+            player->screenPos.x  = this->earthquake.x + screenInfo->center.x + playerXPos - (xscrollB - screenInfo->center.x);
+            this->scrollOffset.x = xscrollB - screenInfo->size.x - this->earthquake.x;
         }
     }
 
-    int32 yScrollA = this->scrollA.y;
-    int32 yScrollB = this->scrollB.y;
+    int32 yscrollA = this->scrollA.y;
+    int32 yscrollB = this->scrollB.y;
     int32 adjustY  = this->adjustY + playerYPos;
     if (player->lookPos + adjustY <= this->scrollA.y + SCREEN_SCROLL_UP) {
         player->screenPos.y  = adjustY - this->scrollA.y - this->earthquake.y;
-        this->scrollOffset.y = this->earthquake.y + this->scrollA.y;
+        this->scrollOffset.y = this->earthquake.y + yscrollA;
     }
     else {
         this->scrollOffset.y = this->earthquake.y + adjustY + player->lookPos - SCREEN_SCROLL_UP;
         player->screenPos.y  = SCREEN_SCROLL_UP - player->lookPos - this->earthquake.y;
-        if (player->lookPos + adjustY > this->scrollB.y - SCREEN_SCROLL_DOWN) {
-            player->screenPos.y  = adjustY - (this->scrollB.y - SCREEN_SCROLL_DOWN) + this->earthquake.y + SCREEN_SCROLL_UP;
-            this->scrollOffset.y = this->scrollB.y - screenInfo->size.y - this->earthquake.y;
+        if (player->lookPos + adjustY > yscrollB - SCREEN_SCROLL_DOWN) {
+            player->screenPos.y  = adjustY - (yscrollB - SCREEN_SCROLL_DOWN) + this->earthquake.y + SCREEN_SCROLL_UP;
+            this->scrollOffset.y = yscrollB - screenInfo->size.y - this->earthquake.y;
         }
     }
     player->screenPos.y -= this->adjustY;

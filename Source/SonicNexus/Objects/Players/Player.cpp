@@ -17,53 +17,39 @@ void Player::Update(void)
     switch (this->propertyValue) {
         case PLAYERMODE_ACTIVE: {
             ProcessPlayerControl(this);
-            this->animator.speed = 0; // ???
             Main();
-            this->state.Run(this);
-            this->animator.Process();
-            /*
-            if (this->tileCollisions) {
-                this->flailing[0] = 0;
-                this->flailing[1] = 0;
-                this->flailing[2] = 0;
-                if (!this->onGround)
-                    this->TileCollision(this->collisionLayers, this->collisionMode, this->collisionPlane, 0, 0, true);
-                else
-                    this->TileGrip(this->collisionLayers, this->collisionMode, this->collisionPlane, 0, 0, 10);
-            }
-            */
 
-            ControllerState *controller = &controllerInfo[Input::CONT_P1];
+            // Small extra added in this port: accessing unused debug mode if enabled through dev menu
+            ControllerState *controller = &controllerInfo[this->Slot() + 1];
             if (sceneInfo->debugMode && controller->keyB.press) {
                 this->tileCollisions = false;
                 this->interaction    = false;
                 this->controlMode    = CONTROLMODE_PLAYER1;
                 this->propertyValue  = PLAYERMODE_DEBUG;
             }
+            else {
+                this->state.Run(this);
+                ProcessPlayerAnimation(this);
+
+                this->HandleMovement();
+            }
             break;
         }
         case PLAYERMODE_INACTIVE: {
             ProcessPlayerControl(this);
-            this->animator.Process();
+            ProcessPlayerAnimation(this);
             Main();
-            /*
-            if (this->tileCollisions) {
-                this->flailing[0] = 0;
-                this->flailing[1] = 0;
-                this->flailing[2] = 0;
-                if (!this->onGround)
-                    this->TileCollision(this->collisionLayers, this->collisionMode, this->collisionPlane, 0, 0, true);
-                else
-                    this->TileGrip(this->collisionLayers, this->collisionMode, this->collisionPlane, 0, 0, 10);
-            }
-            */
+
+            this->outerbox = this->animator.GetHitbox(0);
+            this->innerbox = this->animator.GetHitbox(1);
+            this->ProcessMovement(this->outerbox, this->innerbox);
             break;
         }
         case PLAYERMODE_DEBUG: {
             ProcessPlayerControl(this);
             ProcessDebugMode(this);
             this->camera->enabled       = true;
-            ControllerState *controller = &controllerInfo[Input::CONT_P1];
+            ControllerState *controller = &controllerInfo[this->Slot() + 1];
             if (controller->keyB.press) {
                 this->tileCollisions = true;
                 this->interaction    = true;
@@ -75,13 +61,79 @@ void Player::Update(void)
     }
 }
 
-void Player::LateUpdate(void) {}
+void Player::LateUpdate(void)
+{
+    ControllerState *controller = &controllerInfo[this->Slot() + 1];
+    if (sceneInfo->state == ENGINESTATE_REGULAR && controller->keyStart.press) {
+        Stage::SetEngineState(ENGINESTATE_FROZEN);
+        Music::Pause();
+    }
+    if (this->animator.animationID != this->animator.prevAnimationID && this->animator.animationID != this->animCheck) {
+        if (this->animator.animationID == ANI_JUMPING)
+            this->position.y += (this->normalbox->bottom - this->jumpbox->bottom) << 16;
+        if (this->animator.prevAnimationID == ANI_JUMPING)
+            this->position.y -= (this->normalbox->bottom - this->jumpbox->bottom) << 16;
+        this->animCheck = this->animator.animationID;
+    }
+}
 
-void Player::StaticUpdate(void) {}
+void Player::StaticUpdate(void)
+{
+    if (sVars->frameAdvance)
+        Stage::SetEngineState(ENGINESTATE_FROZEN);
+
+    if (sceneInfo->state == ENGINESTATE_FROZEN) {
+        sVars->frameAdvance = false;
+
+        ControllerState *controller = &controllerInfo[Input::CONT_ANY];
+        if (controller->keyStart.press) {
+            Stage::SetEngineState(ENGINESTATE_REGULAR);
+            Music::Resume();
+        }
+        else if (controller->keyC.press) {
+            sVars->frameAdvance = true;
+            Stage::SetEngineState(ENGINESTATE_REGULAR);
+        }
+    }
+}
 
 void Player::Draw(void) { this->animator.DrawSprite(NULL, false); }
 
-void Player::Create(void *data) {}
+void Player::Create(void *data)
+{
+    this->aniFrames = sVars->sonicFrames;
+    this->camera    = RSDK_GET_ENTITY(SLOT_CAMERA1, Camera);
+    analogStickInfoL[this->Slot() + 1].deadzone = 0.3f;
+
+    this->state.Set(&Player::State_Normal_Ground_Movement);
+    this->drawGroup      = 4;
+    this->active         = ACTIVE_NORMAL;
+    this->visible        = true;
+    this->onGround       = false;
+    this->tileCollisions = true;
+    this->interaction    = true;
+    this->drawFX         = FX_ROTATE | FX_FLIP;
+    SetMovementStats(&this->stats);
+
+    RSDK::SceneLayer fgLow;
+    fgLow.Get("FG Low");
+    RSDK::SceneLayer fgHigh;
+    fgHigh.Get("FG High");
+    this->collisionLayers = (1 << fgLow.id) | (1 << fgHigh.id);
+
+    // v2 stores these in the animation files??????? wtf???????
+    this->animator.SetAnimation(this->aniFrames, ANI_WALKING, true, 0);
+    this->walkingSpeed = this->animator.speed - 20;
+    this->animator.SetAnimation(this->aniFrames, ANI_RUNNING, true, 0);
+    this->runningSpeed = this->animator.speed;
+    this->normalbox    = this->animator.GetHitbox(0);
+    this->animator.SetAnimation(this->aniFrames, ANI_JUMPING, true, 0);
+    this->jumpingSpeed = this->animator.speed - 48;
+    this->jumpbox      = this->animator.GetHitbox(0);
+
+    this->animator.SetAnimation(this->aniFrames, ANI_STOPPED, true, 0);
+    this->animCheck = ANI_STOPPED;
+}
 
 void Player::StageLoad(void)
 {
@@ -89,7 +141,7 @@ void Player::StageLoad(void)
 
     sVars->active = ACTIVE_ALWAYS;
 
-    sVars->sonicFrames.Load("Players/SonicClassic.bin", SCOPE_GLOBAL);
+    sVars->sonicFrames.Load("Sonic/SonicClassic.bin", SCOPE_GLOBAL);
 
     sVars->sfxJump.Get("NexusGlobal/Jump.wav");
     sVars->sfxRing.Get("NexusGlobal/Ring.wav");
@@ -103,7 +155,7 @@ void Player::StageLoad(void)
     sVars->sfxBossHit.Get("NexusGlobal/BossHit.wav");
     sVars->sfxYes.Get("NexusGlobal/Yes.wav");
 
-    foreach_all(Player, player) player->Copy(0, true);
+    foreach_all(Player, player) player->Copy(RSDK_GET_ENTITY_GEN(SLOT_PLAYER1), true);
 
     sVars->upBuffer        = false;
     sVars->downBuffer      = false;
@@ -140,20 +192,20 @@ void Player::ProcessPlayerControl(Player *player)
         player->jumpHold  = sVars->jumpHoldBuffer >> 15;
     }
     else {
-        ControllerState *controller = &controllerInfo[Input::CONT_P1];
-        AnalogState *stick          = &analogStickInfoL[Input::CONT_P1];
+        ControllerState *controller = &controllerInfo[player->Slot() + 1];
+        AnalogState *stick          = &analogStickInfoL[player->Slot() + 1];
 
-        player->up    = controller->keyUp.down | stick->keyUp.down | stick->vDelta > 0.3;
-        player->down  = controller->keyDown.down | stick->keyDown.down | stick->vDelta < -0.3;
-        player->left  = controller->keyLeft.down | stick->keyLeft.down | stick->hDelta < -0.3;
-        player->right = controller->keyRight.down | stick->keyRight.down | stick->hDelta > 0.3;
+        player->up    = controller->keyUp.down || stick->keyUp.down || stick->vDelta > 0.3;
+        player->down  = controller->keyDown.down || stick->keyDown.down || stick->vDelta < -0.3;
+        player->left  = controller->keyLeft.down || stick->keyLeft.down || stick->hDelta < -0.3;
+        player->right = controller->keyRight.down || stick->keyRight.down || stick->hDelta > 0.3;
 
         if (player->left && player->right) {
             player->left  = false;
             player->right = false;
         }
-        player->jumpHold  = controller->keyC.down | controller->keyB.down | controller->keyA.down;
-        player->jumpPress = controller->keyC.press | controller->keyB.press | controller->keyA.press;
+        player->jumpHold  = controller->keyC.down || controller->keyB.down || controller->keyA.down;
+        player->jumpPress = controller->keyC.press || controller->keyB.press || controller->keyA.press;
         sVars->upBuffer <<= 1;
         sVars->upBuffer |= (uint8)player->up;
         sVars->downBuffer <<= 1;
@@ -365,12 +417,12 @@ void Player::DefaultGroundMovement(Player *player)
 void Player::DefaultJumpAction(Player *player)
 {
     player->frictionLoss = 0;
-    player->gravity      = true;
+    player->onGround     = false;
     player->velocity.x   = (player->groundVel * Math::Cos256(player->angle) + player->stats.jumpStrength * Math::Sin256(player->angle)) >> 8;
     player->velocity.y   = (player->groundVel * Math::Sin256(player->angle) + -player->stats.jumpStrength * Math::Cos256(player->angle)) >> 8;
     player->groundVel    = player->velocity.x;
     player->trackScroll  = true;
-    player->animator.SetAnimation(player->aniFrames, ANI_JUMPING, true, 0);
+    player->animator.SetAnimation(player->aniFrames, ANI_JUMPING, false, 0);
     player->angle         = 0;
     player->collisionMode = CMODE_FLOOR;
     player->timer         = 1;
@@ -395,7 +447,7 @@ void Player::DefaultRollingMovement(Player *player)
             player->groundVel = 0;
     }
     if ((player->angle < 12 || player->angle > 244) && !player->groundVel)
-        player->state.Set(&State_Normal_Ground_Movement);
+        player->state.Set(&Player::State_Normal_Ground_Movement);
 
     if (player->groundVel <= 0) {
         if (Math::Sin256(player->angle) >= 0) {
@@ -429,13 +481,13 @@ void Player::ProcessDebugMode(Player *player)
         player->groundVel = 0;
     }
 
-    ControllerState *controller = &controllerInfo[Input::CONT_P1];
-    AnalogState *stick          = &analogStickInfoL[Input::CONT_P1];
+    ControllerState *controller = &controllerInfo[player->Slot() + 1];
+    AnalogState *stick          = &analogStickInfoL[player->Slot() + 1];
 
-    bool32 up    = controller->keyUp.down | stick->keyUp.down | stick->vDelta > 0.3;
-    bool32 down  = controller->keyDown.down | stick->keyDown.down | stick->vDelta < -0.3;
-    bool32 left  = controller->keyLeft.down | stick->keyLeft.down | stick->hDelta < -0.3;
-    bool32 right = controller->keyRight.down | stick->keyRight.down | stick->hDelta > 0.3;
+    bool32 up    = controller->keyUp.down || stick->keyUp.down || stick->vDelta > 0.3;
+    bool32 down  = controller->keyDown.down || stick->keyDown.down || stick->vDelta < -0.3;
+    bool32 left  = controller->keyLeft.down || stick->keyLeft.down || stick->hDelta < -0.3;
+    bool32 right = controller->keyRight.down || stick->keyRight.down || stick->hDelta > 0.3;
 
     if (left)
         player->position.x -= player->groundVel;
@@ -448,10 +500,40 @@ void Player::ProcessDebugMode(Player *player)
         player->position.y += player->groundVel;
 }
 
-void ApplyShield(Player *player)
+void Player::ProcessPlayerAnimation(Player *player)
 {
-    if (!GameObject::Find("BlueShield"))
-        return;
+    if (player->onGround && !player->state.Matches(&Player::State_Peelout)) {
+        int32 speed = (player->jumpingSpeed * abs(player->groundVel) / 6 >> 16) + 48;
+        if (speed > 0xF0)
+            speed = 0xF0;
+        player->jumpAnimSpeed = speed;
+
+        switch (player->animator.animationID) {
+            case ANI_WALKING: player->animator.speed = ((uint32)(player->walkingSpeed * abs(player->groundVel) / 6) >> 16) + 20; break;
+            case ANI_RUNNING:
+                speed = player->runningSpeed * abs(player->groundVel) / 6 >> 16;
+                if (speed > 0xF0)
+                    speed = 0xF0;
+                player->animator.speed = speed;
+                break;
+            case ANI_PEELOUT:
+                speed = player->runningSpeed * abs(player->groundVel) / 6 >> 16;
+                if (speed > 0xF0)
+                    speed = 0xF0;
+                player->animator.speed = speed;
+                break;
+        }
+    }
+    if (player->animator.animationID == ANI_JUMPING)
+        player->animator.speed = player->jumpAnimSpeed;
+    if (player->animator.animationID != player->animator.prevAnimationID && player->animator.animationID != player->animCheck) {
+        if (player->animator.animationID == ANI_JUMPING)
+            player->position.y += (player->normalbox->bottom - player->jumpbox->bottom) << 16;
+        if (player->animator.prevAnimationID == ANI_JUMPING)
+            player->position.y -= (player->normalbox->bottom - player->jumpbox->bottom) << 16;
+        player->animCheck = player->animator.animationID;
+    }
+    player->animator.Process();
 }
 
 void Player::Main(void)
@@ -468,7 +550,7 @@ void Player::Main(void)
     }
 
     if (this->invincibility) {
-        if (!this->state.Matches(&State_Hurt_Recoil) && this->invincibility > 1080) {
+        if (!this->state.Matches(&Player::State_Hurt_Recoil) && this->invincibility > 1080) {
             this->invincibility = 120;
             this->flashing      = 3;
         }
@@ -489,7 +571,7 @@ void Player::Main(void)
         }
     }
 
-    if (!this->state.Matches(&State_Looking_Up) && !this->state.Matches(&State_Looking_Down)) {
+    if (!this->state.Matches(&Player::State_Looking_Up) && !this->state.Matches(&Player::State_Looking_Down)) {
         if (this->lookPos > 0)
             this->lookPos -= 2;
         if (this->lookPos < 0)
@@ -504,7 +586,7 @@ void Player::State_Normal_Ground_Movement(void)
     DefaultGroundMovement(this);
 
     if (!this->onGround) {
-        this->state.Set(&State_Air_Movement);
+        this->state.Set(&Player::State_Air_Movement);
         DefaultGravityTrue(this);
     }
     else {
@@ -556,12 +638,12 @@ void Player::State_Normal_Ground_Movement(void)
 
         if (this->jumpPress) {
             DefaultJumpAction(this);
-            this->state.Set(&State_Air_Movement);
+            this->state.Set(&Player::State_Air_Movement);
             sVars->sfxJump.Play();
         }
         else {
             if (this->up && !this->groundVel && this->flailing[1]) {
-                this->state.Set(&State_Looking_Up);
+                this->state.Set(&Player::State_Looking_Up);
                 this->animator.SetAnimation(this->aniFrames, ANI_LOOKINGUP, false, 0);
                 this->timer = 0;
             }
@@ -569,7 +651,7 @@ void Player::State_Normal_Ground_Movement(void)
             if (this->down) {
                 if (!this->groundVel) {
                     if (this->flailing[1]) {
-                        this->state.Set(&State_Looking_Down);
+                        this->state.Set(&Player::State_Looking_Down);
                         this->animator.SetAnimation(this->aniFrames, ANI_LOOKINGDOWN, false, 0);
                         this->timer = 0;
                     }
@@ -577,7 +659,7 @@ void Player::State_Normal_Ground_Movement(void)
                 else {
                     if (abs(this->groundVel) > 6554) {
                         this->frictionLoss = 0;
-                        this->state.Set(&State_Rolling);
+                        this->state.Set(&Player::State_Rolling);
                         this->animator.SetAnimation(this->aniFrames, ANI_JUMPING, false, 0);
                         sVars->sfxSpin.Play();
                     }
@@ -600,7 +682,7 @@ void Player::State_Air_Movement(void)
             this->animator.SetAnimation(this->aniFrames, ANI_WALKING, false, 0);
     }
     else {
-        this->state.Set(&State_Normal_Ground_Movement);
+        this->state.Set(&Player::State_Normal_Ground_Movement);
         DefaultGravityTrue(this);
     }
 }
@@ -612,14 +694,14 @@ void Player::State_Rolling(void)
     DefaultRollingMovement(this);
 
     if (!this->onGround) {
-        this->state.Set(&State_Air_Movement);
+        this->state.Set(&Player::State_Air_Movement);
         DefaultGravityTrue(this);
     }
     else {
         DefaultGravityFalse(this);
         if (this->jumpPress) {
             DefaultJumpAction(this);
-            this->state.Set(&State_Rolling_Jump);
+            this->state.Set(&Player::State_Rolling_Jump);
             sVars->sfxJump.Play();
         }
     }
@@ -637,7 +719,7 @@ void Player::State_Rolling_Jump(void)
         DefaultGravityTrue(this);
     }
     else {
-        this->state.Set(&State_Normal_Ground_Movement);
+        this->state.Set(&Player::State_Normal_Ground_Movement);
         DefaultGravityFalse(this);
     }
 }
@@ -647,7 +729,7 @@ void Player::State_Looking_Up(void)
     SET_CURRENT_STATE();
 
     if (!this->up) {
-        this->state.Set(&State_Normal_Ground_Movement);
+        this->state.Set(&Player::State_Normal_Ground_Movement);
         this->timer = 0;
     }
     else {
@@ -657,11 +739,11 @@ void Player::State_Looking_Up(void)
             this->lookPos -= 2;
 
         if (!this->onGround) {
-            this->state.Set(&State_Air_Movement);
+            this->state.Set(&Player::State_Air_Movement);
             this->timer = 0;
         }
         else if (this->jumpPress) {
-            this->state.Set(&State_Peelout);
+            this->state.Set(&Player::State_Peelout);
             this->spinDash = 0;
             sVars->sfxCharge.Play();
         }
@@ -673,7 +755,7 @@ void Player::State_Looking_Down(void)
     SET_CURRENT_STATE();
 
     if (!this->down) {
-        this->state.Set(&State_Normal_Ground_Movement);
+        this->state.Set(&Player::State_Normal_Ground_Movement);
         this->timer = 0;
     }
     else {
@@ -683,11 +765,11 @@ void Player::State_Looking_Down(void)
             this->lookPos += 2;
 
         if (!this->onGround) {
-            this->state.Set(&State_Air_Movement);
+            this->state.Set(&Player::State_Air_Movement);
             this->timer = 0;
         }
         else if (this->jumpPress) {
-            this->state.Set(&State_Spindash);
+            this->state.Set(&Player::State_Spindash);
             this->animator.SetAnimation(this->aniFrames, ANI_SPINDASH, false, 0);
             this->spinDash = 0;
             sVars->sfxCharge.Play();
@@ -700,7 +782,7 @@ void Player::State_Spindash(void)
     SET_CURRENT_STATE();
 
     if (!this->onGround) {
-        this->state.Set(&State_Air_Movement);
+        this->state.Set(&Player::State_Air_Movement);
         DefaultGravityTrue(this);
     }
     else
@@ -716,7 +798,7 @@ void Player::State_Spindash(void)
         this->spinDash--;
 
     if (!this->down) {
-        this->state.Set(&State_Rolling);
+        this->state.Set(&Player::State_Rolling);
         this->animator.SetAnimation(this->aniFrames, ANI_JUMPING, false, 0);
 
         int32 dashSpeed = (this->spinDash << 9) + 524288;
@@ -726,12 +808,12 @@ void Player::State_Spindash(void)
     }
 }
 
-void Player::State_Spindash(void)
+void Player::State_Peelout(void)
 {
     SET_CURRENT_STATE();
 
     if (!this->onGround) {
-        this->state.Set(&State_Air_Movement);
+        this->state.Set(&Player::State_Air_Movement);
         this->groundVel = 0;
     }
 
@@ -751,7 +833,7 @@ void Player::State_Spindash(void)
 
     if (!this->up) {
         DefaultGravityTrue(this);
-        this->state.Set(&State_Normal_Ground_Movement);
+        this->state.Set(&Player::State_Normal_Ground_Movement);
         this->groundVel = !this->direction ? this->spinDash : -this->spinDash;
         sVars->sfxRelease.Play();
     }
@@ -782,7 +864,7 @@ void Player::State_Getting_Hurt(void)
     switch (hurtType) {
         case HURT_HASSHIELD: {
             // Ouch!
-            this->state.Set(&State_Hurt_Recoil);
+            this->state.Set(&Player::State_Hurt_Recoil);
             this->animator.SetAnimation(this->aniFrames, ANI_HURT, false, 0);
             this->velocity.y  = -262144;
             this->onGround    = false;
@@ -798,7 +880,7 @@ void Player::State_Getting_Hurt(void)
         }
         case HURT_RINGLOSS: {
             // Ouch!
-            this->state.Set(&State_Hurt_Recoil);
+            this->state.Set(&Player::State_Hurt_Recoil);
             this->animator.SetAnimation(this->aniFrames, ANI_HURT, false, 0);
             this->velocity.y  = -262144;
             this->onGround    = false;
@@ -861,7 +943,7 @@ void Player::State_Getting_Hurt(void)
             // Gadzooks!!
             this->groundVel  = 0;
             this->velocity.y = -425984;
-            this->state.Set(&State_Dying);
+            this->state.Set(&Player::State_Dying);
             this->animator.SetAnimation(this->aniFrames, ANI_DYING, true, 0);
             this->tileCollisions  = false;
             this->interaction     = false;
@@ -878,7 +960,7 @@ void Player::State_Hurt_Recoil(void)
     if (!this->onGround)
         DefaultGravityTrue(this);
     else {
-        this->state.Set(&State_Normal_Ground_Movement);
+        this->state.Set(&Player::State_Normal_Ground_Movement);
         this->invincibility = 120;
         this->flashing      = 3;
         this->groundVel     = 0;
@@ -929,14 +1011,14 @@ void Player::State_Corkscrew_Run(void)
 
     if (abs(this->groundVel) < 393216) {
         this->animator.SetAnimation(this->aniFrames, ANI_WALKING, false, 0);
-        this->state.Set(&State_Air_Movement);
+        this->state.Set(&Player::State_Air_Movement);
         this->rotation = 0;
         if (this->groundVel < 0)
             this->direction = FLIP_X;
     }
 
     if (this->down && abs(this->groundVel) > 6554) {
-        this->state.Set(&State_Corkscrew_Roll);
+        this->state.Set(&Player::State_Corkscrew_Roll);
         this->animator.SetAnimation(this->aniFrames, ANI_JUMPING, false, 0);
         sVars->sfxSpin.Play();
     }
@@ -950,7 +1032,7 @@ void Player::State_Corkscrew_Run(void)
 
     if (this->jumpPress) {
         DefaultJumpAction(this);
-        this->state.Set(&State_Air_Movement);
+        this->state.Set(&Player::State_Air_Movement);
         sVars->sfxJump.Play();
     }
     else
@@ -965,11 +1047,11 @@ void Player::State_Corkscrew_Roll(void)
     DefaultRollingMovement(this);
 
     if (abs(this->groundVel) < 393216)
-        this->state.Set(&State_Air_Movement);
+        this->state.Set(&Player::State_Air_Movement);
 
     if (this->jumpPress) {
         DefaultJumpAction(this);
-        this->state.Set(&State_Rolling_Jump);
+        this->state.Set(&Player::State_Rolling_Jump);
         sVars->sfxJump.Play();
     }
     else
@@ -996,7 +1078,7 @@ void Player::State_Tube_Rolling(void)
     }
 
     if (!this->onGround) {
-        this->state.Set(&State_Air_Movement);
+        this->state.Set(&Player::State_Air_Movement);
         DefaultGravityTrue(this);
     }
     else {

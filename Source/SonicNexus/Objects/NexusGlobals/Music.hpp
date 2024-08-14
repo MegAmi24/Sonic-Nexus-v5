@@ -74,6 +74,8 @@ struct Music : RSDK::GameObject::Entity {
     static void SetTrack(const char *path, uint8 track, uint32 loopPoint);
     static void Play(int32 track);
     static void Stop(void);
+    static void Pause(void);
+    static void Resume(void);
     static bool32 CurrentTrack(int32 track);
 
     // ==============================

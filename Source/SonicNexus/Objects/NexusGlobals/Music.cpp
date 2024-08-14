@@ -33,7 +33,7 @@ void Music::StageLoad(void)
 void Music::SetTrack(const char *filePath, uint8 trackID, uint32 loop)
 {
     TrackInfo *track = &sVars->musicTracks[trackID];
-    strcpy(track->fileName, filePath);
+    strcpy_s(track->fileName, filePath);
     track->trackLoop = loop;
 }
 
@@ -46,6 +46,10 @@ void Music::Play(int32 track)
 }
 
 void Music::Stop() { channels[sVars->currentTrack].Stop(); }
+
+void Music::Pause() { channels[sVars->currentTrack].Pause(); }
+
+void Music::Resume() { channels[sVars->currentTrack].Resume(); }
 
 bool32 Music::CurrentTrack(int32 track) { return sVars->currentTrack == track; }
 

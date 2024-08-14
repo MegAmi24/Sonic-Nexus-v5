@@ -7,7 +7,12 @@ objects_path = "./Objects"
 game_hpp = "SonicNexus.hpp"
 
 f = open(objects_path + "/All.hpp", "w")
-f.write(f"#pragma once\n\n#include \"{game_hpp}\"\n")
+f.write(f"#pragma once\n\n")
+for path in Path(objects_path).rglob("*.hpp"):
+    if path.name == "All.hpp":
+        continue
+    f.write(f"struct {path.stem};\n")
+f.write(f"\n#include \"{game_hpp}\"\n")
 for path in Path(objects_path).rglob("*.hpp"):
     if path.name == "All.hpp":
         continue

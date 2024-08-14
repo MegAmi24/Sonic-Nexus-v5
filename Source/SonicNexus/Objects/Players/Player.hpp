@@ -97,6 +97,7 @@ struct Player : RSDK::GameObject::Entity {
         RSDK::SoundFX sfxDestroy;
         RSDK::SoundFX sfxBossHit;
         RSDK::SoundFX sfxYes;
+        bool32 frameAdvance;
     };
 
     // ==============================
@@ -128,9 +129,9 @@ struct Player : RSDK::GameObject::Entity {
     uint8 gravity;
     uint8 water;
     uint8 flailing[3];
-    uint8 runningSpeed;
-    uint8 walkingSpeed;
-    uint8 jumpingSpeed;
+    int16 runningSpeed;
+    int16 walkingSpeed;
+    int16 jumpingSpeed;
     int32 rings;
     int32 spinDash;
     int32 aniJumpSpeed;
@@ -139,6 +140,10 @@ struct Player : RSDK::GameObject::Entity {
     int32 flashing;
     int32 minRollSpeed;
     int32 ringExtraLife;
+    RSDK::Hitbox *normalbox;
+    RSDK::Hitbox *jumpbox;
+    int32 animCheck;
+    int16 jumpAnimSpeed;
 
     // ==============================
     // EVENTS
@@ -175,10 +180,8 @@ struct Player : RSDK::GameObject::Entity {
     static void DefaultJumpAction(Player *player);
     static void DefaultRollingMovement(Player *player);
     static void ProcessDebugMode(Player *player);
+    static void ProcessPlayerAnimation(Player *player);
 
-    // Helper functions (custom to reduce redundancy)
-    static void ApplyShield(Player *player);
-    
     // Script Subs (ported from Nexus)
     void Main(void);
     void State_Normal_Ground_Movement(void);
@@ -197,6 +200,28 @@ struct Player : RSDK::GameObject::Entity {
     void State_Corkscrew_Run(void);
     void State_Corkscrew_Roll(void);
     void State_Tube_Rolling(void);
+
+    // Helper functions (custom to reduce redundancy)
+    inline void HandleMovement(void)
+    {
+        this->outerbox = this->animator.GetHitbox(0);
+        this->innerbox = this->animator.GetHitbox(1);
+
+        this->ProcessMovement(this->outerbox, this->innerbox);
+
+        RSDK::Vector2 posStore = this->position;
+        this->flailing[0] =
+            !this->TileGrip(this->collisionLayers, RSDK::CMODE_FLOOR, this->collisionPlane, this->normalbox->left, this->normalbox->bottom, 10);
+        this->flailing[1] = !this->TileGrip(this->collisionLayers, RSDK::CMODE_FLOOR, this->collisionPlane, 0, this->normalbox->bottom, 10);
+        this->flailing[2] =
+            !this->TileGrip(this->collisionLayers, RSDK::CMODE_FLOOR, this->collisionPlane, this->normalbox->right, this->normalbox->bottom, 10);
+        this->position = posStore;
+    };
+    static inline void ApplyShield(Player *player)
+    {
+        if (!RSDK::GameObject::Find("BlueShield"))
+            return;
+    };
 
     // ==============================
     // DECLARATION
