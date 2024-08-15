@@ -43,6 +43,15 @@
     <ClCompile Include="Objects\NexusGlobals\Camera.cpp">
       <Filter>Source Files\Objects\NexusGlobals</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\SSZ\BlueShield.cpp">
+      <Filter>Source Files\Objects\SSZ</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\NexusGlobals\Ring.cpp">
+      <Filter>Source Files\Objects\NexusGlobals</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\NexusGlobals\Invincibility.cpp">
+      <Filter>Source Files\Objects\NexusGlobals</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SonicNexus.hpp">
@@ -67,6 +76,15 @@
       <Filter>Source Files\Objects\NexusGlobals</Filter>
     </ClInclude>
     <ClInclude Include="Objects\NexusGlobals\Camera.hpp">
+      <Filter>Source Files\Objects\NexusGlobals</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\SSZ\BlueShield.hpp">
+      <Filter>Source Files\Objects\SSZ</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\NexusGlobals\Ring.hpp">
+      <Filter>Source Files\Objects\NexusGlobals</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\NexusGlobals\Invincibility.hpp">
       <Filter>Source Files\Objects\NexusGlobals</Filter>
     </ClInclude>
   </ItemGroup>

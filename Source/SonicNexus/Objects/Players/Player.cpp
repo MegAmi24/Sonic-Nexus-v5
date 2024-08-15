@@ -102,37 +102,41 @@ void Player::Draw(void) { this->animator.DrawSprite(NULL, false); }
 void Player::Create(void *data)
 {
     this->aniFrames = sVars->sonicFrames;
-    this->camera    = RSDK_GET_ENTITY(SLOT_CAMERA1, Camera);
-    analogStickInfoL[this->Slot() + 1].deadzone = 0.3f;
+    this->visible   = true;
 
-    this->state.Set(&Player::State_Normal_Ground_Movement);
-    this->drawGroup      = 4;
-    this->active         = ACTIVE_NORMAL;
-    this->visible        = true;
-    this->onGround       = false;
-    this->tileCollisions = true;
-    this->interaction    = true;
-    this->drawFX         = FX_ROTATE | FX_FLIP;
-    SetMovementStats(&this->stats);
+    if (!sceneInfo->inEditor) {
+        this->camera = RSDK_GET_ENTITY(SLOT_CAMERA1, Camera);
 
-    RSDK::SceneLayer fgLow;
-    fgLow.Get("FG Low");
-    RSDK::SceneLayer fgHigh;
-    fgHigh.Get("FG High");
-    this->collisionLayers = (1 << fgLow.id) | (1 << fgHigh.id);
+        analogStickInfoL[this->Slot() + 1].deadzone = 0.3f;
 
-    // v2 stores these in the animation files??????? wtf???????
-    this->animator.SetAnimation(this->aniFrames, ANI_WALKING, true, 0);
-    this->walkingSpeed = this->animator.speed - 20;
-    this->animator.SetAnimation(this->aniFrames, ANI_RUNNING, true, 0);
-    this->runningSpeed = this->animator.speed;
-    this->normalbox    = this->animator.GetHitbox(0);
-    this->animator.SetAnimation(this->aniFrames, ANI_JUMPING, true, 0);
-    this->jumpingSpeed = this->animator.speed - 48;
-    this->jumpbox      = this->animator.GetHitbox(0);
+        this->state.Set(&Player::State_Normal_Ground_Movement);
+        this->active         = ACTIVE_NORMAL;
+        this->onGround       = false;
+        this->tileCollisions = true;
+        this->interaction    = true;
+        this->drawFX         = FX_FLIP | FX_ROTATE;
+        this->drawGroup      = 4;
+        SetMovementStats(&this->stats);
 
-    this->animator.SetAnimation(this->aniFrames, ANI_STOPPED, true, 0);
-    this->animCheck = ANI_STOPPED;
+        RSDK::SceneLayer fgLow;
+        fgLow.Get("FG Low");
+        RSDK::SceneLayer fgHigh;
+        fgHigh.Get("FG High");
+        this->collisionLayers = (1 << fgLow.id) | (1 << fgHigh.id);
+
+        // v2 stores these in the animation files??????? wtf???????
+        this->animator.SetAnimation(this->aniFrames, ANI_WALKING, true, 0);
+        this->walkingSpeed = this->animator.speed - 20;
+        this->animator.SetAnimation(this->aniFrames, ANI_RUNNING, true, 0);
+        this->runningSpeed = this->animator.speed;
+        this->normalbox    = this->animator.GetHitbox(0);
+        this->animator.SetAnimation(this->aniFrames, ANI_JUMPING, true, 0);
+        this->jumpingSpeed = this->animator.speed - 48;
+        this->jumpbox      = this->animator.GetHitbox(0);
+
+        this->animator.SetAnimation(this->aniFrames, ANI_STOPPED, true, 0);
+        this->animCheck = ANI_STOPPED;
+    }
 }
 
 void Player::StageLoad(void)
@@ -144,7 +148,6 @@ void Player::StageLoad(void)
     sVars->sonicFrames.Load("Sonic/SonicClassic.bin", SCOPE_GLOBAL);
 
     sVars->sfxJump.Get("NexusGlobal/Jump.wav");
-    sVars->sfxRing.Get("NexusGlobal/Ring.wav");
     sVars->sfxLoseRings.Get("NexusGlobal/LoseRings.wav");
     sVars->sfxHurt.Get("NexusGlobal/Hurt.wav");
     sVars->sfxSpin.Get("NexusGlobal/Spin.wav");
@@ -567,7 +570,14 @@ void Player::Main(void)
             this->visible  = true;
             if (Music::CurrentTrack(Music::TRACK_INVINCIBILITY))
                 Music::Play(Music::TRACK_STAGE);
-            ApplyShield(this);
+            Entity *powerUp = RSDK_GET_ENTITY_GEN(this->Slot() + 2);
+            if (powerUp->classID == Invincibility::sVars->classID) {
+                BlueShield *shield = RSDK_GET_ENTITY(this->Slot() + 2, BlueShield);
+                switch (shield->propertyValue) {
+                    case SHIELD_NONE: shield->Destroy(); break;
+                    case SHIELD_BLUE: GameObject::Reset(shield->Slot(), BlueShield::sVars->classID, this->Slot()); break;
+                }
+            }
         }
     }
 
@@ -912,9 +922,9 @@ void Player::State_Getting_Hurt(void)
                 angle -= 16;
 
             for (int32 r = 0; r < ringPool2; r++) {
-                // Ring *ring = CREATE_ENTITY(Ring, this->position, this->position.x, this->position.y);
-                // ring->velocity.x = Math::Cos256(angle) << 8;
-                // ring->velocity.y = Math::Sin256(angle) << 8;
+                Ring *ring       = CREATE_ENTITY(Ring, INT_TO_VOID(Ring::RING_LOSE), this->position.x, this->position.y);
+                ring->velocity.x = Math::Cos256(angle) << 8;
+                ring->velocity.y = Math::Sin256(angle) << 8;
 
                 angle += 32;
             }
@@ -928,9 +938,9 @@ void Player::State_Getting_Hurt(void)
                 angle -= 16;
 
             for (int32 r = 0; r < ringPool1; r++) {
-                // Ring *ring       = CREATE_ENTITY(Ring, this->position, this->position.x, this->position.y);
-                // ring->velocity.x = Math::Cos256(angle) << 9;
-                // ring->velocity.y = Math::Sin256(angle) << 9;
+                Ring *ring       = CREATE_ENTITY(Ring, INT_TO_VOID(Ring::RING_LOSE), this->position.x, this->position.y);
+                ring->velocity.x = Math::Cos256(angle) << 9;
+                ring->velocity.y = Math::Sin256(angle) << 9;
 
                 angle += 32;
             }
@@ -1094,7 +1104,7 @@ void Player::EditorDraw(void)
     this->animator.DrawSprite(NULL, false);
 }
 
-void Player::EditorLoad(void) { sVars->sonicFrames.Load("Players/SonicClassic.bin", SCOPE_STAGE); }
+void Player::EditorLoad(void) { sVars->sonicFrames.Load("Sonic/SonicClassic.bin", SCOPE_STAGE); }
 #endif
 
 #if RETRO_REV0U

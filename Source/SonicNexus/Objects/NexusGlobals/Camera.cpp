@@ -40,19 +40,21 @@ void Camera::Draw(void) {}
 
 void Camera::Create(void *data)
 {
-    int32 screen = VOID_TO_INT(data);
-    this->target = RSDK_GET_ENTITY_GEN(screen);
+    if (!sceneInfo->inEditor) {
+        int32 screen = VOID_TO_INT(data);
+        this->target = RSDK_GET_ENTITY_GEN(screen);
 
-    if (this->active != ACTIVE_NORMAL)
-        Graphics::AddCamera(&this->target->position, TO_FIXED(screenInfo[screen].center.x), TO_FIXED(screenInfo[screen].center.y), false);
+        if (this->active != ACTIVE_NORMAL)
+            Graphics::AddCamera(&this->target->position, TO_FIXED(screenInfo[screen].center.x), TO_FIXED(screenInfo[screen].center.y), true);
 
-    this->active  = ACTIVE_NORMAL;
-    this->enabled = true;
+        this->active  = ACTIVE_NORMAL;
+        this->enabled = true;
 
-    this->scrollA.x = (this->target->position.x >> 16) - screenInfo[screen].center.x;
-    this->scrollB.x = (this->target->position.x >> 16) - screenInfo[screen].center.x + screenInfo[screen].size.x;
-    this->scrollA.y = (this->target->position.y >> 16) - SCREEN_SCROLL_UP;
-    this->scrollB.y = (this->target->position.y >> 16) - SCREEN_SCROLL_UP + screenInfo[screen].size.y;
+        this->scrollA.x = (this->target->position.x >> 16) - screenInfo[screen].center.x;
+        this->scrollB.x = (this->target->position.x >> 16) - screenInfo[screen].center.x + screenInfo[screen].size.x;
+        this->scrollA.y = (this->target->position.y >> 16) - SCREEN_SCROLL_UP;
+        this->scrollB.y = (this->target->position.y >> 16) - SCREEN_SCROLL_UP + screenInfo[screen].size.y;
+    }
 }
 
 void Camera::StageLoad(void)

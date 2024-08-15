@@ -13,7 +13,7 @@ struct Player : RSDK::GameObject::Entity {
 
     enum PlayerModes {
         PLAYERMODE_ACTIVE,
-        PLAYERMODE_INACTIVE,
+        PLAYERMODE_INACTIVE, // idk what this is for LOL
         PLAYERMODE_DEBUG,
     };
 
@@ -49,6 +49,11 @@ struct Player : RSDK::GameObject::Entity {
         ANI_FINISHPOSE = 23,
         ANI_CORKSCREW  = 34,
         ANI_HANGING    = 43,
+    };
+
+    enum Shields {
+        SHIELD_NONE,
+        SHIELD_BLUE,
     };
 
     enum HurtTypes {
@@ -87,7 +92,6 @@ struct Player : RSDK::GameObject::Entity {
         uint16 jumpHoldBuffer;
         RSDK::SpriteAnimation sonicFrames;
         RSDK::SoundFX sfxJump;
-        RSDK::SoundFX sfxRing;
         RSDK::SoundFX sfxLoseRings;
         RSDK::SoundFX sfxHurt;
         RSDK::SoundFX sfxSpin;
@@ -216,11 +220,6 @@ struct Player : RSDK::GameObject::Entity {
         this->flailing[2] =
             !this->TileGrip(this->collisionLayers, RSDK::CMODE_FLOOR, this->collisionPlane, this->normalbox->right, this->normalbox->bottom, 10);
         this->position = posStore;
-    };
-    static inline void ApplyShield(Player *player)
-    {
-        if (!RSDK::GameObject::Find("BlueShield"))
-            return;
     };
 
     // ==============================
