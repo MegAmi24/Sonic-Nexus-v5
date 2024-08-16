@@ -2,9 +2,6 @@
 
 #include "GameAPI/Game.hpp"
 
-#define Unknown_anyKeyPress unknownInfo->anyKeyPress
-#define Unknown_pausePress  unknownInfo->pausePress
-
 // Enums
 
 enum ScreenSplit { FORCE_SPLIT };
@@ -20,17 +17,23 @@ enum PlaneFilterTypes {
 enum ActIDs {
     ACT_1,
     ACT_2,
-    ACT_NONE,
+    ACT_3,
 };
 
 enum ReservedEntities {
-    SLOT_PLAYER1   = 0,
-    SLOT_CAMERA1   = 1,
-    SLOT_POWERUP1  = 2,
-    SLOT_TITLECARD = 24,
-    // 25 - 31 are used for the Title Card
-    SLOT_ACTFINISH = 30,
-    SLOT_HUD       = 31,
+    SLOT_PLAYER1              = 0,
+    SLOT_CAMERA1              = 1,
+    SLOT_POWERUP1             = 2,
+    SLOT_TITLECARD            = 24,
+    SLOT_TITLECARD_VERTTEXT1  = 25,
+    SLOT_TITLECARD_VERTTEXT2  = 26,
+    SLOT_TITLECARD_SIDEBAR    = 27,
+    SLOT_TITLECARD_FIRSTWORD  = 28,
+    SLOT_TITLECARD_SECONDWORD = 29,
+    SLOT_TITLECARD_ZONE       = 30,
+    SLOT_TITLECARD_ACTBALL    = 31,
+    SLOT_ACTFINISH            = 30,
+    SLOT_HUD                  = 31,
 };
 
 // Global Variables

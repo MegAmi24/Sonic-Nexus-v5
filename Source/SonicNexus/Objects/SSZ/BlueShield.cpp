@@ -44,7 +44,7 @@ void BlueShield::EditorDraw(void)
     this->animator.DrawSprite(NULL, false);
 }
 
-void BlueShield::EditorLoad(void) { sVars->aniFrames.Load("SSZ/Shield.bin", SCOPE_GLOBAL); }
+void BlueShield::EditorLoad(void) { sVars->aniFrames.Load("SSZ/Shield.bin", SCOPE_STAGE); }
 #endif
 
 #if RETRO_REV0U

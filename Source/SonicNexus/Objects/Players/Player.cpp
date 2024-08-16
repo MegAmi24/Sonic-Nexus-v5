@@ -40,9 +40,7 @@ void Player::Update(void)
             ProcessPlayerAnimation(this);
             Main();
 
-            this->outerbox = this->animator.GetHitbox(0);
-            this->innerbox = this->animator.GetHitbox(1);
-            this->ProcessMovement(this->outerbox, this->innerbox);
+            this->HandleMovement();
             break;
         }
         case PLAYERMODE_DEBUG: {
@@ -64,7 +62,7 @@ void Player::Update(void)
 void Player::LateUpdate(void)
 {
     ControllerState *controller = &controllerInfo[this->Slot() + 1];
-    if (sceneInfo->state == ENGINESTATE_REGULAR && controller->keyStart.press) {
+    if (sceneInfo->state == ENGINESTATE_REGULAR && sVars->pauseEnabled && controller->keyStart.press) {
         Stage::SetEngineState(ENGINESTATE_FROZEN);
         Music::Pause();
     }
@@ -97,7 +95,24 @@ void Player::StaticUpdate(void)
     }
 }
 
-void Player::Draw(void) { this->animator.DrawSprite(NULL, false); }
+void Player::Draw(void)
+{
+    int32 rotStore = this->rotation;
+    switch (this->animator.animationID) {
+        case ANI_RUNNING:
+        case ANI_WALKING:
+        case ANI_PEELOUT:
+        case ANI_CORKSCREW:
+            if (this->rotation >= 0x80)
+                this->rotation = 0x200 - ((266 - this->rotation) >> 5 << 6);
+            else
+                this->rotation = (this->rotation + 10) >> 5 << 6;
+            break;
+        default: break;
+    }
+    this->animator.DrawSprite(NULL, false);
+    this->rotation = rotStore;
+}
 
 void Player::Create(void *data)
 {
@@ -166,6 +181,8 @@ void Player::StageLoad(void)
     sVars->rightBuffer     = false;
     sVars->jumpPressBuffer = false;
     sVars->jumpHoldBuffer  = false;
+
+    sVars->pauseEnabled = true;
 }
 
 // Extra Entity Functions
@@ -174,17 +191,17 @@ void Player::ProcessPlayerControl(Player *player)
 {
     if (player->controlMode == CONTROLMODE_NONE) {
         sVars->upBuffer <<= 1;
-        sVars->upBuffer |= (uint8)player->up;
+        sVars->upBuffer |= (int8)player->up;
         sVars->downBuffer <<= 1;
-        sVars->downBuffer |= (uint8)player->down;
+        sVars->downBuffer |= (int8)player->down;
         sVars->leftBuffer <<= 1;
-        sVars->leftBuffer |= (uint8)player->left;
+        sVars->leftBuffer |= (int8)player->left;
         sVars->rightBuffer <<= 1;
-        sVars->rightBuffer |= (uint8)player->right;
+        sVars->rightBuffer |= (int8)player->right;
         sVars->jumpPressBuffer <<= 1;
-        sVars->jumpPressBuffer |= (uint8)player->jumpPress;
+        sVars->jumpPressBuffer |= (int8)player->jumpPress;
         sVars->jumpHoldBuffer <<= 1;
-        sVars->jumpHoldBuffer |= (uint8)player->jumpHold;
+        sVars->jumpHoldBuffer |= (int8)player->jumpHold;
     }
     else if (player->controlMode == CONTROLMODE_DELAY) {
         player->up        = sVars->upBuffer >> 15;
@@ -210,17 +227,17 @@ void Player::ProcessPlayerControl(Player *player)
         player->jumpHold  = controller->keyC.down || controller->keyB.down || controller->keyA.down;
         player->jumpPress = controller->keyC.press || controller->keyB.press || controller->keyA.press;
         sVars->upBuffer <<= 1;
-        sVars->upBuffer |= (uint8)player->up;
+        sVars->upBuffer |= (int8)player->up;
         sVars->downBuffer <<= 1;
-        sVars->downBuffer |= (uint8)player->down;
+        sVars->downBuffer |= (int8)player->down;
         sVars->leftBuffer <<= 1;
-        sVars->leftBuffer |= (uint8)player->left;
+        sVars->leftBuffer |= (int8)player->left;
         sVars->rightBuffer <<= 1;
-        sVars->rightBuffer |= (uint8)player->right;
+        sVars->rightBuffer |= (int8)player->right;
         sVars->jumpPressBuffer <<= 1;
-        sVars->jumpPressBuffer |= (uint8)player->jumpPress;
+        sVars->jumpPressBuffer |= (int8)player->jumpPress;
         sVars->jumpHoldBuffer <<= 1;
-        sVars->jumpHoldBuffer |= (uint8)player->jumpHold;
+        sVars->jumpHoldBuffer |= (int8)player->jumpHold;
     }
 }
 

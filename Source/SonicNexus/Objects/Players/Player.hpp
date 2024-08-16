@@ -101,6 +101,7 @@ struct Player : RSDK::GameObject::Entity {
         RSDK::SoundFX sfxDestroy;
         RSDK::SoundFX sfxBossHit;
         RSDK::SoundFX sfxYes;
+        bool32 pauseEnabled;
         bool32 frameAdvance;
     };
 
@@ -220,6 +221,9 @@ struct Player : RSDK::GameObject::Entity {
         this->flailing[2] =
             !this->TileGrip(this->collisionLayers, RSDK::CMODE_FLOOR, this->collisionPlane, this->normalbox->right, this->normalbox->bottom, 10);
         this->position = posStore;
+
+        if (this->onGround)
+            this->rotation = this->angle;
     };
 
     // ==============================

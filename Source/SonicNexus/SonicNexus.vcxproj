@@ -176,6 +176,7 @@
     <ClCompile Include="Objects\NexusGlobals\Invincibility.cpp" />
     <ClCompile Include="Objects\NexusGlobals\Music.cpp" />
     <ClCompile Include="Objects\NexusGlobals\Ring.cpp" />
+    <ClCompile Include="Objects\NexusGlobals\TitleCard.cpp" />
     <ClCompile Include="Objects\Players\Player.cpp" />
     <ClCompile Include="Objects\SSZ\BlueShield.cpp" />
     <ClCompile Include="SonicNexus.cpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="Objects\NexusGlobals\Invincibility.hpp" />
     <ClInclude Include="Objects\NexusGlobals\Music.hpp" />
     <ClInclude Include="Objects\NexusGlobals\Ring.hpp" />
+    <ClInclude Include="Objects\NexusGlobals\TitleCard.hpp" />
     <ClInclude Include="Objects\Players\Player.hpp" />
     <ClInclude Include="Objects\SSZ\BlueShield.hpp" />
     <ClInclude Include="SonicNexus.hpp" />

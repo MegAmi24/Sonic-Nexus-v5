@@ -52,6 +52,9 @@
     <ClCompile Include="Objects\NexusGlobals\Invincibility.cpp">
       <Filter>Source Files\Objects\NexusGlobals</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\NexusGlobals\TitleCard.cpp">
+      <Filter>Source Files\Objects\NexusGlobals</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SonicNexus.hpp">
@@ -85,6 +88,9 @@
       <Filter>Source Files\Objects\NexusGlobals</Filter>
     </ClInclude>
     <ClInclude Include="Objects\NexusGlobals\Invincibility.hpp">
+      <Filter>Source Files\Objects\NexusGlobals</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\NexusGlobals\TitleCard.hpp">
       <Filter>Source Files\Objects\NexusGlobals</Filter>
     </ClInclude>
   </ItemGroup>

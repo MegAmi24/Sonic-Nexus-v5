@@ -68,7 +68,7 @@ void Invincibility::EditorDraw(void) { sVars->animator.DrawSprite(NULL, false); 
 
 void Invincibility::EditorLoad(void)
 {
-    sVars->aniFrames.Load("SSZ/Invincibility.bin", SCOPE_GLOBAL);
+    sVars->aniFrames.Load("SSZ/Invincibility.bin", SCOPE_STAGE);
     sVars->animator.SetAnimation(sVars->aniFrames, 0, true, 0);
 }
 #endif
