@@ -47,6 +47,8 @@ void Invincibility::StageLoad(void)
 
 void Invincibility::State_Spawner(void)
 {
+    SET_CURRENT_STATE();
+
     if (++this->timer > 3) {
         this->timer = 0;
         CREATE_ENTITY(Invincibility, INT_TO_VOID(1), this->parent->position.x, this->parent->position.y);
@@ -57,6 +59,8 @@ void Invincibility::State_Spawner(void)
 
 void Invincibility::State_Child(void)
 {
+    SET_CURRENT_STATE();
+
     this->inkEffect = this->timer > 5 ? INK_BLEND : INK_NONE;
 
     if (++this->timer > 15)

@@ -212,14 +212,17 @@ struct Player : RSDK::GameObject::Entity {
         this->outerbox = this->animator.GetHitbox(0);
         this->innerbox = this->animator.GetHitbox(1);
 
-        this->ProcessMovement(this->outerbox, this->innerbox);
+        if (!this->state.Matches(&Player::State_Dying))
+            this->ProcessMovement(this->outerbox, this->innerbox);
 
         RSDK::Vector2 posStore = this->position;
-        this->flailing[0] =
-            !this->TileGrip(this->collisionLayers, RSDK::CMODE_FLOOR, this->collisionPlane, this->normalbox->left, this->normalbox->bottom, 10);
-        this->flailing[1] = !this->TileGrip(this->collisionLayers, RSDK::CMODE_FLOOR, this->collisionPlane, 0, this->normalbox->bottom, 10);
-        this->flailing[2] =
-            !this->TileGrip(this->collisionLayers, RSDK::CMODE_FLOOR, this->collisionPlane, this->normalbox->right, this->normalbox->bottom, 10);
+
+        this->flailing[0] = this->TileGrip(this->collisionLayers, RSDK::CMODE_FLOOR, this->collisionPlane, TO_FIXED(this->normalbox->left),
+                                           TO_FIXED(this->normalbox->bottom), 10);
+        this->flailing[1] = this->TileGrip(this->collisionLayers, RSDK::CMODE_FLOOR, this->collisionPlane, 0, TO_FIXED(this->normalbox->bottom), 10);
+        this->flailing[2] = this->TileGrip(this->collisionLayers, RSDK::CMODE_FLOOR, this->collisionPlane, TO_FIXED(this->normalbox->right),
+                                           TO_FIXED(this->normalbox->bottom), 10);
+
         this->position = posStore;
 
         if (this->onGround)

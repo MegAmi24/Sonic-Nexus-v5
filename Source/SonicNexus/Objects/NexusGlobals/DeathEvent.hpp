@@ -5,46 +5,39 @@
 namespace GameLogic
 {
 
-struct Music : RSDK::GameObject::Entity {
+struct DeathEvent : RSDK::GameObject::Entity {
 
     // ==============================
     // ENUMS
     // ==============================
 
-    enum MusicTracks {
-        TRACK_NONE = -1,
-        TRACK_STAGE,
-        TRACK_LEVELCOMPLETE,
-        TRACK_INVINCIBILITY,
-        TRACK_SPEEDSHOES,
-        TRACK_SUPER, // Just a guess
-        TRACK_BOSS,
-        TRACK_1UP,
-        TRACK_GAMEOVER,
+    enum DeathEventTypes {
+        DEATHEVENT_GAMEOVER,
+        DEATHEVENT_TIMEOVER,
+        DEATHEVENT_FADETOBLACK,
     };
 
     // ==============================
     // STRUCTS
     // ==============================
 
-    struct TrackInfo {
-        char fileName[0x40];
-        uint32 trackLoop; // RSDKv2 doesn't support specifying a loop point, but that kinda sucks
-    };
-
     // ==============================
     // STATIC VARS
     // ==============================
 
     struct Static : RSDK::GameObject::Static {
-        TrackInfo musicTracks[CHANNEL_COUNT];
-        int32 currentTrack;
-        float volume;
+        RSDK::SpriteAnimation aniFrames;
     };
 
     // ==============================
     // INSTANCE VARS
     // ==============================
+    DeathEventTypes type;
+    RSDK::StateMachine<DeathEvent> state;
+    RSDK::Animator animator;
+    RSDK::Vector2 leftPos;
+    RSDK::Vector2 rightPos;
+    int32 timer;
 
     // ==============================
     // EVENTS
@@ -71,18 +64,13 @@ struct Music : RSDK::GameObject::Entity {
     // FUNCTIONS
     // ==============================
 
-    static void SetTrack(const char *path, uint8 track, uint32 loopPoint);
-    static void Play(int32 track);
-    static void Stop(void);
-    static void Pause(void);
-    static void Resume(void);
-    static bool32 CurrentTrack(int32 track);
-    static void SetVolume(float volume);
+    void State_GameOver(void); // Also for Time Over
+    void State_FadeToBlack(void);
 
     // ==============================
     // DECLARATION
     // ==============================
 
-    RSDK_DECLARE(Music);
+    RSDK_DECLARE(DeathEvent);
 };
 } // namespace GameLogic

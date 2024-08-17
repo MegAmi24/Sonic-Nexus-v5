@@ -126,6 +126,8 @@ void TitleCard::StageLoad(void)
 
 void TitleCard::State_FadeUp(void)
 {
+    SET_CURRENT_STATE();
+
     foreach_active(Player, player)
     {
         player->controlMode = Player::CONTROLMODE_NONE;
@@ -149,7 +151,9 @@ void TitleCard::State_FadeUp(void)
             GameObject::Reset(SLOT_TITLECARD_ZONE, sVars->classID, INT_TO_VOID(TITLECARD_ZONE));
             GameObject::Reset(SLOT_TITLECARD_ACTBALL, sVars->classID, INT_TO_VOID(TITLECARD_ACTBALL));
 
-            RSDK_GET_ENTITY(SLOT_TITLECARD_ZONE, TitleCard)->animator.frameID = this->actID;
+            sVars->actID = this->actID;
+
+            RSDK_GET_ENTITY(SLOT_TITLECARD_ZONE, TitleCard)->animator.frameID = sVars->actID;
 
             TitleCard *sideBar  = RSDK_GET_ENTITY(SLOT_TITLECARD_SIDEBAR, TitleCard);
             TitleCard *actBall  = RSDK_GET_ENTITY(SLOT_TITLECARD_ACTBALL, TitleCard);
@@ -164,12 +168,16 @@ void TitleCard::State_FadeUp(void)
 
 void TitleCard::State_SideBar(void)
 {
+    SET_CURRENT_STATE();
+
     if (this->position.y < 0)
         this->position.y += TO_FIXED(16);
 }
 
 void TitleCard::State_Word(void)
 {
+    SET_CURRENT_STATE();
+
     TitleCard *sideBar   = RSDK_GET_ENTITY(SLOT_TITLECARD_SIDEBAR, TitleCard);
     TitleCard *titleCard = RSDK_GET_ENTITY(SLOT_TITLECARD, TitleCard);
 
@@ -181,6 +189,8 @@ void TitleCard::State_Word(void)
 
 void TitleCard::State_Zone(void)
 {
+    SET_CURRENT_STATE();
+
     int32 targetPos = TO_FIXED(screenInfo->size.x - 148);
     if (this->position.x > targetPos) {
         this->position.x -= TO_FIXED(8);
@@ -193,6 +203,8 @@ void TitleCard::State_Zone(void)
 
 void TitleCard::State_ActBall(void)
 {
+    SET_CURRENT_STATE();
+
     if (this->timer < 2) {
         this->rotation = (this->rotation + 16) & 511;
 
@@ -215,6 +227,8 @@ void TitleCard::State_ActBall(void)
 
 void TitleCard::State_VertText_Down(void)
 {
+    SET_CURRENT_STATE();
+
     this->position.x += TO_FIXED(1);
     this->position.y += TO_FIXED(2);
     if (this->position.y > 0)
@@ -223,6 +237,8 @@ void TitleCard::State_VertText_Down(void)
 
 void TitleCard::State_VertText_Up(void)
 {
+    SET_CURRENT_STATE();
+
     this->position.x -= TO_FIXED(1);
     this->position.y -= TO_FIXED(2);
     if (this->position.y < TO_FIXED(-516))
@@ -231,6 +247,8 @@ void TitleCard::State_VertText_Up(void)
 
 void TitleCard::State_Colour_Circle(void)
 {
+    SET_CURRENT_STATE();
+
     if (this->scale.x < 1408) {
         this->scale.x += 12;
         this->scale.y = this->scale.x;
@@ -246,6 +264,8 @@ void TitleCard::State_Colour_Circle(void)
 
 void TitleCard::State_SideBar_Exit(void)
 {
+    SET_CURRENT_STATE();
+
     RSDK_GET_ENTITY(SLOT_TITLECARD_VERTTEXT1, TitleCard)->position.x += TO_FIXED(7);
     RSDK_GET_ENTITY(SLOT_TITLECARD_VERTTEXT2, TitleCard)->position.x -= TO_FIXED(7);
     if (this->position.y > TO_FIXED(-192))
@@ -254,15 +274,23 @@ void TitleCard::State_SideBar_Exit(void)
 
 void TitleCard::State_FirstWord_Exit(void)
 {
+    SET_CURRENT_STATE();
+
     int32 offset = TO_FIXED(screenInfo->center.x - RSDK_GET_ENTITY(SLOT_TITLECARD, TitleCard)->offset - 64);
     if (RSDK_GET_ENTITY(SLOT_TITLECARD_SECONDWORD, TitleCard)->position.x < offset)
         this->position.x -= TO_FIXED(16);
 }
 
-void TitleCard::State_SecondWord_Exit(void) { this->position.x -= TO_FIXED(16); }
+void TitleCard::State_SecondWord_Exit(void)
+{
+    SET_CURRENT_STATE();
+    this->position.x -= TO_FIXED(16);
+}
 
 void TitleCard::State_Zone_Exit(void)
 {
+    SET_CURRENT_STATE();
+
     this->position.x += TO_FIXED(8);
     if (this->position.x > TO_FIXED(screenInfo->size.x + 64)) {
         // I have to do this instead of just loading because v5's LoadPalette function sucks
@@ -273,18 +301,22 @@ void TitleCard::State_Zone_Exit(void)
         foreach_active(Player, player) player->controlMode = Player::CONTROLMODE_PLAYER1;
 
         for (int32 e = SLOT_TITLECARD; e < SLOT_TITLECARD_ACTBALL; e++) RSDK_GET_ENTITY(e, TitleCard)->Destroy();
-        // GameObject::Reset(SLOT_HUD, HUD::sVars->classID, NULL);
+        GameObject::Reset(SLOT_HUD, HUD::sVars->classID, INT_TO_VOID(1));
     }
 }
 
 void TitleCard::State_ActBall_Exit(void)
 {
+    SET_CURRENT_STATE();
+
     this->rotation = (this->rotation + 32) & 511;
     this->position.x += 524288;
 }
 
 void TitleCard::Draw_Greyscale_BG(void)
 {
+    SET_CURRENT_STATE();
+
     Graphics::DrawRect(0, 0, screenInfo->size.x, screenInfo->size.y, 0x000000, 0xFF, INK_TINT, true);
     if (this->timer)
         Graphics::FillScreen(0x000000, this->timer, this->timer, this->timer);
@@ -292,6 +324,8 @@ void TitleCard::Draw_Greyscale_BG(void)
 
 void TitleCard::Draw_Colour_Circle(void)
 {
+    SET_CURRENT_STATE();
+
     int32 scaleTemp0 = (128 * this->scale.x) >> 9;
     int32 scaleTemp5 = (256 * this->scale.x) >> 9;
     int32 scaleTemp1 = screenInfo->center.x - scaleTemp0;
@@ -312,6 +346,8 @@ void TitleCard::Draw_Colour_Circle(void)
 
 void TitleCard::Draw_Word(void)
 {
+    SET_CURRENT_STATE();
+
     RSDK::Vector2 pos = this->position;
     RSDK::String *word;
     if (this->type == TITLECARD_FIRSTWORD)
@@ -342,6 +378,8 @@ void TitleCard::Draw_Word(void)
 
 void TitleCard::Draw_VertText(void)
 {
+    SET_CURRENT_STATE();
+
     RSDK::Vector2 pos = this->position;
 
     this->animator.animationID = 0;

@@ -49,6 +49,7 @@ void Camera::Create(void *data)
 
         this->active  = ACTIVE_NORMAL;
         this->enabled = true;
+        this->style   = CAMERASTYLE_CDSTYLE;
 
         this->scrollA.x = (this->target->position.x >> 16) - screenInfo[screen].center.x;
         this->scrollB.x = (this->target->position.x >> 16) - screenInfo[screen].center.x + screenInfo[screen].size.x;
@@ -67,8 +68,8 @@ void Camera::StageLoad(void)
     RSDK::Vector2 layerSize;
     fgLayer.Size(&layerSize, true);
 
-    sVars->boundary2.x  = layerSize.x << 7;
-    sVars->boundary2.y  = layerSize.y << 7;
+    sVars->boundary2.x  = layerSize.x;
+    sVars->boundary2.y  = layerSize.y;
     sVars->waterLevel   = sVars->boundary2.y + 128;
     sVars->newBoundary2 = sVars->boundary2;
 }
@@ -334,7 +335,7 @@ void Camera::SetPlayerScreenPositionCDStyle(Player *player)
         }
     }
 
-    if (!player->gravity) {
+    if (player->onGround) {
         if (player->direction) {
             if (player->animator.animationID == Player::ANI_PEELOUT || player->animator.animationID == Player::ANI_SPINDASH
                 || player->groundVel < -0x5F5C2) {

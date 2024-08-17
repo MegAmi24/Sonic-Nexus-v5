@@ -19,7 +19,8 @@ void Player::Update(void)
             ProcessPlayerControl(this);
             Main();
 
-            // Small extra added in this port: accessing unused debug mode if enabled through dev menu
+            // Small extra added in this port: accessing the unused debug mode if enabled through dev menu
+            // Note that only the code to ENTER debug mode is specific to this port; the exiting code below is in the original v2
             ControllerState *controller = &controllerInfo[this->Slot() + 1];
             if (sceneInfo->debugMode && controller->keyB.press) {
                 this->tileCollisions = false;
@@ -29,9 +30,11 @@ void Player::Update(void)
             }
             else {
                 this->state.Run(this);
-                ProcessPlayerAnimation(this);
+                if (this->classID == sVars->classID) {
+                    ProcessPlayerAnimation(this);
 
-                this->HandleMovement();
+                    this->HandleMovement();
+                }
             }
             break;
         }
@@ -61,11 +64,6 @@ void Player::Update(void)
 
 void Player::LateUpdate(void)
 {
-    ControllerState *controller = &controllerInfo[this->Slot() + 1];
-    if (sceneInfo->state == ENGINESTATE_REGULAR && sVars->pauseEnabled && controller->keyStart.press) {
-        Stage::SetEngineState(ENGINESTATE_FROZEN);
-        Music::Pause();
-    }
     if (this->animator.animationID != this->animator.prevAnimationID && this->animator.animationID != this->animCheck) {
         if (this->animator.animationID == ANI_JUMPING)
             this->position.y += (this->normalbox->bottom - this->jumpbox->bottom) << 16;
@@ -80,10 +78,10 @@ void Player::StaticUpdate(void)
     if (sVars->frameAdvance)
         Stage::SetEngineState(ENGINESTATE_FROZEN);
 
+    ControllerState *controller = &controllerInfo[Input::CONT_ANY];
     if (sceneInfo->state == ENGINESTATE_FROZEN) {
         sVars->frameAdvance = false;
 
-        ControllerState *controller = &controllerInfo[Input::CONT_ANY];
         if (controller->keyStart.press) {
             Stage::SetEngineState(ENGINESTATE_REGULAR);
             Music::Resume();
@@ -92,6 +90,11 @@ void Player::StaticUpdate(void)
             sVars->frameAdvance = true;
             Stage::SetEngineState(ENGINESTATE_REGULAR);
         }
+    }
+    else if (sVars->pauseEnabled && controller->keyStart.press) {
+        Stage::SetEngineState(ENGINESTATE_FROZEN);
+        Music::Pause();
+        sVars->frameAdvance = false;
     }
 }
 
@@ -150,7 +153,8 @@ void Player::Create(void *data)
         this->jumpbox      = this->animator.GetHitbox(0);
 
         this->animator.SetAnimation(this->aniFrames, ANI_STOPPED, true, 0);
-        this->animCheck = ANI_STOPPED;
+        this->animCheck     = ANI_STOPPED;
+        this->ringExtraLife = 99;
     }
 }
 
@@ -182,7 +186,7 @@ void Player::StageLoad(void)
     sVars->jumpPressBuffer = false;
     sVars->jumpHoldBuffer  = false;
 
-    sVars->pauseEnabled = true;
+    sVars->pauseEnabled = false;
 }
 
 // Extra Entity Functions
@@ -621,10 +625,11 @@ void Player::State_Normal_Ground_Movement(void)
 
         if (!this->groundVel) {
             if (this->timer < 240) {
-                this->animator.SetAnimation(this->aniFrames, ANI_STOPPED, false, 0);
+                if (this->flailing[1])
+                    this->animator.SetAnimation(this->aniFrames, ANI_STOPPED, false, 0);
                 this->timer++;
             }
-            else
+            else if (this->flailing[1])
                 this->animator.SetAnimation(this->aniFrames, ANI_WAITING, false, 0);
 
             if (!this->flailing[1]) {
@@ -1009,8 +1014,21 @@ void Player::State_Dying(void)
 
         sceneInfo->timeEnabled = false;
 
-        // GameObject::Reset(this->Slot(), DeathEvent::sVars->classID, false);
-        Stage::LoadScene();
+        int32 deathType;
+        if (!globals->lives) {
+            deathType = DeathEvent::DEATHEVENT_GAMEOVER;
+            Music::Play(Music::TRACK_GAMEOVER);
+            Player::sVars->pauseEnabled = false;
+        }
+        else if (sceneInfo->minutes == 9 && sceneInfo->seconds == 59) {
+            deathType = DeathEvent::DEATHEVENT_TIMEOVER;
+            Music::Play(Music::TRACK_GAMEOVER);
+            Player::sVars->pauseEnabled = false;
+        }
+        else
+            deathType = DeathEvent::DEATHEVENT_FADETOBLACK;
+
+        GameObject::Reset(this->Slot(), DeathEvent::sVars->classID, deathType);
     }
 }
 

@@ -55,6 +55,18 @@
     <ClCompile Include="Objects\NexusGlobals\TitleCard.cpp">
       <Filter>Source Files\Objects\NexusGlobals</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\NexusGlobals\StageSetup.cpp">
+      <Filter>Source Files\Objects\NexusGlobals</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\NexusGlobals\HUD.cpp">
+      <Filter>Source Files\Objects\NexusGlobals</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\SSZ\RotatePalette.cpp">
+      <Filter>Source Files\Objects\SSZ</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\NexusGlobals\DeathEvent.cpp">
+      <Filter>Source Files\Objects\NexusGlobals</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SonicNexus.hpp">
@@ -91,6 +103,18 @@
       <Filter>Source Files\Objects\NexusGlobals</Filter>
     </ClInclude>
     <ClInclude Include="Objects\NexusGlobals\TitleCard.hpp">
+      <Filter>Source Files\Objects\NexusGlobals</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\NexusGlobals\StageSetup.hpp">
+      <Filter>Source Files\Objects\NexusGlobals</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\NexusGlobals\HUD.hpp">
+      <Filter>Source Files\Objects\NexusGlobals</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\SSZ\RotatePalette.hpp">
+      <Filter>Source Files\Objects\SSZ</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\NexusGlobals\DeathEvent.hpp">
       <Filter>Source Files\Objects\NexusGlobals</Filter>
     </ClInclude>
   </ItemGroup>

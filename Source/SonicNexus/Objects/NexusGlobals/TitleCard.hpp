@@ -22,12 +22,6 @@ struct TitleCard : RSDK::GameObject::Entity {
         TITLECARD_VERTTEXT2,
     };
 
-    enum ActDrawModes {
-        DRAWMODE_NONE,
-        DRAWMODE_WORD1,
-        DRAWMODE_WORD2,
-    };
-
     // ==============================
     // STRUCTS
     // ==============================
@@ -39,6 +33,7 @@ struct TitleCard : RSDK::GameObject::Entity {
     struct Static : RSDK::GameObject::Static {
         RSDK::SpriteAnimation aniFrames;
         uint16 tintLookupTable[0x10000];
+        uint8 actID;
     };
 
     // ==============================

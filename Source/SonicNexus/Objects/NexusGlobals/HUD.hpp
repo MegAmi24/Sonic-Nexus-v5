@@ -5,46 +5,37 @@
 namespace GameLogic
 {
 
-struct Music : RSDK::GameObject::Entity {
+struct HUD : RSDK::GameObject::Entity {
 
     // ==============================
     // ENUMS
     // ==============================
 
-    enum MusicTracks {
-        TRACK_NONE = -1,
-        TRACK_STAGE,
-        TRACK_LEVELCOMPLETE,
-        TRACK_INVINCIBILITY,
-        TRACK_SPEEDSHOES,
-        TRACK_SUPER, // Just a guess
-        TRACK_BOSS,
-        TRACK_1UP,
-        TRACK_GAMEOVER,
-    };
-
     // ==============================
     // STRUCTS
     // ==============================
-
-    struct TrackInfo {
-        char fileName[0x40];
-        uint32 trackLoop; // RSDKv2 doesn't support specifying a loop point, but that kinda sucks
-    };
 
     // ==============================
     // STATIC VARS
     // ==============================
 
     struct Static : RSDK::GameObject::Static {
-        TrackInfo musicTracks[CHANNEL_COUNT];
-        int32 currentTrack;
-        float volume;
+        RSDK::SpriteAnimation aniFrames;
     };
 
     // ==============================
     // INSTANCE VARS
     // ==============================
+    RSDK::StateMachine<HUD> state;
+    RSDK::Vector2 scorePos;
+    RSDK::Vector2 timePos;
+    RSDK::Vector2 ringPos;
+    RSDK::Vector2 lifePos;
+    int32 flashingTimer;
+    Player *parent;
+    RSDK::Animator textAnim;
+    RSDK::Animator numbersAnim;
+    RSDK::Animator lifeAnim;
 
     // ==============================
     // EVENTS
@@ -71,18 +62,15 @@ struct Music : RSDK::GameObject::Entity {
     // FUNCTIONS
     // ==============================
 
-    static void SetTrack(const char *path, uint8 track, uint32 loopPoint);
-    static void Play(int32 track);
-    static void Stop(void);
-    static void Pause(void);
-    static void Resume(void);
-    static bool32 CurrentTrack(int32 track);
-    static void SetVolume(float volume);
+    void State_Normal(void);
+    void State_Enter(void);
+
+    static void DrawNumbers(RSDK::Animator *animator, RSDK::Vector2 drawPos, int32 value, uint8 digitCount, bool32 allDigits);
 
     // ==============================
     // DECLARATION
     // ==============================
 
-    RSDK_DECLARE(Music);
+    RSDK_DECLARE(HUD);
 };
 } // namespace GameLogic

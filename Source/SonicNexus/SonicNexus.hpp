@@ -24,6 +24,7 @@ enum ReservedEntities {
     SLOT_PLAYER1              = 0,
     SLOT_CAMERA1              = 1,
     SLOT_POWERUP1             = 2,
+    SLOT_STAGESETUP           = 23,
     SLOT_TITLECARD            = 24,
     SLOT_TITLECARD_VERTTEXT1  = 25,
     SLOT_TITLECARD_VERTTEXT2  = 26,
@@ -63,6 +64,9 @@ struct GlobalVariables {
 
     int32 score;
     int32 lives;
+    int32 recMilliseconds;
+    int32 recSeconds;
+    int32 recMinutes;
 };
 
 // Game Helpers

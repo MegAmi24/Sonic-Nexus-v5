@@ -71,6 +71,8 @@ void Ring::StageLoad(void)
 
 void Ring::State_Normal(void)
 {
+    SET_CURRENT_STATE();
+
     foreach_active(Player, player)
     {
         if (!player->state.Matches(&Player::State_Hurt_Recoil) && this->CheckCollisionTouchBox(&sVars->hitbox, player, player->outerbox)) {
@@ -108,6 +110,8 @@ void Ring::State_Normal(void)
 
 void Ring::State_Lose(void)
 {
+    SET_CURRENT_STATE();
+
     this->velocity.y += 6144;
 
     this->position.x += this->velocity.x;
@@ -167,6 +171,8 @@ void Ring::State_Lose(void)
 
 void Ring::State_Sparkle(void)
 {
+    SET_CURRENT_STATE();
+
     this->animator.Process();
     if (this->animator.animationID == 4)
         this->Destroy();

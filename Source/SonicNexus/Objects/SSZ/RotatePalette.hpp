@@ -5,23 +5,11 @@
 namespace GameLogic
 {
 
-struct Music : RSDK::GameObject::Entity {
+struct RotatePalette : RSDK::GameObject::Entity {
 
     // ==============================
     // ENUMS
     // ==============================
-
-    enum MusicTracks {
-        TRACK_NONE = -1,
-        TRACK_STAGE,
-        TRACK_LEVELCOMPLETE,
-        TRACK_INVINCIBILITY,
-        TRACK_SPEEDSHOES,
-        TRACK_SUPER, // Just a guess
-        TRACK_BOSS,
-        TRACK_1UP,
-        TRACK_GAMEOVER,
-    };
 
     // ==============================
     // STRUCTS
@@ -37,14 +25,14 @@ struct Music : RSDK::GameObject::Entity {
     // ==============================
 
     struct Static : RSDK::GameObject::Static {
-        TrackInfo musicTracks[CHANNEL_COUNT];
-        int32 currentTrack;
-        float volume;
+        RSDK::SpriteAnimation aniFrames;
+        int32 timer;
     };
 
     // ==============================
     // INSTANCE VARS
     // ==============================
+    RSDK::Animator animator;
 
     // ==============================
     // EVENTS
@@ -71,18 +59,10 @@ struct Music : RSDK::GameObject::Entity {
     // FUNCTIONS
     // ==============================
 
-    static void SetTrack(const char *path, uint8 track, uint32 loopPoint);
-    static void Play(int32 track);
-    static void Stop(void);
-    static void Pause(void);
-    static void Resume(void);
-    static bool32 CurrentTrack(int32 track);
-    static void SetVolume(float volume);
-
     // ==============================
     // DECLARATION
     // ==============================
 
-    RSDK_DECLARE(Music);
+    RSDK_DECLARE(RotatePalette);
 };
 } // namespace GameLogic
