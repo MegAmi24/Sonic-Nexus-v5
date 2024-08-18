@@ -67,6 +67,7 @@ struct GlobalVariables {
     int32 recMilliseconds;
     int32 recSeconds;
     int32 recMinutes;
+    int32 starPost;
 };
 
 // Game Helpers

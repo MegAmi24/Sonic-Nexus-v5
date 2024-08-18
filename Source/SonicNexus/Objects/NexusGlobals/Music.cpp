@@ -28,7 +28,7 @@ void Music::StageLoad(void)
     Music::SetTrack("Nexus/Boss.ogg", TRACK_BOSS, false);
     Music::SetTrack("Nexus/OneUp.ogg", TRACK_1UP, false);
     Music::SetTrack("Nexus/GameOver.ogg", TRACK_GAMEOVER, false);
-    sVars->volume = 1.0;
+    sVars->volume = 1.0f;
 }
 
 void Music::SetTrack(const char *filePath, uint8 trackID, uint32 loop)
@@ -42,8 +42,9 @@ void Music::Play(int32 track)
 {
     Stop();
     sVars->currentTrack = track;
-    channels[sVars->currentTrack].PlayStream(sVars->musicTracks[sVars->currentTrack].fileName, 0, sVars->musicTracks[sVars->currentTrack].trackLoop,
-                                             true);
+    TrackInfo *song     = &sVars->musicTracks[sVars->currentTrack];
+    channels[sVars->currentTrack].PlayStream(song->fileName, 0, song->trackLoop, true);
+    sVars->volume = 1.0f;
 }
 
 void Music::Stop() { channels[sVars->currentTrack].Stop(); }
@@ -52,12 +53,12 @@ void Music::Pause() { channels[sVars->currentTrack].Pause(); }
 
 void Music::Resume() { channels[sVars->currentTrack].Resume(); }
 
-bool32 Music::CurrentTrack(int32 track) { return sVars->currentTrack == track; }
+int32 Music::CurrentTrack(void) { return sVars->currentTrack; }
 
 void Music::SetVolume(float volume)
 {
     sVars->volume = CLAMP(volume, 0.0f, 1.0f);
-    channels[sVars->currentTrack].SetAttributes(sVars->volume, 0.0, 1.0);
+    channels[sVars->currentTrack].SetAttributes(sVars->volume, 0.0f, 1.0f);
 }
 
 #if GAME_INCLUDE_EDITOR

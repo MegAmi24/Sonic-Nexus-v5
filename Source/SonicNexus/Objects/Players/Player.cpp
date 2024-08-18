@@ -33,7 +33,7 @@ void Player::Update(void)
                 if (this->classID == sVars->classID) {
                     ProcessPlayerAnimation(this);
 
-                    this->HandleMovement();
+                    HandleMovement();
                 }
             }
             break;
@@ -43,7 +43,7 @@ void Player::Update(void)
             ProcessPlayerAnimation(this);
             Main();
 
-            this->HandleMovement();
+            HandleMovement();
             break;
         }
         case PLAYERMODE_DEBUG: {
@@ -64,6 +64,29 @@ void Player::Update(void)
 
 void Player::LateUpdate(void)
 {
+    if (this->propertyValue != PLAYERMODE_DEBUG) {
+        if (!this->state.Matches(&Player::State_Normal_Ground_Movement))
+            this->pushing = 0;
+        else {
+            if (!this->groundVel) {
+                if (this->left || this->right)
+                    ++this->pushing;
+                else
+                    this->pushing = 0;
+            }
+            else if (!this->left && !this->right)
+                this->pushing = 0;
+            else if (abs(this->groundVel) > 0x10000)
+                this->pushing = 0;
+
+            if (this->collisionMode != CMODE_FLOOR)
+                this->pushing = 0;
+        }
+
+        if (this->onGround)
+            this->rotation = this->angle;
+    }
+
     if (this->animator.animationID != this->animator.prevAnimationID && this->animator.animationID != this->animCheck) {
         if (this->animator.animationID == ANI_JUMPING)
             this->position.y += (this->normalbox->bottom - this->jumpbox->bottom) << 16;
@@ -136,11 +159,7 @@ void Player::Create(void *data)
         this->drawGroup      = 4;
         SetMovementStats(&this->stats);
 
-        RSDK::SceneLayer fgLow;
-        fgLow.Get("FG Low");
-        RSDK::SceneLayer fgHigh;
-        fgHigh.Get("FG High");
-        this->collisionLayers = (1 << fgLow.id) | (1 << fgHigh.id);
+        this->collisionLayers = StageSetup::sVars->collisionLayers;
 
         // v2 stores these in the animation files??????? wtf???????
         this->animator.SetAnimation(this->aniFrames, ANI_WALKING, true, 0);
@@ -563,12 +582,11 @@ void Player::ProcessPlayerAnimation(Player *player)
 void Player::Main(void)
 {
     if (this->speedShoes) {
-        this->speedShoes--;
-        if (!this->speedShoes) {
+        if (--this->speedShoes == 0) {
             this->stats.acceleration >>= 1;
             this->stats.airAcceleration >>= 1;
             this->stats.topSpeed >>= 1;
-            if (Music::CurrentTrack(Music::TRACK_SPEEDSHOES))
+            if (Music::CurrentTrack() == Music::TRACK_SPEEDSHOES)
                 Music::Play(Music::TRACK_STAGE);
         }
     }
@@ -580,8 +598,7 @@ void Player::Main(void)
         }
 
         if (this->flashing) {
-            this->flashing++;
-            if (this->flashing > 8)
+            if (++this->flashing > 8)
                 this->flashing = 1;
             this->visible = this->flashing <= 4;
         }
@@ -589,14 +606,16 @@ void Player::Main(void)
         if (--this->invincibility == 0) {
             this->flashing = false;
             this->visible  = true;
-            if (Music::CurrentTrack(Music::TRACK_INVINCIBILITY))
+            if (Music::CurrentTrack() == Music::TRACK_INVINCIBILITY)
                 Music::Play(Music::TRACK_STAGE);
             Entity *powerUp = RSDK_GET_ENTITY_GEN(this->Slot() + 2);
             if (powerUp->classID == Invincibility::sVars->classID) {
-                BlueShield *shield = RSDK_GET_ENTITY(this->Slot() + 2, BlueShield);
-                switch (shield->propertyValue) {
-                    case SHIELD_NONE: shield->Destroy(); break;
-                    case SHIELD_BLUE: GameObject::Reset(shield->Slot(), BlueShield::sVars->classID, this->Slot()); break;
+                switch (this->shield) {
+                    case SHIELD_NONE: powerUp->Destroy(); break;
+                    case SHIELD_BLUE:
+                        if (GameObject::Find("BlueShield"))
+                            GameObject::Reset(powerUp->Slot(), BlueShield::sVars->classID, this->Slot());
+                        break;
                 }
             }
         }
@@ -625,14 +644,14 @@ void Player::State_Normal_Ground_Movement(void)
 
         if (!this->groundVel) {
             if (this->timer < 240) {
-                if (this->flailing[1])
+                if (this->flailing[1] && this->pushing < 2)
                     this->animator.SetAnimation(this->aniFrames, ANI_STOPPED, false, 0);
                 this->timer++;
             }
-            else if (this->flailing[1])
+            else if (this->flailing[1] && this->pushing < 2)
                 this->animator.SetAnimation(this->aniFrames, ANI_WAITING, false, 0);
 
-            if (!this->flailing[1]) {
+            if (!this->flailing[1] && this->pushing < 2) {
                 if (!this->flailing[2]) {
                     if (this->direction == FLIP_X)
                         this->animator.SetAnimation(this->aniFrames, ANI_FLAILINGLEFT, false, 0);
@@ -650,22 +669,25 @@ void Player::State_Normal_Ground_Movement(void)
         }
         else {
             this->timer = 0;
-            if (abs(this->groundVel) < 390594)
-                this->animator.SetAnimation(this->aniFrames, ANI_WALKING, false, 0);
-            else if (abs(this->groundVel) > 655359)
-                this->animator.SetAnimation(this->aniFrames, ANI_PEELOUT, false, 0);
-            else
-                this->animator.SetAnimation(this->aniFrames, ANI_RUNNING, false, 0);
+            if (this->pushing < 2) {
+                if (abs(this->groundVel) < 390594)
+                    this->animator.SetAnimation(this->aniFrames, ANI_WALKING, false, 0);
+                else if (abs(this->groundVel) > 655359)
+                    this->animator.SetAnimation(this->aniFrames, ANI_PEELOUT, false, 0);
+                else
+                    this->animator.SetAnimation(this->aniFrames, ANI_RUNNING, false, 0);
+            }
         }
 
         if (this->skidding) {
             if (this->skidding == 16)
                 sVars->sfxSkidding.Play();
-            this->animator.SetAnimation(this->aniFrames, ANI_SKIDDING, false, 0);
+            if (this->pushing < 2)
+                this->animator.SetAnimation(this->aniFrames, ANI_SKIDDING, false, 0);
             this->skidding--;
         }
 
-        if (this->pushing == 2)
+        if (this->pushing >= 2)
             this->animator.SetAnimation(this->aniFrames, ANI_PUSHING, false, 0);
 
         if (this->jumpPress) {
@@ -879,9 +901,9 @@ void Player::State_Getting_Hurt(void)
 
     uint8 hurtType = HURT_NONE;
 
-    if (GameObject::Find("BlueShield") && false) {
+    if (this->shield) {
         hurtType = HURT_HASSHIELD;
-        // shield->Destroy();
+        RSDK_GET_ENTITY_GEN(SLOT_POWERUP1)->Destroy();
         sVars->sfxHurt.Play();
     }
     else if (!this->rings) {
@@ -898,6 +920,7 @@ void Player::State_Getting_Hurt(void)
             // Ouch!
             this->state.Set(&Player::State_Hurt_Recoil);
             this->animator.SetAnimation(this->aniFrames, ANI_HURT, false, 0);
+            this->velocity.x  = this->groundVel;
             this->velocity.y  = -262144;
             this->onGround    = false;
             this->trackScroll = true;
@@ -914,6 +937,7 @@ void Player::State_Getting_Hurt(void)
             // Ouch!
             this->state.Set(&Player::State_Hurt_Recoil);
             this->animator.SetAnimation(this->aniFrames, ANI_HURT, false, 0);
+            this->velocity.x  = this->groundVel;
             this->velocity.y  = -262144;
             this->onGround    = false;
             this->trackScroll = true;
@@ -944,7 +968,7 @@ void Player::State_Getting_Hurt(void)
                 angle -= 16;
 
             for (int32 r = 0; r < ringPool2; r++) {
-                Ring *ring       = CREATE_ENTITY(Ring, INT_TO_VOID(Ring::RING_LOSE), this->position.x, this->position.y);
+                Ring *ring       = CREATE_ENTITY(Ring, Ring::RING_LOSE, this->position.x, this->position.y);
                 ring->velocity.x = Math::Cos256(angle) << 8;
                 ring->velocity.y = Math::Sin256(angle) << 8;
 
@@ -960,7 +984,7 @@ void Player::State_Getting_Hurt(void)
                 angle -= 16;
 
             for (int32 r = 0; r < ringPool1; r++) {
-                Ring *ring       = CREATE_ENTITY(Ring, INT_TO_VOID(Ring::RING_LOSE), this->position.x, this->position.y);
+                Ring *ring       = CREATE_ENTITY(Ring, Ring::RING_LOSE, this->position.x, this->position.y);
                 ring->velocity.x = Math::Cos256(angle) << 9;
                 ring->velocity.y = Math::Sin256(angle) << 9;
 
@@ -1130,6 +1154,57 @@ void Player::State_Tube_Rolling(void)
         DefaultRollingMovement(this);
         DefaultGravityFalse(this);
     }
+}
+
+void Player::HandleMovement(void)
+{
+    this->outerbox = this->animator.GetHitbox(0);
+    this->innerbox = this->animator.GetHitbox(1);
+
+    if (!this->state.Matches(&Player::State_Dying))
+        this->ProcessMovement(this->outerbox, this->innerbox);
+
+    if (this->onGround) {
+        RSDK::Vector2 posStore = this->position;
+
+        this->flailing[0] = this->TileGrip(this->collisionLayers, RSDK::CMODE_FLOOR, this->collisionPlane, TO_FIXED(this->normalbox->left - 5),
+                                           TO_FIXED(this->normalbox->bottom), 10);
+        this->flailing[1] = this->TileGrip(this->collisionLayers, RSDK::CMODE_FLOOR, this->collisionPlane, 0, TO_FIXED(this->normalbox->bottom), 10);
+        this->flailing[2] = this->TileGrip(this->collisionLayers, RSDK::CMODE_FLOOR, this->collisionPlane, TO_FIXED(this->normalbox->right + 5),
+                                           TO_FIXED(this->normalbox->bottom), 10);
+
+        this->position = posStore;
+    }
+    else {
+        this->flailing[0] = false;
+        this->flailing[1] = false;
+        this->flailing[2] = false;
+    }
+}
+
+uint8 Player::BoxCollision(Entity *thisEntity, RSDK::Hitbox *thisHitbox, Player *player)
+{
+    uint8 boxCol = thisEntity->CheckCollisionBox(thisHitbox, player, player->outerbox);
+
+    if (boxCol == C_TOP && player->onGround) {
+        RSDK::Hitbox sensor;
+        sensor.top    = player->normalbox->bottom - 1;
+        sensor.bottom = player->normalbox->bottom + 1;
+
+        sensor.left  = player->normalbox->left;
+        sensor.right = sensor.left + 1;
+        player->flailing[0] |= thisEntity->CheckCollisionTouchBox(thisHitbox, player, &sensor);
+
+        sensor.left  = -1;
+        sensor.right = 1;
+        player->flailing[1] |= thisEntity->CheckCollisionTouchBox(thisHitbox, player, &sensor);
+
+        sensor.right = player->normalbox->right;
+        sensor.left  = sensor.right - 1;
+        player->flailing[2] |= thisEntity->CheckCollisionTouchBox(thisHitbox, player, &sensor);
+    }
+
+    return boxCol;
 }
 
 #if GAME_INCLUDE_EDITOR

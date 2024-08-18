@@ -81,7 +81,7 @@ struct TitleCard : RSDK::GameObject::Entity {
     void State_ActBall(void);
     void State_VertText_Down(void);
     void State_VertText_Up(void);
-    void State_Colour_Circle(void);
+    void State_ColourCircle(void);
     void State_SideBar_Exit(void);
     void State_FirstWord_Exit(void);
     void State_SecondWord_Exit(void);
@@ -89,7 +89,7 @@ struct TitleCard : RSDK::GameObject::Entity {
     void State_ActBall_Exit(void);
 
     void Draw_Greyscale_BG(void);
-    void Draw_Colour_Circle(void);
+    void Draw_ColourCircle(void);
     void Draw_Word(void);
     void Draw_VertText(void);
 

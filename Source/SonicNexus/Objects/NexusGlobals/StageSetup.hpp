@@ -22,6 +22,7 @@ struct StageSetup : RSDK::GameObject::Entity {
     struct Static : RSDK::GameObject::Static {
         RSDK::SpriteAnimation aniFrames; // For the editor
         int32 oscillation;
+        uint8 collisionLayers;
     };
 
     // ==============================

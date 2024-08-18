@@ -2,8 +2,10 @@
 
 struct Camera;
 struct DeathEvent;
+struct Explosion;
 struct HUD;
 struct Invincibility;
+struct Monitor;
 struct Music;
 struct Ring;
 struct StageSetup;
@@ -15,8 +17,10 @@ struct RotatePalette;
 #include "SonicNexus.hpp"
 #include "NexusGlobals\Camera.hpp"
 #include "NexusGlobals\DeathEvent.hpp"
+#include "NexusGlobals\Explosion.hpp"
 #include "NexusGlobals\HUD.hpp"
 #include "NexusGlobals\Invincibility.hpp"
+#include "NexusGlobals\Monitor.hpp"
 #include "NexusGlobals\Music.hpp"
 #include "NexusGlobals\Ring.hpp"
 #include "NexusGlobals\StageSetup.hpp"

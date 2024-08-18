@@ -29,8 +29,8 @@ void HUD::Draw(void)
     this->textAnim.DrawSprite(&this->ringPos, true);
 
     // Draw Seconds Markings
-    this->textAnim.frameID   = 5;
-    RSDK::Vector2 pos = this->timePos;
+    this->textAnim.frameID = 5;
+    RSDK::Vector2 pos      = this->timePos;
     pos.x += TO_FIXED(50);
     this->textAnim.DrawSprite(&pos, true);
 
@@ -72,7 +72,7 @@ void HUD::Create(void *data)
     this->visible = true;
 
     if (!sceneInfo->inEditor) {
-        this->active = ACTIVE_NORMAL;
+        this->active    = ACTIVE_NORMAL;
         this->drawGroup = 6;
 
         if (data) {

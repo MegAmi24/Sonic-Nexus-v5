@@ -85,7 +85,7 @@ void DeathEvent::State_GameOver(void)
     else {
         if (this->type == DEATHEVENT_GAMEOVER)
             Stage::SetScene("Presentation Stages", "Intro Screen");
-        else if (this->type == DEATHEVENT_TIMEOVER) {
+        if (this->type == DEATHEVENT_TIMEOVER) {
             globals->recMilliseconds = 0;
             globals->recSeconds      = 0;
             globals->recMinutes      = 0;

@@ -14,12 +14,7 @@ RSDK_REGISTER_OBJECT(Ring);
 
 void Ring::Update(void) { this->state.Run(this); }
 void Ring::LateUpdate(void) {}
-
-void Ring::StaticUpdate(void)
-{
-    if (sceneInfo->state == ENGINESTATE_REGULAR)
-        sVars->ringAnim.Process();
-}
+void Ring::StaticUpdate(void) { sVars->ringAnim.Process(); }
 
 void Ring::Draw(void)
 {
@@ -45,7 +40,7 @@ void Ring::Create(void *data)
             case RING_NORMAL: this->state.Set(&Ring::State_Normal); break;
             case RING_LOSE:
                 this->state.Set(&Ring::State_Lose);
-                this->collisionLayers = RSDK_GET_ENTITY_GEN(SLOT_PLAYER1)->collisionLayers;
+                this->collisionLayers = StageSetup::sVars->collisionLayers;
                 break;
             case RING_SPARKLE:
                 this->state.Set(&Ring::State_Sparkle);
@@ -60,7 +55,7 @@ void Ring::StageLoad(void)
 {
     sVars->aniFrames.Load("NexusGlobals/Ring.bin", SCOPE_STAGE);
     sVars->ringAnim.SetAnimation(&sVars->aniFrames, 0, true, 0);
-    
+
     sVars->hitbox.left   = -8;
     sVars->hitbox.top    = -8;
     sVars->hitbox.right  = 8;
@@ -140,7 +135,7 @@ void Ring::State_Lose(void)
             this->drawGroup = 4;
             this->animator.SetAnimation(sVars->aniFrames, 1, true, 0);
             this->state.Set(&Ring::State_Sparkle);
-            this->velocity  = { 0, 0 };
+            this->velocity = { 0, 0 };
             player->rings++;
 
             if (player->rings > 999)

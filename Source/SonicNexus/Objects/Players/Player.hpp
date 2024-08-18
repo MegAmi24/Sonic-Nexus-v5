@@ -149,6 +149,7 @@ struct Player : RSDK::GameObject::Entity {
     RSDK::Hitbox *jumpbox;
     int32 animCheck;
     int16 jumpAnimSpeed;
+    uint8 shield;
 
     // ==============================
     // EVENTS
@@ -206,28 +207,9 @@ struct Player : RSDK::GameObject::Entity {
     void State_Corkscrew_Roll(void);
     void State_Tube_Rolling(void);
 
-    // Helper functions (custom to reduce redundancy)
-    inline void HandleMovement(void)
-    {
-        this->outerbox = this->animator.GetHitbox(0);
-        this->innerbox = this->animator.GetHitbox(1);
-
-        if (!this->state.Matches(&Player::State_Dying))
-            this->ProcessMovement(this->outerbox, this->innerbox);
-
-        RSDK::Vector2 posStore = this->position;
-
-        this->flailing[0] = this->TileGrip(this->collisionLayers, RSDK::CMODE_FLOOR, this->collisionPlane, TO_FIXED(this->normalbox->left),
-                                           TO_FIXED(this->normalbox->bottom), 10);
-        this->flailing[1] = this->TileGrip(this->collisionLayers, RSDK::CMODE_FLOOR, this->collisionPlane, 0, TO_FIXED(this->normalbox->bottom), 10);
-        this->flailing[2] = this->TileGrip(this->collisionLayers, RSDK::CMODE_FLOOR, this->collisionPlane, TO_FIXED(this->normalbox->right),
-                                           TO_FIXED(this->normalbox->bottom), 10);
-
-        this->position = posStore;
-
-        if (this->onGround)
-            this->rotation = this->angle;
-    };
+    // Helper functions
+    void HandleMovement(void);
+    static uint8 BoxCollision(Entity *thisEntity, RSDK::Hitbox *thisHitbox, Player *player);
 
     // ==============================
     // DECLARATION

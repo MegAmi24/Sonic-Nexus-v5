@@ -21,8 +21,8 @@ void StageSetup::Update(void)
 
         Player::sVars->sfxHurt.Play();
         sceneInfo->timeEnabled = false;
-        
-        Player *player1 = RSDK_GET_ENTITY(SLOT_PLAYER1, Player);
+
+        Player *player1     = RSDK_GET_ENTITY(SLOT_PLAYER1, Player);
         player1->groundVel  = 0;
         player1->velocity.y = -425984;
         player1->state.Set(&Player::State_Dying);
@@ -35,7 +35,8 @@ void StageSetup::Update(void)
 
 void StageSetup::LateUpdate(void)
 {
-    foreach_active(Player, player) {
+    foreach_active(Player, player)
+    {
         if ((TO_FIXED(player->outerbox->left) + player->position.x) < TO_FIXED(Camera::sVars->boundary1.x)) {
             player->velocity.x = 0;
             player->groundVel  = 0;
@@ -63,6 +64,12 @@ void StageSetup::StageLoad(void)
     Player::sVars->pauseEnabled = true;
     foreach_all(StageSetup, stageSetup) { stageSetup->Destroy(); }
     GameObject::Reset(SLOT_STAGESETUP, StageSetup::sVars->classID, NULL);
+
+    RSDK::SceneLayer fgLow;
+    fgLow.Get("FG Low");
+    RSDK::SceneLayer fgHigh;
+    fgHigh.Get("FG High");
+    sVars->collisionLayers = (1 << fgLow.id) | (1 << fgHigh.id);
 
     // StarPost stuff goes here
 }

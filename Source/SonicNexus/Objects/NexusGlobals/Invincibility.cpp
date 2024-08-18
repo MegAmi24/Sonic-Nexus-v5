@@ -14,26 +14,21 @@ RSDK_REGISTER_OBJECT(Invincibility);
 
 void Invincibility::Update(void) { this->state.Run(this); }
 void Invincibility::LateUpdate(void) {}
-
-void Invincibility::StaticUpdate(void)
-{
-    if (sceneInfo->state == ENGINESTATE_REGULAR)
-        sVars->animator.Process();
-}
-
+void Invincibility::StaticUpdate(void) { sVars->animator.Process(); }
 void Invincibility::Draw(void) { sVars->animator.DrawSprite(NULL, false); }
 
 void Invincibility::Create(void *data)
 {
-    this->visible   = true;
-    this->drawGroup = 4;
+    this->visible = true;
 
     if (!sceneInfo->inEditor) {
-        this->parent        = RSDK_GET_ENTITY(VOID_TO_INT(data), Player);
-        this->active        = ACTIVE_NORMAL;
-        this->position      = this->parent->position;
-        if (!data)
+        this->active    = ACTIVE_NORMAL;
+        this->drawGroup = 4;
+        if (VOID_TO_INT(data) != -1) {
+            this->parent   = RSDK_GET_ENTITY(VOID_TO_INT(data), Player);
+            this->position = this->parent->position;
             this->state.Set(&Invincibility::State_Spawner);
+        }
         else
             this->state.Set(&Invincibility::State_Child);
     }
@@ -51,7 +46,7 @@ void Invincibility::State_Spawner(void)
 
     if (++this->timer > 3) {
         this->timer = 0;
-        CREATE_ENTITY(Invincibility, INT_TO_VOID(1), this->parent->position.x, this->parent->position.y);
+        CREATE_ENTITY(Invincibility, -1, this->parent->position.x, this->parent->position.y);
     }
 
     this->position = this->parent->position;

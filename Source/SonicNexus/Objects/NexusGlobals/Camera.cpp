@@ -31,7 +31,7 @@ void Camera::LateUpdate(void)
     }
 
     ScreenInfo *screen = &screenInfo[this->target->Slot()];
-    screen->position = this->scrollA;
+    screen->position   = this->scrollA;
 }
 
 void Camera::StaticUpdate(void) {}
@@ -60,7 +60,7 @@ void Camera::Create(void *data)
 
 void Camera::StageLoad(void)
 {
-    GameObject::Reset(SLOT_CAMERA1, sVars->classID, INT_TO_VOID(SLOT_PLAYER1));
+    GameObject::Reset(SLOT_CAMERA1, sVars->classID, SLOT_PLAYER1);
 
     // Get Layer size and setup default bounds
     RSDK::SceneLayer fgLayer;

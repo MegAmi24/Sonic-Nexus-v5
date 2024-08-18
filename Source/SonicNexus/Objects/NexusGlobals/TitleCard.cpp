@@ -143,13 +143,13 @@ void TitleCard::State_FadeUp(void)
         if (this->timer == 256) {
             Music::Play(Music::TRACK_STAGE);
 
-            GameObject::Reset(SLOT_TITLECARD_VERTTEXT1, sVars->classID, INT_TO_VOID(TITLECARD_VERTTEXT1));
-            GameObject::Reset(SLOT_TITLECARD_VERTTEXT2, sVars->classID, INT_TO_VOID(TITLECARD_VERTTEXT2));
-            GameObject::Reset(SLOT_TITLECARD_SIDEBAR, sVars->classID, INT_TO_VOID(TITLECARD_SIDEBAR));
-            GameObject::Reset(SLOT_TITLECARD_FIRSTWORD, sVars->classID, INT_TO_VOID(TITLECARD_FIRSTWORD));
-            GameObject::Reset(SLOT_TITLECARD_SECONDWORD, sVars->classID, INT_TO_VOID(TITLECARD_SECONDWORD));
-            GameObject::Reset(SLOT_TITLECARD_ZONE, sVars->classID, INT_TO_VOID(TITLECARD_ZONE));
-            GameObject::Reset(SLOT_TITLECARD_ACTBALL, sVars->classID, INT_TO_VOID(TITLECARD_ACTBALL));
+            GameObject::Reset(SLOT_TITLECARD_VERTTEXT1, sVars->classID, TITLECARD_VERTTEXT1);
+            GameObject::Reset(SLOT_TITLECARD_VERTTEXT2, sVars->classID, TITLECARD_VERTTEXT2);
+            GameObject::Reset(SLOT_TITLECARD_SIDEBAR, sVars->classID, TITLECARD_SIDEBAR);
+            GameObject::Reset(SLOT_TITLECARD_FIRSTWORD, sVars->classID, TITLECARD_FIRSTWORD);
+            GameObject::Reset(SLOT_TITLECARD_SECONDWORD, sVars->classID, TITLECARD_SECONDWORD);
+            GameObject::Reset(SLOT_TITLECARD_ZONE, sVars->classID, TITLECARD_ZONE);
+            GameObject::Reset(SLOT_TITLECARD_ACTBALL, sVars->classID, TITLECARD_ACTBALL);
 
             sVars->actID = this->actID;
 
@@ -182,9 +182,11 @@ void TitleCard::State_Word(void)
     TitleCard *titleCard = RSDK_GET_ENTITY(SLOT_TITLECARD, TitleCard);
 
     int32 offset = sideBar->position.x - TO_FIXED(titleCard->offset);
-    this->position.x += TO_FIXED(16);
-    if (this->position.x > offset)
-        this->position.x = offset;
+    if (this->position.x < offset) {
+        this->position.x += TO_FIXED(16);
+        if (this->position.x > offset)
+            this->position.x = offset;
+    }
 }
 
 void TitleCard::State_Zone(void)
@@ -196,7 +198,7 @@ void TitleCard::State_Zone(void)
         this->position.x -= TO_FIXED(8);
         if (this->position.x < targetPos)
             this->position.x = targetPos;
-        this->scale.x = ((FROM_FIXED(this->position.x) - 172) << 4) + 512;
+        this->scale.x = (FROM_FIXED(this->position.x - targetPos) << 4) + 512;
         this->scale.y = this->scale.x;
     }
 }
@@ -215,8 +217,8 @@ void TitleCard::State_ActBall(void)
             this->velocity.y = -this->velocity.y / 3;
             if (++this->timer == 2) {
                 TitleCard *titleCard = RSDK_GET_ENTITY(SLOT_TITLECARD, TitleCard);
-                titleCard->state.Set(&TitleCard::State_Colour_Circle);
-                titleCard->stateDraw.Set(&TitleCard::Draw_Colour_Circle);
+                titleCard->state.Set(&TitleCard::State_ColourCircle);
+                titleCard->stateDraw.Set(&TitleCard::Draw_ColourCircle);
                 titleCard->scale     = { 0, 0 };
                 titleCard->inkEffect = INK_TINT;
             }
@@ -245,7 +247,7 @@ void TitleCard::State_VertText_Up(void)
         this->position.y += TO_FIXED(516);
 }
 
-void TitleCard::State_Colour_Circle(void)
+void TitleCard::State_ColourCircle(void)
 {
     SET_CURRENT_STATE();
 
@@ -266,8 +268,8 @@ void TitleCard::State_SideBar_Exit(void)
 {
     SET_CURRENT_STATE();
 
-    RSDK_GET_ENTITY(SLOT_TITLECARD_VERTTEXT1, TitleCard)->position.x += TO_FIXED(7);
-    RSDK_GET_ENTITY(SLOT_TITLECARD_VERTTEXT2, TitleCard)->position.x -= TO_FIXED(7);
+    RSDK_GET_ENTITY_GEN(SLOT_TITLECARD_VERTTEXT1)->position.x += TO_FIXED(7);
+    RSDK_GET_ENTITY_GEN(SLOT_TITLECARD_VERTTEXT2)->position.x -= TO_FIXED(7);
     if (this->position.y > TO_FIXED(-192))
         this->position.y -= TO_FIXED(16);
 }
@@ -277,7 +279,7 @@ void TitleCard::State_FirstWord_Exit(void)
     SET_CURRENT_STATE();
 
     int32 offset = TO_FIXED(screenInfo->center.x - RSDK_GET_ENTITY(SLOT_TITLECARD, TitleCard)->offset - 64);
-    if (RSDK_GET_ENTITY(SLOT_TITLECARD_SECONDWORD, TitleCard)->position.x < offset)
+    if (RSDK_GET_ENTITY_GEN(SLOT_TITLECARD_SECONDWORD)->position.x < offset)
         this->position.x -= TO_FIXED(16);
 }
 
@@ -300,8 +302,8 @@ void TitleCard::State_Zone_Exit(void)
 
         foreach_active(Player, player) player->controlMode = Player::CONTROLMODE_PLAYER1;
 
-        for (int32 e = SLOT_TITLECARD; e < SLOT_TITLECARD_ACTBALL; e++) RSDK_GET_ENTITY(e, TitleCard)->Destroy();
-        GameObject::Reset(SLOT_HUD, HUD::sVars->classID, INT_TO_VOID(1));
+        for (int32 e = SLOT_TITLECARD; e < SLOT_TITLECARD_ACTBALL; e++) RSDK_GET_ENTITY_GEN(e)->Destroy();
+        GameObject::Reset(SLOT_HUD, HUD::sVars->classID, 1);
     }
 }
 
@@ -322,7 +324,7 @@ void TitleCard::Draw_Greyscale_BG(void)
         Graphics::FillScreen(0x000000, this->timer, this->timer, this->timer);
 }
 
-void TitleCard::Draw_Colour_Circle(void)
+void TitleCard::Draw_ColourCircle(void)
 {
     SET_CURRENT_STATE();
 
@@ -358,7 +360,6 @@ void TitleCard::Draw_Word(void)
     if (!word || !word->length)
         return;
 
-    // this code probably sucks but fuck it we ball
     for (int32 c = 0; c < word->length; c++) {
         for (int32 f = 0; f < this->animator.frameCount; f++) {
             this->animator.frameID = f;
