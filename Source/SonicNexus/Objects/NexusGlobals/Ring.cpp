@@ -169,7 +169,7 @@ void Ring::State_Sparkle(void)
     SET_CURRENT_STATE();
 
     this->animator.Process();
-    if (this->animator.animationID == 4)
+    if (this->animator.frameID == 4)
         this->Destroy();
 }
 

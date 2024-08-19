@@ -39,7 +39,7 @@ void TitleCard::Create(void *data)
             case TITLECARD_FADEUP:
                 this->timer = 384;
                 this->state.Set(&TitleCard::State_FadeUp);
-                this->stateDraw.Set(&TitleCard::Draw_Greyscale_BG);
+                this->stateDraw.Set(&TitleCard::Draw_GreyscaleBG);
                 this->drawFX = FX_SCALE;
                 this->animator.SetAnimation(&sVars->aniFrames, 5, true, 0);
                 break;
@@ -315,7 +315,7 @@ void TitleCard::State_ActBall_Exit(void)
     this->position.x += 524288;
 }
 
-void TitleCard::Draw_Greyscale_BG(void)
+void TitleCard::Draw_GreyscaleBG(void)
 {
     SET_CURRENT_STATE();
 

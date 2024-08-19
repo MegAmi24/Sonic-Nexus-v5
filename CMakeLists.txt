@@ -12,17 +12,18 @@ set(RETRO_MOD_LOADER_VER 2 CACHE STRING "Sets the mod loader version. Defaults t
 
 option(GAME_INCLUDE_EDITOR "Whether or not to include editor functions. Defaults to true" ON)
 
-file(GLOB OBJECTS RELATIVE ${CMAKE_SOURCE_DIR} Source/SonicNexus/Objects/*/*.cpp)
+file(GLOB OBJECTS RELATIVE ${CMAKE_SOURCE_DIR} Source/${MOD_NAME}/Objects/*/*.cpp)
 
 add_library(SonicNexus SHARED
-    Source/GameAPI/CPP/GameAPI/Game.cpp
+    Source/RSDKv5-GameAPI/CPP/GameAPI/Game.cpp
     Source/${MOD_NAME}/SonicNexus.cpp
     ${OBJECTS}
 )
 
 target_include_directories(SonicNexus PRIVATE
     Source/${MOD_NAME}/
-    Source/GameAPI/CPP/
+    Source/${MOD_NAME}/Objects/
+    Source/RSDKv5-GameAPI/CPP/
 )
 
 set_target_properties(SonicNexus PROPERTIES OUTPUT_NAME ${OUTPUT_NAME})

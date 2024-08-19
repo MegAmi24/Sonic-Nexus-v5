@@ -8,7 +8,9 @@ struct Invincibility;
 struct Monitor;
 struct Music;
 struct Ring;
+struct Spring;
 struct StageSetup;
+struct StarPost;
 struct TitleCard;
 struct Player;
 struct BlueShield;
@@ -23,7 +25,9 @@ struct RotatePalette;
 #include "NexusGlobals\Monitor.hpp"
 #include "NexusGlobals\Music.hpp"
 #include "NexusGlobals\Ring.hpp"
+#include "NexusGlobals\Spring.hpp"
 #include "NexusGlobals\StageSetup.hpp"
+#include "NexusGlobals\StarPost.hpp"
 #include "NexusGlobals\TitleCard.hpp"
 #include "Players\Player.hpp"
 #include "SSZ\BlueShield.hpp"

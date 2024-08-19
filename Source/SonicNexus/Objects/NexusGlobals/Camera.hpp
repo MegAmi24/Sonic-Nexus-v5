@@ -42,6 +42,7 @@ struct Camera : RSDK::GameObject::Entity {
     // ==============================
     // INSTANCE VARS
     // ==============================
+    RSDK::Vector2 center;
     Entity *target;
     int32 style;
     int32 enabled;

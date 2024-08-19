@@ -5,21 +5,26 @@
 namespace GameLogic
 {
 
-struct TitleCard : RSDK::GameObject::Entity {
+struct Spring : RSDK::GameObject::Entity {
 
     // ==============================
     // ENUMS
     // ==============================
 
-    enum TitleCardTypes {
-        TITLECARD_FADEUP,
-        TITLECARD_SIDEBAR,
-        TITLECARD_FIRSTWORD,
-        TITLECARD_SECONDWORD,
-        TITLECARD_ZONE,
-        TITLECARD_ACTBALL,
-        TITLECARD_VERTTEXT1,
-        TITLECARD_VERTTEXT2,
+    enum SpringTypes {
+        SPRING_YELLOW,
+        SPRING_RED,
+    };
+
+    enum SpringDirections {
+        SPRING_UP,
+        SPRING_RIGHT,
+        SPRING_LEFT,
+        SPRING_DOWN,
+        SPRING_UP_RIGHT,
+        SPRING_UP_LEFT,
+        SPRING_DOWN_RIGHT,
+        SPRING_DOWN_LEFT,
     };
 
     // ==============================
@@ -32,21 +37,18 @@ struct TitleCard : RSDK::GameObject::Entity {
 
     struct Static : RSDK::GameObject::Static {
         RSDK::SpriteAnimation aniFrames;
-        uint16 tintLookupTable[0x10000];
-        uint8 actID;
+        RSDK::SoundFX sfxSpring;
     };
 
     // ==============================
     // INSTANCE VARS
     // ==============================
-    TitleCardTypes type;
+    SpringTypes type;
+    SpringDirections flipFlags;
     RSDK::Animator animator;
-    RSDK::StateMachine<TitleCard> state;
-    RSDK::StateMachine<TitleCard> stateDraw;
-    RSDK::String word1;
-    RSDK::String word2;
-    uint8 actID;
-    uint8 offset;
+    RSDK::Animator baseAnim;
+    RSDK::Hitbox boxHitbox;
+    RSDK::Hitbox touchHitbox;
     int32 timer;
 
     // ==============================
@@ -74,29 +76,10 @@ struct TitleCard : RSDK::GameObject::Entity {
     // FUNCTIONS
     // ==============================
 
-    void State_FadeUp(void);
-    void State_SideBar(void);
-    void State_Word(void);
-    void State_Zone(void);
-    void State_ActBall(void);
-    void State_VertText_Down(void);
-    void State_VertText_Up(void);
-    void State_ColourCircle(void);
-    void State_SideBar_Exit(void);
-    void State_FirstWord_Exit(void);
-    void State_SecondWord_Exit(void);
-    void State_Zone_Exit(void);
-    void State_ActBall_Exit(void);
-
-    void Draw_GreyscaleBG(void);
-    void Draw_ColourCircle(void);
-    void Draw_Word(void);
-    void Draw_VertText(void);
-
     // ==============================
     // DECLARATION
     // ==============================
 
-    RSDK_DECLARE(TitleCard);
+    RSDK_DECLARE(Spring);
 };
 } // namespace GameLogic

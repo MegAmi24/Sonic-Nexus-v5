@@ -71,7 +71,18 @@ void StageSetup::StageLoad(void)
     fgHigh.Get("FG High");
     sVars->collisionLayers = (1 << fgLow.id) | (1 << fgHigh.id);
 
-    // StarPost stuff goes here
+    if (globals->starPost > 31) {
+        StarPost *starPost = RSDK_GET_ENTITY(globals->starPost, StarPost);
+
+        foreach_all(Player, player) player->position = starPost->position;
+
+        starPost->state.Set(&StarPost::State_Flashing);
+        starPost->stateDraw.Set(&StarPost::Draw_Flashing);
+
+        sceneInfo->milliseconds = globals->recMilliseconds;
+        sceneInfo->seconds      = globals->recSeconds;
+        sceneInfo->minutes      = globals->recMinutes;
+    }
 }
 
 #if GAME_INCLUDE_EDITOR

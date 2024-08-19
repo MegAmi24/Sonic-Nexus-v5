@@ -180,7 +180,9 @@
     <ClCompile Include="Objects\NexusGlobals\Monitor.cpp" />
     <ClCompile Include="Objects\NexusGlobals\Music.cpp" />
     <ClCompile Include="Objects\NexusGlobals\Ring.cpp" />
+    <ClCompile Include="Objects\NexusGlobals\Spring.cpp" />
     <ClCompile Include="Objects\NexusGlobals\StageSetup.cpp" />
+    <ClCompile Include="Objects\NexusGlobals\StarPost.cpp" />
     <ClCompile Include="Objects\NexusGlobals\TitleCard.cpp" />
     <ClCompile Include="Objects\Players\Player.cpp" />
     <ClCompile Include="Objects\SSZ\BlueShield.cpp" />
@@ -200,7 +202,9 @@
     <ClInclude Include="Objects\NexusGlobals\Monitor.hpp" />
     <ClInclude Include="Objects\NexusGlobals\Music.hpp" />
     <ClInclude Include="Objects\NexusGlobals\Ring.hpp" />
+    <ClInclude Include="Objects\NexusGlobals\Spring.hpp" />
     <ClInclude Include="Objects\NexusGlobals\StageSetup.hpp" />
+    <ClInclude Include="Objects\NexusGlobals\StarPost.hpp" />
     <ClInclude Include="Objects\NexusGlobals\TitleCard.hpp" />
     <ClInclude Include="Objects\Players\Player.hpp" />
     <ClInclude Include="Objects\SSZ\BlueShield.hpp" />

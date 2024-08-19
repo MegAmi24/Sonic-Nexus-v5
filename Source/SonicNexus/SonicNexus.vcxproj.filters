@@ -73,6 +73,12 @@
     <ClCompile Include="Objects\NexusGlobals\Monitor.cpp">
       <Filter>Source Files\Objects\NexusGlobals</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\NexusGlobals\StarPost.cpp">
+      <Filter>Source Files\Objects\NexusGlobals</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\NexusGlobals\Spring.cpp">
+      <Filter>Source Files\Objects\NexusGlobals</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SonicNexus.hpp">
@@ -127,6 +133,12 @@
       <Filter>Source Files\Objects\NexusGlobals</Filter>
     </ClInclude>
     <ClInclude Include="Objects\NexusGlobals\Monitor.hpp">
+      <Filter>Source Files\Objects\NexusGlobals</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\NexusGlobals\StarPost.hpp">
+      <Filter>Source Files\Objects\NexusGlobals</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\NexusGlobals\Spring.hpp">
       <Filter>Source Files\Objects\NexusGlobals</Filter>
     </ClInclude>
   </ItemGroup>

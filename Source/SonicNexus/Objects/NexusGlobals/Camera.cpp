@@ -31,6 +31,8 @@ void Camera::LateUpdate(void)
     }
 
     ScreenInfo *screen = &screenInfo[this->target->Slot()];
+    this->center.x     = this->scrollA.x + screen->center.x;
+    this->center.y     = this->scrollA.y + screen->center.y;
     screen->position   = this->scrollA;
 }
 
@@ -45,7 +47,7 @@ void Camera::Create(void *data)
         this->target = RSDK_GET_ENTITY_GEN(screen);
 
         if (this->active != ACTIVE_NORMAL)
-            Graphics::AddCamera(&this->target->position, TO_FIXED(screenInfo[screen].center.x), TO_FIXED(screenInfo[screen].center.y), true);
+            Graphics::AddCamera(&this->center, TO_FIXED(screenInfo[screen].center.x), TO_FIXED(screenInfo[screen].center.y), false);
 
         this->active  = ACTIVE_NORMAL;
         this->enabled = true;
@@ -55,6 +57,9 @@ void Camera::Create(void *data)
         this->scrollB.x = (this->target->position.x >> 16) - screenInfo[screen].center.x + screenInfo[screen].size.x;
         this->scrollA.y = (this->target->position.y >> 16) - SCREEN_SCROLL_UP;
         this->scrollB.y = (this->target->position.y >> 16) - SCREEN_SCROLL_UP + screenInfo[screen].size.y;
+
+        this->center.x = this->scrollA.x + screenInfo[screen].center.x;
+        this->center.y = this->scrollA.y + screenInfo[screen].center.y;
     }
 }
 
