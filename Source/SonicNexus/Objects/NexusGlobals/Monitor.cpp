@@ -89,9 +89,9 @@ void Monitor::State_Idle(void)
                 }
             }
             else
-                Player::BoxCollision(this, &sVars->hitbox, player);
+                player->BoxCollision(this, &sVars->hitbox);
         }
-        else if (Player::BoxCollision(this, &sVars->hitbox, player) == C_BOTTOM) {
+        else if (player->BoxCollision(this, &sVars->hitbox) == C_BOTTOM) {
             this->falling    = true;
             this->velocity.y = -131072;
         }

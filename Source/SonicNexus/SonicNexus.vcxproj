@@ -172,6 +172,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\RSDKv5-GameAPI\CPP\GameAPI\Game.cpp" />
+    <ClCompile Include="Objects\NexusGlobals\ActFinish.cpp" />
     <ClCompile Include="Objects\NexusGlobals\Camera.cpp" />
     <ClCompile Include="Objects\NexusGlobals\DeathEvent.cpp" />
     <ClCompile Include="Objects\NexusGlobals\Explosion.cpp" />
@@ -179,7 +180,10 @@
     <ClCompile Include="Objects\NexusGlobals\Invincibility.cpp" />
     <ClCompile Include="Objects\NexusGlobals\Monitor.cpp" />
     <ClCompile Include="Objects\NexusGlobals\Music.cpp" />
+    <ClCompile Include="Objects\NexusGlobals\PSwitch.cpp" />
     <ClCompile Include="Objects\NexusGlobals\Ring.cpp" />
+    <ClCompile Include="Objects\NexusGlobals\SignPost.cpp" />
+    <ClCompile Include="Objects\NexusGlobals\Spikes.cpp" />
     <ClCompile Include="Objects\NexusGlobals\Spring.cpp" />
     <ClCompile Include="Objects\NexusGlobals\StageSetup.cpp" />
     <ClCompile Include="Objects\NexusGlobals\StarPost.cpp" />
@@ -194,6 +198,7 @@
     <ClInclude Include="..\RSDKv5-GameAPI\CPP\GameAPI\GameObjects.hpp" />
     <ClInclude Include="..\RSDKv5-GameAPI\CPP\GameAPI\GameVariables.hpp" />
     <ClInclude Include="Objects\All.hpp" />
+    <ClInclude Include="Objects\NexusGlobals\ActFinish.hpp" />
     <ClInclude Include="Objects\NexusGlobals\Camera.hpp" />
     <ClInclude Include="Objects\NexusGlobals\DeathEvent.hpp" />
     <ClInclude Include="Objects\NexusGlobals\Explosion.hpp" />
@@ -201,7 +206,10 @@
     <ClInclude Include="Objects\NexusGlobals\Invincibility.hpp" />
     <ClInclude Include="Objects\NexusGlobals\Monitor.hpp" />
     <ClInclude Include="Objects\NexusGlobals\Music.hpp" />
+    <ClInclude Include="Objects\NexusGlobals\PSwitch.hpp" />
     <ClInclude Include="Objects\NexusGlobals\Ring.hpp" />
+    <ClInclude Include="Objects\NexusGlobals\SignPost.hpp" />
+    <ClInclude Include="Objects\NexusGlobals\Spikes.hpp" />
     <ClInclude Include="Objects\NexusGlobals\Spring.hpp" />
     <ClInclude Include="Objects\NexusGlobals\StageSetup.hpp" />
     <ClInclude Include="Objects\NexusGlobals\StarPost.hpp" />

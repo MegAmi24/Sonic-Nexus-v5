@@ -209,7 +209,7 @@ struct Player : RSDK::GameObject::Entity {
 
     // Helper functions
     void HandleMovement(void);
-    static uint8 BoxCollision(Entity *thisEntity, RSDK::Hitbox *thisHitbox, Player *player);
+    uint8 BoxCollision(Entity *thisEntity, RSDK::Hitbox *thisHitbox);
 
     // ==============================
     // DECLARATION

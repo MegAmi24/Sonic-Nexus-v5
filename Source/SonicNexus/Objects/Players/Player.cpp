@@ -904,6 +904,7 @@ void Player::State_Getting_Hurt(void)
     if (this->shield) {
         hurtType = HURT_HASSHIELD;
         RSDK_GET_ENTITY_GEN(SLOT_POWERUP1)->Destroy();
+        this->shield = SHIELD_NONE;
         sVars->sfxHurt.Play();
     }
     else if (!this->rings) {
@@ -1182,26 +1183,26 @@ void Player::HandleMovement(void)
     }
 }
 
-uint8 Player::BoxCollision(Entity *thisEntity, RSDK::Hitbox *thisHitbox, Player *player)
+uint8 Player::BoxCollision(Entity *thisEntity, RSDK::Hitbox *thisHitbox)
 {
-    uint8 boxCol = thisEntity->CheckCollisionBox(thisHitbox, player, player->outerbox);
+    uint8 boxCol = thisEntity->CheckCollisionBox(thisHitbox, this, this->outerbox);
 
-    if (boxCol == C_TOP && player->onGround) {
+    if (boxCol == C_TOP && this->onGround) {
         RSDK::Hitbox sensor;
-        sensor.top    = player->normalbox->bottom - 1;
-        sensor.bottom = player->normalbox->bottom + 1;
+        sensor.top    = this->normalbox->bottom - 1;
+        sensor.bottom = this->normalbox->bottom + 1;
 
-        sensor.left  = player->normalbox->left;
+        sensor.left  = this->normalbox->left;
         sensor.right = sensor.left + 1;
-        player->flailing[0] |= thisEntity->CheckCollisionTouchBox(thisHitbox, player, &sensor);
+        this->flailing[0] |= thisEntity->CheckCollisionTouchBox(thisHitbox, this, &sensor);
 
         sensor.left  = -1;
         sensor.right = 1;
-        player->flailing[1] |= thisEntity->CheckCollisionTouchBox(thisHitbox, player, &sensor);
+        this->flailing[1] |= thisEntity->CheckCollisionTouchBox(thisHitbox, this, &sensor);
 
-        sensor.right = player->normalbox->right;
+        sensor.right = this->normalbox->right;
         sensor.left  = sensor.right - 1;
-        player->flailing[2] |= thisEntity->CheckCollisionTouchBox(thisHitbox, player, &sensor);
+        this->flailing[2] |= thisEntity->CheckCollisionTouchBox(thisHitbox, this, &sensor);
     }
 
     return boxCol;

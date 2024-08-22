@@ -17,7 +17,7 @@ void Spring::Update(void)
     foreach_active(Player, player)
     {
         if (this->flipFlags < SPRING_UP_RIGHT)
-            Player::BoxCollision(this, &this->boxHitbox, player);
+            player->BoxCollision(this, &this->boxHitbox);
         if (this->CheckCollisionTouchBox(&this->touchHitbox, player, player->outerbox)) {
             this->timer = 8;
             if (this->velocity.x)

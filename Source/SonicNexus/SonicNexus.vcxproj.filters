@@ -79,6 +79,18 @@
     <ClCompile Include="Objects\NexusGlobals\Spring.cpp">
       <Filter>Source Files\Objects\NexusGlobals</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\NexusGlobals\Spikes.cpp">
+      <Filter>Source Files\Objects\NexusGlobals</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\NexusGlobals\SignPost.cpp">
+      <Filter>Source Files\Objects\NexusGlobals</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\NexusGlobals\ActFinish.cpp">
+      <Filter>Source Files\Objects\NexusGlobals</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\NexusGlobals\PSwitch.cpp">
+      <Filter>Source Files\Objects\NexusGlobals</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SonicNexus.hpp">
@@ -139,6 +151,18 @@
       <Filter>Source Files\Objects\NexusGlobals</Filter>
     </ClInclude>
     <ClInclude Include="Objects\NexusGlobals\Spring.hpp">
+      <Filter>Source Files\Objects\NexusGlobals</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\NexusGlobals\Spikes.hpp">
+      <Filter>Source Files\Objects\NexusGlobals</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\NexusGlobals\SignPost.hpp">
+      <Filter>Source Files\Objects\NexusGlobals</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\NexusGlobals\ActFinish.hpp">
+      <Filter>Source Files\Objects\NexusGlobals</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\NexusGlobals\PSwitch.hpp">
       <Filter>Source Files\Objects\NexusGlobals</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,5 +1,6 @@
 #pragma once
 
+struct ActFinish;
 struct Camera;
 struct DeathEvent;
 struct Explosion;
@@ -7,7 +8,10 @@ struct HUD;
 struct Invincibility;
 struct Monitor;
 struct Music;
+struct PSwitch;
 struct Ring;
+struct SignPost;
+struct Spikes;
 struct Spring;
 struct StageSetup;
 struct StarPost;
@@ -17,6 +21,7 @@ struct BlueShield;
 struct RotatePalette;
 
 #include "SonicNexus.hpp"
+#include "NexusGlobals\ActFinish.hpp"
 #include "NexusGlobals\Camera.hpp"
 #include "NexusGlobals\DeathEvent.hpp"
 #include "NexusGlobals\Explosion.hpp"
@@ -24,7 +29,10 @@ struct RotatePalette;
 #include "NexusGlobals\Invincibility.hpp"
 #include "NexusGlobals\Monitor.hpp"
 #include "NexusGlobals\Music.hpp"
+#include "NexusGlobals\PSwitch.hpp"
 #include "NexusGlobals\Ring.hpp"
+#include "NexusGlobals\SignPost.hpp"
+#include "NexusGlobals\Spikes.hpp"
 #include "NexusGlobals\Spring.hpp"
 #include "NexusGlobals\StageSetup.hpp"
 #include "NexusGlobals\StarPost.hpp"

@@ -70,12 +70,11 @@ void Camera::StageLoad(void)
     // Get Layer size and setup default bounds
     RSDK::SceneLayer fgLayer;
     fgLayer.Get("FG Low");
-    RSDK::Vector2 layerSize;
-    fgLayer.Size(&layerSize, true);
+    fgLayer.Size(&sVars->boundary2, true);
 
-    sVars->boundary2.x  = layerSize.x;
-    sVars->boundary2.y  = layerSize.y;
+    sVars->boundary1    = { 0, 0 };
     sVars->waterLevel   = sVars->boundary2.y + 128;
+    sVars->newBoundary1 = sVars->boundary1;
     sVars->newBoundary2 = sVars->boundary2;
 }
 

@@ -44,7 +44,6 @@ void Ring::Create(void *data)
                 break;
             case RING_SPARKLE:
                 this->state.Set(&Ring::State_Sparkle);
-                this->drawGroup = 4;
                 this->animator.SetAnimation(sVars->aniFrames, 1, true, 0);
                 break;
         }
