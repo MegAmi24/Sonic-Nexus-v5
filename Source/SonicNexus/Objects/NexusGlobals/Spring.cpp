@@ -57,7 +57,6 @@ void Spring::Update(void)
 }
 
 void Spring::LateUpdate(void) {}
-
 void Spring::StaticUpdate(void) {}
 
 void Spring::Draw(void)
@@ -179,7 +178,6 @@ void Spring::Create(void *data)
 void Spring::StageLoad(void)
 {
     sVars->aniFrames.Load("NexusGlobals/Spring.bin", SCOPE_GLOBAL);
-
     sVars->sfxSpring.Get("NexusGlobal/Spring.wav");
 }
 

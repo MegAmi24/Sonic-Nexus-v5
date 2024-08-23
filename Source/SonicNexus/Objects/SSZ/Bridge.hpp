@@ -5,7 +5,7 @@
 namespace GameLogic
 {
 
-struct RotatePalette : RSDK::GameObject::Entity {
+struct Bridge : RSDK::GameObject::Entity {
 
     // ==============================
     // ENUMS
@@ -21,13 +21,21 @@ struct RotatePalette : RSDK::GameObject::Entity {
 
     struct Static : RSDK::GameObject::Static {
         RSDK::SpriteAnimation aniFrames;
-        int32 timer;
     };
 
     // ==============================
     // INSTANCE VARS
     // ==============================
+    int32 length;
     RSDK::Animator animator;
+    int32 walkedOn;
+    int32 depress;
+    int32 midPoint;
+    int32 midHeight;
+    int32 midYPos;
+    Player *target;
+    int32 left;
+    int32 right;
 
     // ==============================
     // EVENTS
@@ -58,6 +66,6 @@ struct RotatePalette : RSDK::GameObject::Entity {
     // DECLARATION
     // ==============================
 
-    RSDK_DECLARE(RotatePalette);
+    RSDK_DECLARE(Bridge);
 };
 } // namespace GameLogic

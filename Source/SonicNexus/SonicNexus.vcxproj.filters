@@ -91,6 +91,30 @@
     <ClCompile Include="Objects\NexusGlobals\PSwitch.cpp">
       <Filter>Source Files\Objects\NexusGlobals</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\SSZ\Corkscrew.cpp">
+      <Filter>Source Files\Objects\SSZ</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\SSZ\Platform.cpp">
+      <Filter>Source Files\Objects\SSZ</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\SSZ\SwingPlat.cpp">
+      <Filter>Source Files\Objects\SSZ</Filter>
+    </ClCompile>
+    <ClCompile Include="Math.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\SSZ\TubeSwitch.cpp">
+      <Filter>Source Files\Objects\SSZ</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\SSZ\ZipTrack.cpp">
+      <Filter>Source Files\Objects\SSZ</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\SSZ\ZipLine.cpp">
+      <Filter>Source Files\Objects\SSZ</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\SSZ\Bridge.cpp">
+      <Filter>Source Files\Objects\SSZ</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SonicNexus.hpp">
@@ -164,6 +188,30 @@
     </ClInclude>
     <ClInclude Include="Objects\NexusGlobals\PSwitch.hpp">
       <Filter>Source Files\Objects\NexusGlobals</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\SSZ\Corkscrew.hpp">
+      <Filter>Source Files\Objects\SSZ</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\SSZ\Platform.hpp">
+      <Filter>Source Files\Objects\SSZ</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\SSZ\SwingPlat.hpp">
+      <Filter>Source Files\Objects\SSZ</Filter>
+    </ClInclude>
+    <ClInclude Include="Math.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\SSZ\TubeSwitch.hpp">
+      <Filter>Source Files\Objects\SSZ</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\SSZ\ZipTrack.hpp">
+      <Filter>Source Files\Objects\SSZ</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\SSZ\ZipLine.hpp">
+      <Filter>Source Files\Objects\SSZ</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\SSZ\Bridge.hpp">
+      <Filter>Source Files\Objects\SSZ</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

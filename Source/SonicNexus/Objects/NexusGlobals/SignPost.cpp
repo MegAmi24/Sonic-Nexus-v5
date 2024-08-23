@@ -46,6 +46,8 @@ void SignPost::StageLoad(void)
 
 void SignPost::State_Waiting(void)
 {
+    SET_CURRENT_STATE();
+
     this->signAnim.frameID = 0;
 
     Camera::sVars->newBoundary1.x = FROM_FIXED(this->position.x) - screenInfo->center.x;
@@ -68,6 +70,8 @@ void SignPost::State_Waiting(void)
 
 void SignPost::State_Spinning(void)
 {
+    SET_CURRENT_STATE();
+
     Music::SetVolume(Music::sVars->volume - 0.01f);
 
     int32 prevFrame = this->signAnim.frameID;
@@ -119,6 +123,8 @@ void SignPost::State_Spinning(void)
 
 void SignPost::State_Exit(void)
 {
+    SET_CURRENT_STATE();
+
     foreach_active(Player, player)
     {
         if (player->controlMode == Player::CONTROLMODE_NONE)

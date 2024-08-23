@@ -37,13 +37,12 @@ void Camera::LateUpdate(void)
 }
 
 void Camera::StaticUpdate(void) {}
-
 void Camera::Draw(void) {}
 
 void Camera::Create(void *data)
 {
     if (!sceneInfo->inEditor) {
-        int32 screen = VOID_TO_INT(data);
+        int32 screen = data ? VOID_TO_INT(data) : SLOT_PLAYER1;
         this->target = RSDK_GET_ENTITY_GEN(screen);
 
         if (this->active != ACTIVE_NORMAL)

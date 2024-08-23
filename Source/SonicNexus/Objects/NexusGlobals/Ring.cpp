@@ -52,7 +52,7 @@ void Ring::Create(void *data)
 
 void Ring::StageLoad(void)
 {
-    sVars->aniFrames.Load("NexusGlobals/Ring.bin", SCOPE_STAGE);
+    sVars->aniFrames.Load("NexusGlobals/Ring.bin", SCOPE_GLOBAL);
     sVars->ringAnim.SetAnimation(&sVars->aniFrames, 0, true, 0);
 
     sVars->hitbox.left   = -8;

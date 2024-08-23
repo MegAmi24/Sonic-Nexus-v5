@@ -5,11 +5,17 @@
 namespace GameLogic
 {
 
-struct RotatePalette : RSDK::GameObject::Entity {
+struct Platform : RSDK::GameObject::Entity {
 
     // ==============================
     // ENUMS
     // ==============================
+
+    enum PlatformTypes {
+        PLATFORM_FLOAT,
+        PLATFORM_HORIZONTAL,
+        PLATFORM_VERTICAL,
+    };
 
     // ==============================
     // STRUCTS
@@ -21,13 +27,18 @@ struct RotatePalette : RSDK::GameObject::Entity {
 
     struct Static : RSDK::GameObject::Static {
         RSDK::SpriteAnimation aniFrames;
-        int32 timer;
+        RSDK::Hitbox hitbox;
     };
 
     // ==============================
     // INSTANCE VARS
     // ==============================
+    PlatformTypes type;
+    bool32 flippedOsc;
     RSDK::Animator animator;
+    bool32 pressed;
+    RSDK::Vector2 platformPos;
+    RSDK::Vector2 changePos;
 
     // ==============================
     // EVENTS
@@ -58,6 +69,6 @@ struct RotatePalette : RSDK::GameObject::Entity {
     // DECLARATION
     // ==============================
 
-    RSDK_DECLARE(RotatePalette);
+    RSDK_DECLARE(Platform);
 };
 } // namespace GameLogic

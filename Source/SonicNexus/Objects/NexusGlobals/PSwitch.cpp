@@ -54,10 +54,10 @@ void PSwitch::EditorDraw(void)
 
     RSDK::Vector2 pos = this->position;
     int32 yOffset     = TO_FIXED(-(this->animator.GetFrame(sVars->aniFrames)->height * (this->height / 2)));
-    if (this->height % 2 == 1)
-        yOffset += TO_FIXED(this->animator.GetFrame(sVars->aniFrames)->pivotY);
+    if (this->height % 2 != 1)
+        yOffset -= TO_FIXED(this->animator.GetFrame(sVars->aniFrames)->pivotY);
     pos.y += yOffset;
-    for (int i = 0; i < this->height; i++) {
+    for (int32 i = 0; i < this->height; i++) {
         this->animator.DrawSprite(&pos, false);
         pos.y += TO_FIXED(this->animator.GetFrame(sVars->aniFrames)->height);
     }

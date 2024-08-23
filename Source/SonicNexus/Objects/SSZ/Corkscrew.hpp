@@ -5,11 +5,16 @@
 namespace GameLogic
 {
 
-struct RotatePalette : RSDK::GameObject::Entity {
+struct Corkscrew : RSDK::GameObject::Entity {
 
     // ==============================
     // ENUMS
     // ==============================
+
+    enum CorkscrewDirections {
+        CORKSCREW_RIGHT,
+        CORKSCREW_LEFT,
+    };
 
     // ==============================
     // STRUCTS
@@ -21,7 +26,7 @@ struct RotatePalette : RSDK::GameObject::Entity {
 
     struct Static : RSDK::GameObject::Static {
         RSDK::SpriteAnimation aniFrames;
-        int32 timer;
+        RSDK::Hitbox hitbox;
     };
 
     // ==============================
@@ -58,6 +63,6 @@ struct RotatePalette : RSDK::GameObject::Entity {
     // DECLARATION
     // ==============================
 
-    RSDK_DECLARE(RotatePalette);
+    RSDK_DECLARE(Corkscrew);
 };
 } // namespace GameLogic

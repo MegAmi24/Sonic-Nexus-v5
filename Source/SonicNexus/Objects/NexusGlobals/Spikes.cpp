@@ -36,7 +36,6 @@ void Spikes::Update(void)
 }
 
 void Spikes::LateUpdate(void) {}
-
 void Spikes::StaticUpdate(void) {}
 
 void Spikes::Draw(void) { this->animator.DrawSprite(NULL, false); }

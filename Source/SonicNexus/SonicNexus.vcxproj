@@ -172,6 +172,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\RSDKv5-GameAPI\CPP\GameAPI\Game.cpp" />
+    <ClCompile Include="Math.cpp" />
     <ClCompile Include="Objects\NexusGlobals\ActFinish.cpp" />
     <ClCompile Include="Objects\NexusGlobals\Camera.cpp" />
     <ClCompile Include="Objects\NexusGlobals\DeathEvent.cpp" />
@@ -190,13 +191,21 @@
     <ClCompile Include="Objects\NexusGlobals\TitleCard.cpp" />
     <ClCompile Include="Objects\Players\Player.cpp" />
     <ClCompile Include="Objects\SSZ\BlueShield.cpp" />
+    <ClCompile Include="Objects\SSZ\Bridge.cpp" />
+    <ClCompile Include="Objects\SSZ\Corkscrew.cpp" />
+    <ClCompile Include="Objects\SSZ\Platform.cpp" />
     <ClCompile Include="Objects\SSZ\RotatePalette.cpp" />
+    <ClCompile Include="Objects\SSZ\SwingPlat.cpp" />
+    <ClCompile Include="Objects\SSZ\TubeSwitch.cpp" />
+    <ClCompile Include="Objects\SSZ\ZipLine.cpp" />
+    <ClCompile Include="Objects\SSZ\ZipTrack.cpp" />
     <ClCompile Include="SonicNexus.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\RSDKv5-GameAPI\CPP\GameAPI\Game.hpp" />
     <ClInclude Include="..\RSDKv5-GameAPI\CPP\GameAPI\GameObjects.hpp" />
     <ClInclude Include="..\RSDKv5-GameAPI\CPP\GameAPI\GameVariables.hpp" />
+    <ClInclude Include="Math.hpp" />
     <ClInclude Include="Objects\All.hpp" />
     <ClInclude Include="Objects\NexusGlobals\ActFinish.hpp" />
     <ClInclude Include="Objects\NexusGlobals\Camera.hpp" />
@@ -216,7 +225,14 @@
     <ClInclude Include="Objects\NexusGlobals\TitleCard.hpp" />
     <ClInclude Include="Objects\Players\Player.hpp" />
     <ClInclude Include="Objects\SSZ\BlueShield.hpp" />
+    <ClInclude Include="Objects\SSZ\Bridge.hpp" />
+    <ClInclude Include="Objects\SSZ\Corkscrew.hpp" />
+    <ClInclude Include="Objects\SSZ\Platform.hpp" />
     <ClInclude Include="Objects\SSZ\RotatePalette.hpp" />
+    <ClInclude Include="Objects\SSZ\SwingPlat.hpp" />
+    <ClInclude Include="Objects\SSZ\TubeSwitch.hpp" />
+    <ClInclude Include="Objects\SSZ\ZipLine.hpp" />
+    <ClInclude Include="Objects\SSZ\ZipTrack.hpp" />
     <ClInclude Include="SonicNexus.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

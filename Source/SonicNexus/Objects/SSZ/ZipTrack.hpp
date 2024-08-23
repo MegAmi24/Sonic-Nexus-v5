@@ -5,11 +5,20 @@
 namespace GameLogic
 {
 
-struct RotatePalette : RSDK::GameObject::Entity {
+struct ZipTrack : RSDK::GameObject::Entity {
 
     // ==============================
     // ENUMS
     // ==============================
+
+    enum ZipTrackTypes {
+        ZIPTRACK_TRACK1,
+        ZIPTRACK_TRACK2,
+        ZIPTRACK_TRACK3,
+        ZIPTRACK_TRACK4,
+        ZIPTRACK_TRACK5,
+        ZIPTRACK_TRACK6,
+    };
 
     // ==============================
     // STRUCTS
@@ -21,12 +30,12 @@ struct RotatePalette : RSDK::GameObject::Entity {
 
     struct Static : RSDK::GameObject::Static {
         RSDK::SpriteAnimation aniFrames;
-        int32 timer;
     };
 
     // ==============================
     // INSTANCE VARS
     // ==============================
+    ZipTrackTypes track;
     RSDK::Animator animator;
 
     // ==============================
@@ -58,6 +67,6 @@ struct RotatePalette : RSDK::GameObject::Entity {
     // DECLARATION
     // ==============================
 
-    RSDK_DECLARE(RotatePalette);
+    RSDK_DECLARE(ZipTrack);
 };
 } // namespace GameLogic

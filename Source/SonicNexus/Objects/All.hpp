@@ -18,9 +18,17 @@ struct StarPost;
 struct TitleCard;
 struct Player;
 struct BlueShield;
+struct Bridge;
+struct Corkscrew;
+struct Platform;
 struct RotatePalette;
+struct SwingPlat;
+struct TubeSwitch;
+struct ZipLine;
+struct ZipTrack;
 
 #include "SonicNexus.hpp"
+#include "Math.hpp"
 #include "NexusGlobals\ActFinish.hpp"
 #include "NexusGlobals\Camera.hpp"
 #include "NexusGlobals\DeathEvent.hpp"
@@ -39,4 +47,11 @@ struct RotatePalette;
 #include "NexusGlobals\TitleCard.hpp"
 #include "Players\Player.hpp"
 #include "SSZ\BlueShield.hpp"
+#include "SSZ\Bridge.hpp"
+#include "SSZ\Corkscrew.hpp"
+#include "SSZ\Platform.hpp"
 #include "SSZ\RotatePalette.hpp"
+#include "SSZ\SwingPlat.hpp"
+#include "SSZ\TubeSwitch.hpp"
+#include "SSZ\ZipLine.hpp"
+#include "SSZ\ZipTrack.hpp"

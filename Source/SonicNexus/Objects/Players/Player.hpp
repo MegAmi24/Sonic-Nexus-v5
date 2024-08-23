@@ -210,6 +210,7 @@ struct Player : RSDK::GameObject::Entity {
     // Helper functions
     void HandleMovement(void);
     uint8 BoxCollision(Entity *thisEntity, RSDK::Hitbox *thisHitbox);
+    bool32 PlatformCollision(Entity *thisEntity, RSDK::Hitbox *thisHitbox);
 
     // ==============================
     // DECLARATION

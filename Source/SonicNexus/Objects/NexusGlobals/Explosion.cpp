@@ -20,7 +20,6 @@ void Explosion::Update(void)
 }
 
 void Explosion::LateUpdate(void) {}
-
 void Explosion::StaticUpdate(void) {}
 
 void Explosion::Draw(void) { this->animator.DrawSprite(NULL, false); }

@@ -144,10 +144,12 @@ void ActFinish::StageLoad(void)
 
 void ActFinish::State_MoveIn(void)
 {
+    SET_CURRENT_STATE();
+
     int32 targetPos = TO_FIXED(screenInfo->center.x - 79);
     if (this->line0Pos.x < targetPos) {
         this->line0Pos.x += TO_FIXED(16);
-        if (this->line0Pos.x >= targetPos)
+        if (this->line0Pos.x > targetPos)
             this->line0Pos.x = targetPos;
     }
     else
@@ -156,7 +158,7 @@ void ActFinish::State_MoveIn(void)
     targetPos = TO_FIXED(screenInfo->center.x - 71);
     if (this->line1Pos.x > targetPos) {
         this->line1Pos.x -= TO_FIXED(16);
-        if (this->line1Pos.x <= targetPos)
+        if (this->line1Pos.x < targetPos)
             this->line1Pos.x = targetPos;
     }
     else
@@ -165,7 +167,7 @@ void ActFinish::State_MoveIn(void)
     targetPos = TO_FIXED(screenInfo->center.x - 97);
     if (this->line2Pos.x > targetPos) {
         this->line2Pos.x -= TO_FIXED(16);
-        if (this->line2Pos.x <= targetPos)
+        if (this->line2Pos.x < targetPos)
             this->line2Pos.x = targetPos;
     }
     else
@@ -173,7 +175,7 @@ void ActFinish::State_MoveIn(void)
 
     if (this->line3Pos.x > targetPos) {
         this->line3Pos.x -= TO_FIXED(16);
-        if (this->line3Pos.x <= targetPos)
+        if (this->line3Pos.x < targetPos)
             this->line3Pos.x = targetPos;
     }
     else
@@ -182,7 +184,7 @@ void ActFinish::State_MoveIn(void)
     targetPos = TO_FIXED(screenInfo->center.x - 77);
     if (this->line4Pos.x > targetPos) {
         this->line4Pos.x -= TO_FIXED(16);
-        if (this->line4Pos.x <= targetPos)
+        if (this->line4Pos.x < targetPos)
             this->line4Pos.x = targetPos;
     }
     else {
@@ -194,6 +196,8 @@ void ActFinish::State_MoveIn(void)
 
 void ActFinish::State_Wait(void)
 {
+    SET_CURRENT_STATE();
+
     if (++this->timer > 299) {
         this->timer = 0;
         this->state.Set(&ActFinish::State_AddEverying);
@@ -202,6 +206,8 @@ void ActFinish::State_Wait(void)
 
 void ActFinish::State_AddEverying(void)
 {
+    SET_CURRENT_STATE();
+
     if (this->ringBonus) {
         this->ringBonus -= 100;
         this->total += 100;
@@ -229,6 +235,8 @@ void ActFinish::State_AddEverying(void)
 
 void ActFinish::State_WaitSomeMore(void)
 {
+    SET_CURRENT_STATE();
+
     if (++this->timer == 160) {
         this->timer = 0;
         this->state.Set(&ActFinish::State_FadeOut);
@@ -237,6 +245,8 @@ void ActFinish::State_WaitSomeMore(void)
 
 void ActFinish::State_FadeOut(void)
 {
+    SET_CURRENT_STATE();
+
     this->timer += 4;
     if (this->timer == 384) {
         this->timer = 0;

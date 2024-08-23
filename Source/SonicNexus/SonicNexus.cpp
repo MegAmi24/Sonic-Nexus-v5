@@ -1,4 +1,5 @@
 #include "SonicNexus.hpp"
+#include "Math.hpp"
 
 using namespace RSDK;
 
@@ -19,6 +20,8 @@ void GlobalVariables::Init(void *g)
     memset(globals, 0, sizeof(GlobalVariables));
 
     // sceneInfo->debugMode = false;
+
+    CalculateTrigAngles();
 }
 
 #if RETRO_USE_MOD_LOADER

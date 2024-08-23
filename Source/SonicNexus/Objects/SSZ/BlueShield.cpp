@@ -13,11 +13,8 @@ namespace GameLogic
 RSDK_REGISTER_OBJECT(BlueShield);
 
 void BlueShield::Update(void) {}
-
 void BlueShield::LateUpdate(void) { this->animator.Process(); }
-
 void BlueShield::StaticUpdate(void) {}
-
 void BlueShield::Draw(void) { this->animator.DrawSprite(&this->parent->position, false); }
 
 void BlueShield::Create(void *data)
@@ -28,7 +25,7 @@ void BlueShield::Create(void *data)
 
     if (!sceneInfo->inEditor) {
         this->animator.SetAnimation(sVars->aniFrames, 0, true, 0);
-        this->parent        = RSDK_GET_ENTITY(VOID_TO_INT(data), Player);
+        this->parent        = RSDK_GET_ENTITY(data ? VOID_TO_INT(data) : SLOT_PLAYER1, Player);
         this->propertyValue = 1;
         this->active        = ACTIVE_NORMAL;
         this->position      = this->parent->position;

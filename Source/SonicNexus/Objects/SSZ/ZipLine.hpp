@@ -5,7 +5,7 @@
 namespace GameLogic
 {
 
-struct RotatePalette : RSDK::GameObject::Entity {
+struct ZipLine : RSDK::GameObject::Entity {
 
     // ==============================
     // ENUMS
@@ -21,13 +21,20 @@ struct RotatePalette : RSDK::GameObject::Entity {
 
     struct Static : RSDK::GameObject::Static {
         RSDK::SpriteAnimation aniFrames;
-        int32 timer;
+        RSDK::Hitbox hitbox;
+        RSDK::SoundFX sfxCatch;
     };
 
     // ==============================
     // INSTANCE VARS
     // ==============================
+    RSDK::StateMachine<ZipLine> state;
     RSDK::Animator animator;
+    RSDK::Vector2 handlePos;
+    int32 trackPos;
+    RSDK::Vector2 originPos;
+    Player *target;
+    int32 lastY;
 
     // ==============================
     // EVENTS
@@ -54,10 +61,14 @@ struct RotatePalette : RSDK::GameObject::Entity {
     // FUNCTIONS
     // ==============================
 
+    void State_Stopped(void);
+    void State_Moving(void);
+    void State_Return(void);
+
     // ==============================
     // DECLARATION
     // ==============================
 
-    RSDK_DECLARE(RotatePalette);
+    RSDK_DECLARE(ZipLine);
 };
 } // namespace GameLogic

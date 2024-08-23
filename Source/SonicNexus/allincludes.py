@@ -13,6 +13,7 @@ for path in Path(objects_path).rglob("*.hpp"):
         continue
     f.write(f"struct {path.stem};\n")
 f.write(f"\n#include \"{game_hpp}\"\n")
+f.write(f"#include \"Math.hpp\"\n")
 for path in Path(objects_path).rglob("*.hpp"):
     if path.name == "All.hpp":
         continue

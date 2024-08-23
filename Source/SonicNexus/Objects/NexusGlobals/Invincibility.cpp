@@ -25,7 +25,7 @@ void Invincibility::Create(void *data)
         this->active    = ACTIVE_NORMAL;
         this->drawGroup = 4;
         if (VOID_TO_INT(data) != -1) {
-            this->parent   = RSDK_GET_ENTITY(VOID_TO_INT(data), Player);
+            this->parent   = RSDK_GET_ENTITY(data ? VOID_TO_INT(data) : SLOT_PLAYER1, Player);
             this->position = this->parent->position;
             this->state.Set(&Invincibility::State_Spawner);
         }

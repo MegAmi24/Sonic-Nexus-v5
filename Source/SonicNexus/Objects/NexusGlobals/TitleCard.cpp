@@ -13,7 +13,7 @@ namespace GameLogic
 RSDK_REGISTER_OBJECT(TitleCard);
 
 void TitleCard::Update(void) { this->state.Run(this); }
-void TitleCard::LateUpdate(void) {}
+void TitleCard::LateUpdate(void) { foreach_active(Player, player) player->timer = 0; }
 void TitleCard::StaticUpdate(void) {}
 
 void TitleCard::Draw(void)
@@ -31,7 +31,6 @@ void TitleCard::Create(void *data)
     if (!sceneInfo->inEditor) {
         if (data)
             this->type = (TitleCardTypes)(VOID_TO_INT(data));
-
         this->active    = ACTIVE_NORMAL;
         this->drawGroup = 6;
 
@@ -104,7 +103,7 @@ void TitleCard::StageLoad(void)
 
     // I have to do this instead of just loading because v5's LoadPalette function sucks
     paletteBank[1].Load("TCardTint.act", 0b0000010000000000);
-    paletteBank[0].Copy(1, 80, 80, 17);
+    paletteBank[0].Copy(1, 80, 80, 16);
 
     // This is the same code from Mania Plus's pause menu
     // I could modify it so the tint matches Nexus better but I'm too dumb to know how to do that LOL
@@ -297,7 +296,7 @@ void TitleCard::State_Zone_Exit(void)
     if (this->position.x > TO_FIXED(screenInfo->size.x + 64)) {
         // I have to do this instead of just loading because v5's LoadPalette function sucks
         paletteBank[1].Load("BShieldTint.act", 0b0000010000000000);
-        paletteBank[0].Copy(1, 80, 80, 17);
+        paletteBank[0].Copy(1, 80, 80, 16);
         // SetBlendTable(128, 1, 16, 80);
 
         foreach_active(Player, player) player->controlMode = Player::CONTROLMODE_PLAYER1;

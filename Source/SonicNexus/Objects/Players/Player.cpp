@@ -1001,7 +1001,7 @@ void Player::State_Getting_Hurt(void)
             this->groundVel  = 0;
             this->velocity.y = -425984;
             this->state.Set(&Player::State_Dying);
-            this->animator.SetAnimation(this->aniFrames, ANI_DYING, true, 0);
+            this->animator.SetAnimation(this->aniFrames, ANI_DYING, false, 0);
             this->tileCollisions  = false;
             this->interaction     = false;
             this->camera->enabled = false;
@@ -1185,6 +1185,9 @@ void Player::HandleMovement(void)
 
 uint8 Player::BoxCollision(Entity *thisEntity, RSDK::Hitbox *thisHitbox)
 {
+    if (!this->interaction)
+        return C_NONE;
+
     uint8 boxCol = thisEntity->CheckCollisionBox(thisHitbox, this, this->outerbox);
 
     if (boxCol == C_TOP && this->onGround) {
@@ -1206,6 +1209,34 @@ uint8 Player::BoxCollision(Entity *thisEntity, RSDK::Hitbox *thisHitbox)
     }
 
     return boxCol;
+}
+
+bool32 Player::PlatformCollision(Entity *thisEntity, RSDK::Hitbox *thisHitbox)
+{
+    if (!this->interaction)
+        return false;
+
+    bool32 platCol = thisEntity->CheckCollisionPlatform(thisHitbox, this, this->outerbox);
+
+    if (platCol && this->onGround) {
+        RSDK::Hitbox sensor;
+        sensor.top    = this->normalbox->bottom - 1;
+        sensor.bottom = this->normalbox->bottom + 1;
+
+        sensor.left  = this->normalbox->left;
+        sensor.right = sensor.left + 1;
+        this->flailing[0] |= thisEntity->CheckCollisionTouchBox(thisHitbox, this, &sensor);
+
+        sensor.left  = -1;
+        sensor.right = 1;
+        this->flailing[1] |= thisEntity->CheckCollisionTouchBox(thisHitbox, this, &sensor);
+
+        sensor.right = this->normalbox->right;
+        sensor.left  = sensor.right - 1;
+        this->flailing[2] |= thisEntity->CheckCollisionTouchBox(thisHitbox, this, &sensor);
+    }
+
+    return platCol;
 }
 
 #if GAME_INCLUDE_EDITOR

@@ -34,8 +34,9 @@ void DeathEvent::Create(void *data)
     this->visible = true;
 
     if (!sceneInfo->inEditor) {
+        if (data)
+            this->type = (DeathEventTypes)VOID_TO_INT(data);
         this->active    = ACTIVE_NORMAL;
-        this->type      = (DeathEventTypes)VOID_TO_INT(data);
         this->drawGroup = 6;
 
         switch (this->type) {
