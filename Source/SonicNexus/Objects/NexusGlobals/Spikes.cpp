@@ -1,7 +1,8 @@
 // ---------------------------------------------------------------------
 // RSDK Project: Sonic Nexus v5
 // Object Description: Spikes Object
-// Object Author: MegAmi
+// Original Author: Christian Whitehead "The Taxman"
+// Ported to RSDKv5 By: MegAmi
 // ---------------------------------------------------------------------
 
 #include "Spikes.hpp"

@@ -5,7 +5,7 @@
 namespace GameLogic
 {
 
-struct BlueShield : RSDK::GameObject::Entity {
+struct MRally : RSDK::GameObject::Entity {
 
     // ==============================
     // ENUMS
@@ -21,14 +21,15 @@ struct BlueShield : RSDK::GameObject::Entity {
 
     struct Static : RSDK::GameObject::Static {
         RSDK::SpriteAnimation aniFrames;
+        RSDK::Hitbox hitbox;
     };
 
     // ==============================
     // INSTANCE VARS
     // ==============================
+    RSDK::StateMachine<MRally> state;
     RSDK::Animator animator;
-    Player *parent;
-    uint8 shieldValue;
+    int32 timer;
 
     // ==============================
     // EVENTS
@@ -55,10 +56,17 @@ struct BlueShield : RSDK::GameObject::Entity {
     // FUNCTIONS
     // ==============================
 
+    void State_Move_Left(void);
+    void State_Move_Right(void);
+    void State_Move_Left_Fast(void);
+    void State_Move_Right_Fast(void);
+    void State_Wait_Left(void);
+    void State_Wait_Right(void);
+
     // ==============================
     // DECLARATION
     // ==============================
 
-    RSDK_DECLARE(BlueShield);
+    RSDK_DECLARE(MRally);
 };
 } // namespace GameLogic

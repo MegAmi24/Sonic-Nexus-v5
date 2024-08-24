@@ -1,7 +1,8 @@
 // ---------------------------------------------------------------------
 // RSDK Project: Sonic Nexus v5
 // Object Description: Monitor Object
-// Object Author: MegAmi
+// Original Author: Christian Whitehead "The Taxman"
+// Ported to RSDKv5 By: MegAmi
 // ---------------------------------------------------------------------
 
 #include "Monitor.hpp"
@@ -101,7 +102,7 @@ void Monitor::State_Idle(void)
         this->velocity.y += 14336;
         this->position.y += this->velocity.y;
 
-        if (this->velocity.y >= 0 && this->TileCollision(this->collisionLayers, this->collisionMode, this->collisionPlane, 0, 16, true)) {
+        if (this->velocity.y >= 0 && this->TileCollision(this->collisionLayers, this->collisionMode, this->collisionPlane, 0, TO_FIXED(16), true)) {
             this->velocity.y = 0;
             this->falling    = false;
         }

@@ -1,7 +1,8 @@
 // ---------------------------------------------------------------------
 // RSDK Project: Sonic Nexus v5
 // Object Description: SwingPlat Object
-// Object Author: MegAmi
+// Original Author: Christian Whitehead "The Taxman"
+// Ported to RSDKv5 By: MegAmi
 // ---------------------------------------------------------------------
 
 #include "SwingPlat.hpp"

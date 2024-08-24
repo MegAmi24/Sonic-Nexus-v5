@@ -1,7 +1,8 @@
 // ---------------------------------------------------------------------
 // RSDK Project: Sonic Nexus v5
 // Object Description: Sonic Object
-// Object Author: MegAmi
+// Original Author: Christian Whitehead "The Taxman"
+// Ported to RSDKv5 By: MegAmi
 // ---------------------------------------------------------------------
 
 #include "Player.hpp"
@@ -14,19 +15,19 @@ RSDK_REGISTER_OBJECT(Player);
 
 void Player::Update(void)
 {
-    switch (this->propertyValue) {
-        case PLAYERMODE_ACTIVE: {
+    switch (this->mode) {
+        case PLAYERMODE_NORMAL: {
             ProcessPlayerControl(this);
             Main();
 
             // Small extra added in this port: accessing the unused debug mode if enabled through dev menu
-            // Note that only the code to ENTER debug mode is specific to this port; the exiting code below is in the original v2
+            // Note that only the code to ENTER debug mode was added to this port; the exiting code below is in the original v2
             ControllerState *controller = &controllerInfo[this->Slot() + 1];
             if (sceneInfo->debugMode && controller->keyB.press) {
                 this->tileCollisions = false;
                 this->interaction    = false;
                 this->controlMode    = CONTROLMODE_PLAYER1;
-                this->propertyValue  = PLAYERMODE_DEBUG;
+                this->mode           = PLAYERMODE_DEBUG;
             }
             else {
                 this->state.Run(this);
@@ -38,7 +39,7 @@ void Player::Update(void)
             }
             break;
         }
-        case PLAYERMODE_INACTIVE: {
+        case PLAYERMODE_PARACHUTE: {
             ProcessPlayerControl(this);
             ProcessPlayerAnimation(this);
             Main();
@@ -55,7 +56,7 @@ void Player::Update(void)
                 this->tileCollisions = true;
                 this->interaction    = true;
                 this->controlMode    = CONTROLMODE_PLAYER1;
-                this->propertyValue  = PLAYERMODE_ACTIVE;
+                this->mode           = PLAYERMODE_NORMAL;
             }
             break;
         }
@@ -64,7 +65,7 @@ void Player::Update(void)
 
 void Player::LateUpdate(void)
 {
-    if (this->propertyValue != PLAYERMODE_DEBUG) {
+    if (this->mode != PLAYERMODE_DEBUG) {
         if (!this->state.Matches(&Player::State_Normal_Ground_Movement))
             this->pushing = 0;
         else {

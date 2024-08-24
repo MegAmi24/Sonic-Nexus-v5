@@ -115,6 +115,27 @@
     <ClCompile Include="Objects\SSZ\Bridge.cpp">
       <Filter>Source Files\Objects\SSZ</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\SSZ\Parachute.cpp">
+      <Filter>Source Files\Objects\SSZ</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\SSZ\Fan.cpp">
+      <Filter>Source Files\Objects\SSZ</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\SSZ\CLedge.cpp">
+      <Filter>Source Files\Objects\SSZ</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\SSZ\Chompy.cpp">
+      <Filter>Source Files\Objects\SSZ</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\SSZ\FrogOmatic.cpp">
+      <Filter>Source Files\Objects\SSZ</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\SSZ\HelliBomber.cpp">
+      <Filter>Source Files\Objects\SSZ</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\SSZ\MRally.cpp">
+      <Filter>Source Files\Objects\SSZ</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SonicNexus.hpp">
@@ -211,6 +232,27 @@
       <Filter>Source Files\Objects\SSZ</Filter>
     </ClInclude>
     <ClInclude Include="Objects\SSZ\Bridge.hpp">
+      <Filter>Source Files\Objects\SSZ</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\SSZ\Parachute.hpp">
+      <Filter>Source Files\Objects\SSZ</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\SSZ\Fan.hpp">
+      <Filter>Source Files\Objects\SSZ</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\SSZ\CLedge.hpp">
+      <Filter>Source Files\Objects\SSZ</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\SSZ\Chompy.hpp">
+      <Filter>Source Files\Objects\SSZ</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\SSZ\FrogOmatic.hpp">
+      <Filter>Source Files\Objects\SSZ</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\SSZ\HelliBomber.hpp">
+      <Filter>Source Files\Objects\SSZ</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\SSZ\MRally.hpp">
       <Filter>Source Files\Objects\SSZ</Filter>
     </ClInclude>
   </ItemGroup>

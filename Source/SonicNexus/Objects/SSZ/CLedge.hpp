@@ -5,7 +5,7 @@
 namespace GameLogic
 {
 
-struct BlueShield : RSDK::GameObject::Entity {
+struct CLedge : RSDK::GameObject::Entity {
 
     // ==============================
     // ENUMS
@@ -21,14 +21,20 @@ struct BlueShield : RSDK::GameObject::Entity {
 
     struct Static : RSDK::GameObject::Static {
         RSDK::SpriteAnimation aniFrames;
+        RSDK::SoundFX sfxCrumble;
     };
 
     // ==============================
     // INSTANCE VARS
     // ==============================
+    int32 length;
+    RSDK::StateMachine<CLedge> state;
+    RSDK::StateMachine<CLedge> stateDraw;
     RSDK::Animator animator;
-    Player *parent;
-    uint8 shieldValue;
+    int32 left;
+    int32 right;
+    int32 timer;
+    int32 noBlocks;
 
     // ==============================
     // EVENTS
@@ -55,10 +61,22 @@ struct BlueShield : RSDK::GameObject::Entity {
     // FUNCTIONS
     // ==============================
 
+    void State_Ledge(void);
+    void State_Wait_Right(void);
+    void State_Wait_Left(void);
+    void State_Crumble_Left(void);
+    void State_Crumble_Right(void);
+    void State_Wait_Respawn(void);
+    void State_FallingBlock(void);
+
+    void Draw_Ledge(void);
+    void Draw_Crumble_Left(void);
+    void Draw_FallingBlock(void);
+
     // ==============================
     // DECLARATION
     // ==============================
 
-    RSDK_DECLARE(BlueShield);
+    RSDK_DECLARE(CLedge);
 };
 } // namespace GameLogic

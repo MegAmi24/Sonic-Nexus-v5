@@ -12,8 +12,8 @@ struct Player : RSDK::GameObject::Entity {
     // ==============================
 
     enum PlayerModes {
-        PLAYERMODE_ACTIVE,
-        PLAYERMODE_INACTIVE, // idk what this is for LOL
+        PLAYERMODE_NORMAL,
+        PLAYERMODE_PARACHUTE,
         PLAYERMODE_DEBUG,
     };
 
@@ -108,7 +108,7 @@ struct Player : RSDK::GameObject::Entity {
     // ==============================
     // INSTANCE VARS
     // ==============================
-    uint8 propertyValue;
+    uint8 mode;
     Camera *camera;
     RSDK::Vector2 screenPos;
     int32 timer;

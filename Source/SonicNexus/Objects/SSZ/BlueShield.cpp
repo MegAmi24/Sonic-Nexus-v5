@@ -1,7 +1,8 @@
 // ---------------------------------------------------------------------
 // RSDK Project: Sonic Nexus v5
 // Object Description: BlueShield Object
-// Object Author: MegAmi
+// Original Author: Christian Whitehead "The Taxman"
+// Ported to RSDKv5 By: MegAmi
 // ---------------------------------------------------------------------
 
 #include "BlueShield.hpp"
@@ -26,7 +27,7 @@ void BlueShield::Create(void *data)
     if (!sceneInfo->inEditor) {
         this->animator.SetAnimation(sVars->aniFrames, 0, true, 0);
         this->parent        = RSDK_GET_ENTITY(data ? VOID_TO_INT(data) : SLOT_PLAYER1, Player);
-        this->propertyValue = 1;
+        this->shieldValue   = 1;
         this->active        = ACTIVE_NORMAL;
         this->position      = this->parent->position;
     }

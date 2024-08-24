@@ -5,11 +5,20 @@
 namespace GameLogic
 {
 
-struct BlueShield : RSDK::GameObject::Entity {
+struct Fan : RSDK::GameObject::Entity {
 
     // ==============================
     // ENUMS
     // ==============================
+
+    enum FanTypes {
+        Fan_TRACK1,
+        Fan_TRACK2,
+        Fan_TRACK3,
+        Fan_TRACK4,
+        Fan_TRACK5,
+        Fan_TRACK6,
+    };
 
     // ==============================
     // STRUCTS
@@ -21,14 +30,13 @@ struct BlueShield : RSDK::GameObject::Entity {
 
     struct Static : RSDK::GameObject::Static {
         RSDK::SpriteAnimation aniFrames;
+        RSDK::Hitbox hitbox;
     };
 
     // ==============================
     // INSTANCE VARS
     // ==============================
     RSDK::Animator animator;
-    Player *parent;
-    uint8 shieldValue;
 
     // ==============================
     // EVENTS
@@ -59,6 +67,6 @@ struct BlueShield : RSDK::GameObject::Entity {
     // DECLARATION
     // ==============================
 
-    RSDK_DECLARE(BlueShield);
+    RSDK_DECLARE(Fan);
 };
 } // namespace GameLogic

@@ -5,11 +5,17 @@
 namespace GameLogic
 {
 
-struct BlueShield : RSDK::GameObject::Entity {
+struct Chompy : RSDK::GameObject::Entity {
 
     // ==============================
     // ENUMS
     // ==============================
+
+    enum ChompyJumpDirs {
+        JUMPDIR_LEFT,
+        JUMPDIR_RIGHT,
+        JUMPDIR_RIGHT2, // not sure if or how this is different from JUMPDIR_RIGHT
+    };
 
     // ==============================
     // STRUCTS
@@ -21,14 +27,17 @@ struct BlueShield : RSDK::GameObject::Entity {
 
     struct Static : RSDK::GameObject::Static {
         RSDK::SpriteAnimation aniFrames;
+        RSDK::Hitbox hitbox;
     };
 
     // ==============================
     // INSTANCE VARS
     // ==============================
+    ChompyJumpDirs jumpDir;
+    RSDK::StateMachine<Chompy> state;
     RSDK::Animator animator;
-    Player *parent;
-    uint8 shieldValue;
+    RSDK::Vector2 oldPos;
+    int32 timer;
 
     // ==============================
     // EVENTS
@@ -55,10 +64,13 @@ struct BlueShield : RSDK::GameObject::Entity {
     // FUNCTIONS
     // ==============================
 
+    void State_Wait(void);
+    void State_Jump(void);
+
     // ==============================
     // DECLARATION
     // ==============================
 
-    RSDK_DECLARE(BlueShield);
+    RSDK_DECLARE(Chompy);
 };
 } // namespace GameLogic

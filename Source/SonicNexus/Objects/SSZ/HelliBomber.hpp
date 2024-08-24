@@ -5,7 +5,7 @@
 namespace GameLogic
 {
 
-struct BlueShield : RSDK::GameObject::Entity {
+struct HelliBomber : RSDK::GameObject::Entity {
 
     // ==============================
     // ENUMS
@@ -21,14 +21,21 @@ struct BlueShield : RSDK::GameObject::Entity {
 
     struct Static : RSDK::GameObject::Static {
         RSDK::SpriteAnimation aniFrames;
+        RSDK::Hitbox hitbox;
+        RSDK::Hitbox aggroHitbox;
+        RSDK::Hitbox bulletHitbox;
     };
 
     // ==============================
     // INSTANCE VARS
     // ==============================
+    bool32 isBullet;
+    RSDK::StateMachine<HelliBomber> state;
     RSDK::Animator animator;
-    Player *parent;
-    uint8 shieldValue;
+    RSDK::Animator bladesAnim;
+    int32 destX;
+    int32 timer;
+    Player *target;
 
     // ==============================
     // EVENTS
@@ -55,10 +62,16 @@ struct BlueShield : RSDK::GameObject::Entity {
     // FUNCTIONS
     // ==============================
 
+    void State_Idle(void);
+    void State_Move(void);
+    void State_Wait(void);
+    void State_Shoot(void);
+    void State_Bullet(void);
+
     // ==============================
     // DECLARATION
     // ==============================
 
-    RSDK_DECLARE(BlueShield);
+    RSDK_DECLARE(HelliBomber);
 };
 } // namespace GameLogic

@@ -5,7 +5,7 @@
 namespace GameLogic
 {
 
-struct BlueShield : RSDK::GameObject::Entity {
+struct FrogOmatic : RSDK::GameObject::Entity {
 
     // ==============================
     // ENUMS
@@ -21,14 +21,14 @@ struct BlueShield : RSDK::GameObject::Entity {
 
     struct Static : RSDK::GameObject::Static {
         RSDK::SpriteAnimation aniFrames;
+        RSDK::Hitbox hitbox;
     };
 
     // ==============================
     // INSTANCE VARS
     // ==============================
     RSDK::Animator animator;
-    Player *parent;
-    uint8 shieldValue;
+    int32 bounce;
 
     // ==============================
     // EVENTS
@@ -59,6 +59,6 @@ struct BlueShield : RSDK::GameObject::Entity {
     // DECLARATION
     // ==============================
 
-    RSDK_DECLARE(BlueShield);
+    RSDK_DECLARE(FrogOmatic);
 };
 } // namespace GameLogic

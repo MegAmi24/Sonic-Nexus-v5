@@ -1,7 +1,8 @@
 // ---------------------------------------------------------------------
 // RSDK Project: Sonic Nexus v5
 // Object Description: Ring Object
-// Object Author: MegAmi
+// Original Author: Christian Whitehead "The Taxman"
+// Ported to RSDKv5 By: MegAmi
 // ---------------------------------------------------------------------
 
 #include "Ring.hpp"
@@ -112,7 +113,7 @@ void Ring::State_Lose(void)
     this->position.y += this->velocity.y;
 
     if (this->velocity.y >= 0) {
-        if (this->TileCollision(this->collisionLayers, CMODE_FLOOR, this->collisionPlane, 0, 8, true)) {
+        if (this->TileCollision(this->collisionLayers, CMODE_FLOOR, this->collisionPlane, 0, TO_FIXED(8), true)) {
             this->velocity.y = -this->velocity.y;
 
             this->velocity.y += 32768;
