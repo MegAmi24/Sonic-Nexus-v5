@@ -14,6 +14,7 @@ struct Corkscrew : RSDK::GameObject::Entity {
     enum CorkscrewDirections {
         CORKSCREW_RIGHT,
         CORKSCREW_LEFT,
+        CORKSCREW_CENTER,
     };
 
     // ==============================

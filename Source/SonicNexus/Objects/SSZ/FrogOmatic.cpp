@@ -112,7 +112,7 @@ void FrogOmatic::StageLoad(void)
 #if GAME_INCLUDE_EDITOR
 void FrogOmatic::EditorDraw(void)
 {
-    this->animator.SetAnimation(sVars->aniFrames, 0, true, 0);
+    this->animator.SetAnimation(sVars->aniFrames, 0, true, 2);
     this->animator.DrawSprite(NULL, false);
 }
 

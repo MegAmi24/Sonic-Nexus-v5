@@ -53,7 +53,7 @@ void CLedge::Create(void *data)
             this->length = VOID_TO_INT(data);
         this->animator.SetAnimation(sVars->aniFrames, 3, true, 0);
         this->active        = ACTIVE_BOUNDS;
-        this->updateRange.x = TO_FIXED(64);
+        this->updateRange.x = TO_FIXED(128);
         this->updateRange.y = TO_FIXED(128);
         this->drawGroup     = 3;
 

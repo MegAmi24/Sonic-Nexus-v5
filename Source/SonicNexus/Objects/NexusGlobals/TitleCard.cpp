@@ -42,6 +42,7 @@ void TitleCard::Create(void *data)
                 this->stateDraw.Set(&TitleCard::Draw_GreyscaleBG);
                 this->drawFX = FX_SCALE;
                 this->animator.SetAnimation(&sVars->aniFrames, 5, true, 0);
+                sVars->actID = this->actID;
                 break;
             case TITLECARD_SIDEBAR:
                 this->position.x = TO_FIXED(screenInfo->size.x - 116);
@@ -76,7 +77,7 @@ void TitleCard::Create(void *data)
                 this->rotation   = 80;
                 this->drawFX     = FX_ROTATE;
                 this->state.Set(&TitleCard::State_ActBall);
-                this->animator.SetAnimation(&sVars->aniFrames, 2, true, 0);
+                this->animator.SetAnimation(&sVars->aniFrames, 2, true, sVars->actID);
                 break;
             case TITLECARD_VERTTEXT1:
                 this->position.x = TO_FIXED(24);
@@ -150,10 +151,6 @@ void TitleCard::State_FadeUp(void)
             GameObject::Reset(SLOT_TITLECARD_SECONDWORD, sVars->classID, TITLECARD_SECONDWORD);
             GameObject::Reset(SLOT_TITLECARD_ZONE, sVars->classID, TITLECARD_ZONE);
             GameObject::Reset(SLOT_TITLECARD_ACTBALL, sVars->classID, TITLECARD_ACTBALL);
-
-            sVars->actID = this->actID;
-
-            RSDK_GET_ENTITY(SLOT_TITLECARD_ZONE, TitleCard)->animator.frameID = sVars->actID;
 
             TitleCard *sideBar  = RSDK_GET_ENTITY(SLOT_TITLECARD_SIDEBAR, TitleCard);
             TitleCard *actBall  = RSDK_GET_ENTITY(SLOT_TITLECARD_ACTBALL, TitleCard);
@@ -423,7 +420,7 @@ void TitleCard::Serialize(void)
     RSDK_EDITABLE_VAR(TitleCard, VAR_STRING, word1);
     RSDK_EDITABLE_VAR(TitleCard, VAR_STRING, word2);
     RSDK_EDITABLE_VAR(TitleCard, VAR_UINT8, offset);
-    RSDK_EDITABLE_VAR(TitleCard, VAR_UINT8, actID);
+    RSDK_EDITABLE_VAR(TitleCard, VAR_ENUM, actID);
 }
 
 } // namespace GameLogic

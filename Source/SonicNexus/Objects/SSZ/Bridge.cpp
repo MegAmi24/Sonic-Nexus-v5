@@ -144,7 +144,7 @@ void Bridge::Create(void *data)
             this->length = VOID_TO_INT(data);
         this->animator.SetAnimation(sVars->aniFrames, 2, true, 0);
         this->active        = ACTIVE_BOUNDS;
-        this->updateRange.x = TO_FIXED(128); // Bigger range than normal so it doesn't pop in/out in widescreen
+        this->updateRange.x = TO_FIXED(128);
         this->updateRange.y = TO_FIXED(128);
         this->drawGroup     = 3;
 

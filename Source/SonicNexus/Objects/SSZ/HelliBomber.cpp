@@ -203,6 +203,8 @@ void HelliBomber::State_Bullet(void)
                     player->groundVel = -131072;
             }
         }
+
+        this->animator.Process();
     }
 }
 

@@ -149,6 +149,7 @@ void Corkscrew::EditorLoad(void)
     RSDK_ACTIVE_VAR(Corkscrew::sVars, direction);
     RSDK_ENUM_VAR("Right", CORKSCREW_RIGHT);
     RSDK_ENUM_VAR("Left", CORKSCREW_LEFT);
+    RSDK_ENUM_VAR("Center", CORKSCREW_CENTER);
 }
 #endif
 

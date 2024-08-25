@@ -45,7 +45,7 @@ struct TitleCard : RSDK::GameObject::Entity {
     RSDK::StateMachine<TitleCard> stateDraw;
     RSDK::String word1;
     RSDK::String word2;
-    uint8 actID;
+    ActIDs actID;
     uint8 offset;
     int32 timer;
 
