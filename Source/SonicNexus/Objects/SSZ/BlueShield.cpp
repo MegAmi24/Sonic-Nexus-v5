@@ -20,16 +20,16 @@ void BlueShield::Draw(void) { this->animator.DrawSprite(&this->parent->position,
 
 void BlueShield::Create(void *data)
 {
-    this->visible   = true;
-    this->drawGroup = 4;
-    this->inkEffect = INK_BLEND;
+    this->visible = true;
 
     if (!sceneInfo->inEditor) {
         this->animator.SetAnimation(sVars->aniFrames, 0, true, 0);
-        this->parent        = RSDK_GET_ENTITY(data ? VOID_TO_INT(data) : SLOT_PLAYER1, Player);
-        this->shieldValue   = 1;
         this->active        = ACTIVE_NORMAL;
+        this->drawGroup     = 4;
+        this->inkEffect     = INK_BLEND;
+        this->parent        = RSDK_GET_ENTITY(data ? VOID_TO_INT(data) : SLOT_PLAYER1, Player);
         this->position      = this->parent->position;
+        this->shieldValue   = 1;
     }
 }
 

@@ -39,6 +39,7 @@ struct Music : RSDK::GameObject::Entity {
     struct Static : RSDK::GameObject::Static {
         TrackInfo musicTracks[CHANNEL_COUNT];
         int32 currentTrack;
+        uint8 channelID;
         float volume;
     };
 

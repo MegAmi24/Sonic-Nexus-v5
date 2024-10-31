@@ -41,25 +41,24 @@ void Music::SetTrack(const char *filePath, uint8 trackID, uint32 loop)
 
 void Music::Play(int32 track)
 {
-    Stop();
     sVars->currentTrack = track;
-    TrackInfo *song     = &sVars->musicTracks[sVars->currentTrack];
-    channels[sVars->currentTrack].PlayStream(song->fileName, 0, song->trackLoop, true);
-    sVars->volume = 1.0f;
+    TrackInfo *song     = &sVars->musicTracks[track];
+    sVars->channelID    = channels[0].PlayStream(song->fileName, 0, song->trackLoop, true);
+    sVars->volume       = 1.0f;
 }
 
-void Music::Stop() { channels[sVars->currentTrack].Stop(); }
+void Music::Stop() { channels[sVars->channelID].Stop(); }
 
-void Music::Pause() { channels[sVars->currentTrack].Pause(); }
+void Music::Pause() { channels[sVars->channelID].Pause(); }
 
-void Music::Resume() { channels[sVars->currentTrack].Resume(); }
+void Music::Resume() { channels[sVars->channelID].Resume(); }
 
 int32 Music::CurrentTrack(void) { return sVars->currentTrack; }
 
 void Music::SetVolume(float volume)
 {
     sVars->volume = CLAMP(volume, 0.0f, 1.0f);
-    channels[sVars->currentTrack].SetAttributes(sVars->volume, 0.0f, 1.0f);
+    channels[sVars->channelID].SetAttributes(sVars->volume, 0.0f, 1.0f);
 }
 
 #if GAME_INCLUDE_EDITOR

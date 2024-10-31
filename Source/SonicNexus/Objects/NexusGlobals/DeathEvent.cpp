@@ -38,7 +38,7 @@ void DeathEvent::Create(void *data)
         if (data)
             this->type = (DeathEventTypes)VOID_TO_INT(data);
         this->active    = ACTIVE_NORMAL;
-        this->drawGroup = 6;
+        this->drawGroup = 7; // Using 7 instead of 6 so the fade draws above the HUD
 
         switch (this->type) {
             case DEATHEVENT_GAMEOVER:

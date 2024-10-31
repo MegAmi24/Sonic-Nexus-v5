@@ -124,6 +124,7 @@ void Player::StaticUpdate(void)
 
 void Player::Draw(void)
 {
+    // v5 45-degree rotation is broken so we have to do it ourselves
     int32 rotStore = this->rotation;
     switch (this->animator.animationID) {
         case ANI_RUNNING:
