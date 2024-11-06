@@ -280,43 +280,39 @@ void Player::SetMovementStats(PlayerMovementStats *stats)
 
 void Player::DefaultAirMovement(Player *player)
 {
-    if (player->velocity.y > -0x40000 && player->velocity.y < 0)
-        player->groundVel -= player->groundVel >> 5;
-
     if (player->groundVel <= -player->stats.topSpeed) {
-        if (player->left) {
+        if (player->left)
             player->direction = FLIP_X;
-        }
     }
-    else {
-        if (player->left) {
-            player->groundVel -= player->stats.airAcceleration;
-            player->direction = FLIP_X;
-        }
+    else if (player->left) {
+        player->groundVel -= player->stats.airAcceleration;
+        player->direction = FLIP_X;
     }
-
     if (player->groundVel >= player->stats.topSpeed) {
         if (player->right)
             player->direction = FLIP_NONE;
     }
     else if (player->right) {
-        player->direction = FLIP_NONE;
         player->groundVel += player->stats.airAcceleration;
+        player->direction = FLIP_NONE;
     }
+
+    if (player->velocity.y > -0x40001 && player->velocity.y < 1)
+        player->groundVel -= player->groundVel >> 5;
 }
 
 void Player::DefaultGravityFalse(Player *player)
 {
     player->trackScroll = false;
-    player->velocity.x  = player->groundVel * Math::Cos256(player->angle) >> 8;
-    player->velocity.y  = player->groundVel * Math::Sin256(player->angle) >> 8;
+    player->velocity.x  = (player->groundVel * Math::Cos256(player->angle)) >> 8;
+    player->velocity.y  = (player->groundVel * Math::Sin256(player->angle)) >> 8;
 }
 
 void Player::DefaultGravityTrue(Player *player)
 {
     player->trackScroll = true;
     player->velocity.y += player->stats.gravityStrength;
-    if (player->velocity.y >= -0x40000) {
+    if (player->velocity.y >= -0x33CB0) {
         player->timer = 0;
     }
     else if (!player->jumpHold && player->timer > 0) {
@@ -475,7 +471,6 @@ void Player::DefaultJumpAction(Player *player)
 
 void Player::DefaultRollingMovement(Player *player)
 {
-
     if (player->right && player->groundVel < 0)
         player->groundVel += player->stats.rollingDeceleration;
     if (player->left && player->groundVel > 0)

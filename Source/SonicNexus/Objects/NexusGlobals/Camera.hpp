@@ -17,10 +17,8 @@ struct Camera : RSDK::GameObject::Entity {
     // ==============================
 
     enum CameraStyles {
-        CAMERASTYLE_NORMAL,
-        CAMERASTYLE_CDSTYLE,
-        CAMERASTYLE_HLOCKED,
-        CAMERASTYLE_DISABLED,
+        CAMERASTYLE_FOLLOW,
+        CAMERASTYLE_EXTENDED,
     };
 
     // ==============================
@@ -82,7 +80,6 @@ struct Camera : RSDK::GameObject::Entity {
 
     void SetPlayerScreenPosition(Player *player);
     void SetPlayerScreenPositionCDStyle(Player *player);
-    void SetPlayerHLockedScreenPosition(Player *player);
     void SetPlayerLockedScreenPosition(Player *player);
 
     // ==============================

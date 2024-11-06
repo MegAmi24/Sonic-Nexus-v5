@@ -36,7 +36,7 @@ void CalculateTrigAngles()
     sinVal512[256] = 0;
     sinVal512[384] = -0x200;
 
-    for (int32 i = 0; i < 0x100; i++) {
+    for (int32 i = 0; i < 0x100; ++i) {
         sinVal256[i] = (sinVal512[i * 2] >> 1);
         cosVal256[i] = (cosVal512[i * 2] >> 1);
     }
