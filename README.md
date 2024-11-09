@@ -11,8 +11,11 @@ First, you will need to clone the repository containing the source code. To do t
 Clone the repo **recursively**, using:
 `git clone https://github.com/MegAmi24/Sonic-Nexus-v5 --recursive`
 
-If you've already cloned the repo, run this command inside of the repository:
-```git submodule update --init```
+If you've already cloned the repo, run these commands inside of the repository to ensure the clone is up-to-date:
+```
+git pull
+git submodule update --remote --init --recursive
+```
 
 ## Building
 
@@ -47,6 +50,7 @@ After adding the symlink, build the RSDKv5(U) decompilation in Android Studio.
 # Special Thanks
 * [Rubberduckycooly](https://github.com/Rubberduckycooly) and [st×tic](https://github.com/stxticOVFL) for the original RSDK decompilations.
 * Everyone in the [Retro Engine Modding Server](https://dc.railgun.works/retroengine).
+* Taxman and the Nexus Team for the original game.
 
 # Disclaimer
 Sonic Nexus is a fangame by Taxman and the Nexus Team. Sonic the Hedgehog and all related characters are property of SEGA and Sonic Team. This game is fan made and is not intended for retail.
