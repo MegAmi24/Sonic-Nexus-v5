@@ -138,7 +138,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)/GameAPI/CPP/;$(ProjectDir);$(ProjectDir)Objects/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/RSDKv5-GameAPI/CPP/;$(ProjectDir);$(ProjectDir)Objects/</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -189,6 +189,12 @@
     <ClCompile Include="Objects\NexusGlobals\StageSetup.cpp" />
     <ClCompile Include="Objects\NexusGlobals\StarPost.cpp" />
     <ClCompile Include="Objects\NexusGlobals\TitleCard.cpp" />
+    <ClCompile Include="Objects\NexusIntro\Intro.cpp" />
+    <ClCompile Include="Objects\NexusIntro\RLogo.cpp" />
+    <ClCompile Include="Objects\NexusTitle\FadeUp.cpp" />
+    <ClCompile Include="Objects\NexusTitle\Island.cpp" />
+    <ClCompile Include="Objects\NexusTitle\Logo.cpp" />
+    <ClCompile Include="Objects\NexusTitle\PressStart.cpp" />
     <ClCompile Include="Objects\Players\Player.cpp" />
     <ClCompile Include="Objects\SSZ\BlueShield.cpp" />
     <ClCompile Include="Objects\SSZ\Bridge.cpp" />
@@ -230,6 +236,12 @@
     <ClInclude Include="Objects\NexusGlobals\StageSetup.hpp" />
     <ClInclude Include="Objects\NexusGlobals\StarPost.hpp" />
     <ClInclude Include="Objects\NexusGlobals\TitleCard.hpp" />
+    <ClInclude Include="Objects\NexusIntro\Intro.hpp" />
+    <ClInclude Include="Objects\NexusIntro\RLogo.hpp" />
+    <ClInclude Include="Objects\NexusTitle\FadeUp.hpp" />
+    <ClInclude Include="Objects\NexusTitle\Island.hpp" />
+    <ClInclude Include="Objects\NexusTitle\Logo.hpp" />
+    <ClInclude Include="Objects\NexusTitle\PressStart.hpp" />
     <ClInclude Include="Objects\Players\Player.hpp" />
     <ClInclude Include="Objects\SSZ\BlueShield.hpp" />
     <ClInclude Include="Objects\SSZ\Bridge.hpp" />

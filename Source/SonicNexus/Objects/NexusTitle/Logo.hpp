@@ -2,49 +2,50 @@
 
 #include "All.hpp"
 
+#define LOGO_YPOS (108)
+
 namespace GameLogic
 {
 
-struct Music : RSDK::GameObject::Entity {
+struct Logo : RSDK::GameObject::Entity {
 
     // ==============================
     // ENUMS
     // ==============================
 
-    enum MusicTracks {
-        TRACK_STAGE,
-        TRACK_LEVELCOMPLETE,
-        TRACK_INVINCIBILITY,
-        TRACK_SPEEDSHOES,
-        TRACK_SUPER, // Just a guess
-        TRACK_BOSS,
-        TRACK_1UP,
-        TRACK_GAMEOVER,
+    enum LogoTypes {
+        LOGO_BOUNCING_DOWN,
+        LOGO_BOUNCING_SCALE,
+        LOGO_STATIC,
     };
 
     // ==============================
     // STRUCTS
     // ==============================
 
-    struct TrackInfo {
-        char fileName[0x40];
-        uint32 trackLoop; // RSDKv2 doesn't support specifying a loop point, but that kinda sucks
-    };
-
     // ==============================
     // STATIC VARS
     // ==============================
 
     struct Static : RSDK::GameObject::Static {
-        TrackInfo musicTracks[CHANNEL_COUNT];
-        int32 currentTrack;
-        uint8 channelID;
-        float volume;
+        RSDK::SpriteAnimation aniFrames;
+        RSDK::SoundFX sfxLand;
     };
 
     // ==============================
     // INSTANCE VARS
     // ==============================
+    RSDK::Animator animator;
+    RSDK::Animator handAnim;
+    RSDK::Animator sonicBlinkAnim;
+    RSDK::Animator tailsBlinkAnim;
+    RSDK::StateMachine<Logo> state;
+    RSDK::StateMachine<Logo> stateDraw;
+    int32 bounceCount;
+    int32 scaleSpeed;
+    int32 timer;
+    int32 sonicBlink;
+    int32 tailsBlink;
 
     // ==============================
     // EVENTS
@@ -70,19 +71,18 @@ struct Music : RSDK::GameObject::Entity {
     // ==============================
     // FUNCTIONS
     // ==============================
+    
+    void State_BouncingDown(void); // Unused
+    void State_BouncingScale(void);
+    void State_Static(void);
 
-    static void SetTrack(const char *path, uint8 track, uint32 loopPoint);
-    static void Play(int32 track);
-    static void Stop(void);
-    static void Pause(void);
-    static void Resume(void);
-    static int32 CurrentTrack(void);
-    static void SetVolume(float volume);
+    void Draw_Normal(void);
+    void Draw_BouncingScale(void);
 
     // ==============================
     // DECLARATION
     // ==============================
 
-    RSDK_DECLARE(Music);
+    RSDK_DECLARE(Logo);
 };
 } // namespace GameLogic

@@ -257,7 +257,7 @@ void ActFinish::State_FadeOut(void)
         if (Stage::CheckValidScene())
             Stage::LoadScene();
         else {
-            Stage::SetScene("Presentation", "Intro Screen");
+            Stage::SetScene("Presentation Stages", "Intro Screen");
             Stage::LoadScene();
         }
     }

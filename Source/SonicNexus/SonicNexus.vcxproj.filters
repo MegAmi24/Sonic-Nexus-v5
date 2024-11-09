@@ -11,9 +11,6 @@
     <Filter Include="Source Files\Objects">
       <UniqueIdentifier>{9ea60711-b902-46e4-a0fd-554f746f5f71}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Objects\NexusIntro">
-      <UniqueIdentifier>{217af9ff-fa8b-41b8-bfc5-fa580801c1bf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Objects\NexusGlobals">
       <UniqueIdentifier>{2e09f982-cdbc-4b81-a05d-0fab5a097e76}</UniqueIdentifier>
     </Filter>
@@ -25,6 +22,9 @@
     </Filter>
     <Filter Include="Source Files\Objects\Players">
       <UniqueIdentifier>{eb8f823d-9b70-4025-842a-2672fcd70c12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Objects\NexusIntro">
+      <UniqueIdentifier>{a45d411b-8ca6-41e1-bbec-8a2e807629f8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -135,6 +135,24 @@
     </ClCompile>
     <ClCompile Include="Objects\SSZ\MRally.cpp">
       <Filter>Source Files\Objects\SSZ</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\NexusIntro\Intro.cpp">
+      <Filter>Source Files\Objects\NexusIntro</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\NexusIntro\RLogo.cpp">
+      <Filter>Source Files\Objects\NexusIntro</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\NexusTitle\FadeUp.cpp">
+      <Filter>Source Files\Objects\NexusTitle</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\NexusTitle\Island.cpp">
+      <Filter>Source Files\Objects\NexusTitle</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\NexusTitle\Logo.cpp">
+      <Filter>Source Files\Objects\NexusTitle</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\NexusTitle\PressStart.cpp">
+      <Filter>Source Files\Objects\NexusTitle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -254,6 +272,24 @@
     </ClInclude>
     <ClInclude Include="Objects\SSZ\MRally.hpp">
       <Filter>Source Files\Objects\SSZ</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\NexusIntro\Intro.hpp">
+      <Filter>Source Files\Objects\NexusIntro</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\NexusIntro\RLogo.hpp">
+      <Filter>Source Files\Objects\NexusIntro</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\NexusTitle\FadeUp.hpp">
+      <Filter>Source Files\Objects\NexusTitle</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\NexusTitle\Island.hpp">
+      <Filter>Source Files\Objects\NexusTitle</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\NexusTitle\Logo.hpp">
+      <Filter>Source Files\Objects\NexusTitle</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\NexusTitle\PressStart.hpp">
+      <Filter>Source Files\Objects\NexusTitle</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

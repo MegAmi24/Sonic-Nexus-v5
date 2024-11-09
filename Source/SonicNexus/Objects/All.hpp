@@ -16,6 +16,12 @@ struct Spring;
 struct StageSetup;
 struct StarPost;
 struct TitleCard;
+struct Intro;
+struct RLogo;
+struct FadeUp;
+struct Island;
+struct Logo;
+struct PressStart;
 struct Player;
 struct BlueShield;
 struct Bridge;
@@ -52,6 +58,12 @@ struct ZipTrack;
 #include "NexusGlobals\StageSetup.hpp"
 #include "NexusGlobals\StarPost.hpp"
 #include "NexusGlobals\TitleCard.hpp"
+#include "NexusIntro\Intro.hpp"
+#include "NexusIntro\RLogo.hpp"
+#include "NexusTitle\FadeUp.hpp"
+#include "NexusTitle\Island.hpp"
+#include "NexusTitle\Logo.hpp"
+#include "NexusTitle\PressStart.hpp"
 #include "Players\Player.hpp"
 #include "SSZ\BlueShield.hpp"
 #include "SSZ\Bridge.hpp"
