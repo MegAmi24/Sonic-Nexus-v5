@@ -1,7 +1,7 @@
 # Sonic Nexus v5
 This is the Summer 2008 Demo of [Sonic Nexus](https://info.sonicretro.org/Sonic_Nexus) made by Taxman, ported to RSDKv5.
 
-This is a direct port of the game, using little to no code from other RSDKv5 projects. There are also no enchancments made to the original game, save for widescreen support.
+This is a direct port of the game, using little to no code from other RSDKv5 projects. There are also no enhancments made to the original game, save for widescreen support.
 
 # How to Build
 
