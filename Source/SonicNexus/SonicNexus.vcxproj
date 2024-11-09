@@ -98,7 +98,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)/GameAPI/CPP/;$(ProjectDir);$(ProjectDir)Objects/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/RSDKv5-GameAPI/CPP/;$(ProjectDir);$(ProjectDir)Objects/</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -118,7 +118,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)/GameAPI/CPP/;$(ProjectDir);$(ProjectDir)Objects/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/RSDKv5-GameAPI/CPP/;$(ProjectDir);$(ProjectDir)Objects/</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
