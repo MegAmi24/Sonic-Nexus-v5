@@ -19,7 +19,7 @@ void GlobalVariables::Init(void *g)
     GlobalVariables *globals = (GlobalVariables *)g;
     memset(globals, 0, sizeof(GlobalVariables));
 
-    // sceneInfo->debugMode = false;
+    sceneInfo->debugMode = false;
 
     CalculateTrigAngles();
 }
