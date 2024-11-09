@@ -27,6 +27,7 @@ void Logo::Create(void *data)
         this->drawGroup = 4;
 
         this->position.x = TO_FIXED(screenInfo->center.x);
+        this->drawFX |= FX_ROTATE;
         this->animator.SetAnimation(sVars->aniFrames, 0, true, 0);
         this->handAnim.SetAnimation(sVars->aniFrames, 1, true, 0);
         this->sonicBlinkAnim.SetAnimation(sVars->aniFrames, 2, true, 0);
@@ -35,7 +36,7 @@ void Logo::Create(void *data)
             this->position.y = TO_FIXED(LOGO_YPOS);
             this->scale      = { 2048, 2048 };
             this->scaleSpeed = -24;
-            this->drawFX     = FX_SCALE;
+            this->drawFX |= FX_SCALE;
             this->state.Set(&Logo::State_BouncingScale);
             this->stateDraw.Set(&Logo::Draw_BouncingScale);
         }
@@ -55,6 +56,8 @@ void Logo::StageLoad(void)
 
 void Logo::State_BouncingDown(void)
 {
+    SET_CURRENT_STATE();
+
     if (this->bounceCount < 4) {
         this->velocity.y += 16384;
         this->position.y += this->velocity.y;
@@ -91,6 +94,8 @@ void Logo::State_BouncingDown(void)
 
 void Logo::State_BouncingScale(void)
 {
+    SET_CURRENT_STATE();
+
     if (this->bounceCount < 4) {
         this->scaleSpeed -= 2;
         this->scale.x += this->scaleSpeed;
@@ -119,12 +124,13 @@ void Logo::State_BouncingScale(void)
 
 void Logo::State_Static(void)
 {
+    SET_CURRENT_STATE();
+
     this->timer += 8;
     if (this->timer > 511)
         this->timer -= 512;
 
     this->rotation = sin512(this->timer) >> 4;
-    Dev::PrintInt32(Dev::PRINT_NORMAL, "rotation", this->rotation);
 
     if (--this->sonicBlink < 19) {
         if (this->sonicBlink == 18)
@@ -145,15 +151,15 @@ void Logo::State_Static(void)
 
 void Logo::Draw_Normal(void)
 {
+    SET_CURRENT_STATE();
+
     this->animator.frameID = 1;
     this->animator.DrawSprite(NULL, true);
     this->animator.frameID = 2;
     this->animator.DrawSprite(NULL, true);
 
-    this->drawFX |= FX_ROTATE;
     RSDK::Vector2 pos = { TO_FIXED(screenInfo->center.x - 52), TO_FIXED(LOGO_YPOS - 13) };
     this->handAnim.DrawSprite(&pos, true);
-    this->drawFX &= ~FX_ROTATE;
 
     if (this->sonicBlink < 19)
         this->sonicBlinkAnim.DrawSprite(NULL, true);
@@ -164,6 +170,8 @@ void Logo::Draw_Normal(void)
 
 void Logo::Draw_BouncingScale(void)
 {
+    SET_CURRENT_STATE();
+
     this->animator.frameID = 0;
     this->animator.DrawSprite(NULL, true);
 }

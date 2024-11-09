@@ -58,6 +58,8 @@ void PressStart::StageLoad(void)
 
 void PressStart::State_AwaitStart(void)
 {
+    SET_CURRENT_STATE();
+
     if (controllerInfo->keyStart.press) {
         this->state.Set(&PressStart::State_FadeToBlack);
         sVars->sfxEnter.Play();
@@ -66,6 +68,8 @@ void PressStart::State_AwaitStart(void)
 
 void PressStart::State_FadeToBlack(void)
 {
+    SET_CURRENT_STATE();
+
     Music::SetVolume(Music::sVars->volume - 0.02f);
     this->fadeTimer += 4;
     if (this->fadeTimer == 384) {

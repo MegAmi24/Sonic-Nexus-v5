@@ -56,7 +56,7 @@ void FadeUp::Create(void *data)
 
 void FadeUp::StageLoad(void)
 {
-    GameObject::Reset(1, Logo::sVars->classID, 1);
+    GameObject::Reset(1, Logo::sVars->classID, Logo::LOGO_BOUNCING_SCALE);
     Music::SetTrack("Nexus/TitleScreen.ogg", Music::TRACK_STAGE, false);
 }
 
