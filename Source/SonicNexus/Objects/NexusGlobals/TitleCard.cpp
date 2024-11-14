@@ -297,7 +297,7 @@ void TitleCard::State_Zone_Exit(void)
         paletteBank[0].Copy(1, 80, 80, 16);
         // SetBlendTable(128, 1, 16, 80);
 
-        foreach_active(Player, player) player->controlMode = Player::CONTROLMODE_PLAYER1;
+        foreach_active(Player, player) player->controlMode = Player::CONTROLMODE_NORMAL;
 
         for (int32 e = SLOT_TITLECARD; e < SLOT_TITLECARD_ACTBALL; e++) RSDK_GET_ENTITY_GEN(e)->Destroy();
         GameObject::Reset(SLOT_HUD, HUD::sVars->classID, 1);

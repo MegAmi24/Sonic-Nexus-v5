@@ -31,14 +31,14 @@ void ZipLine::Update(void)
         this->angle = (this->angle << 3) + 512;
     }
 
-    this->position.x = cos512(angle) * 25856 + this->originPos.x;
-    this->position.y = sin512(angle) * 53760 + this->originPos.y;
+    this->position.x = Cos512(angle) * 25856 + this->originPos.x;
+    this->position.y = Sin512(angle) * 53760 + this->originPos.y;
 
-    this->handlePos.x = cos512(this->angle) * 4608;
+    this->handlePos.x = Cos512(this->angle) * 4608;
     this->handlePos.x += this->position.x;
     this->handlePos.x &= 4294901760;
 
-    this->handlePos.y = sin512(this->angle) * 4608;
+    this->handlePos.y = Sin512(this->angle) * 4608;
     this->handlePos.y += this->position.y;
     this->handlePos.y &= 4294901760;
 
@@ -55,7 +55,7 @@ void ZipLine::Update(void)
                 if (player->jumpPress) {
                     player->angle     = 0;
                     player->groundVel = this->groundVel;
-                    Player::DefaultJumpAction(player);
+                    Player::ProcessDefaultJumpAction(player);
                     player->state.Set(&Player::State_Air_Movement);
                     Player::sVars->sfxJump.Play();
                     this->state.Set(&ZipLine::State_Return);
@@ -103,10 +103,10 @@ void ZipLine::Draw(void)
     int32 height = 8;
     for (int32 s = 0; s < 3; s++) {
         RSDK::Vector2 pos;
-        pos.x = (cos512(this->angle) * height) << 7;
+        pos.x = (Cos512(this->angle) * height) << 7;
         pos.x += this->position.x;
 
-        pos.y = (sin512(this->angle) * height) << 7;
+        pos.y = (Sin512(this->angle) * height) << 7;
         pos.y += this->position.y;
 
         this->animator.DrawSprite(&pos, false);

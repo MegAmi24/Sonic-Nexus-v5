@@ -17,10 +17,10 @@ struct Player : RSDK::GameObject::Entity {
         PLAYERMODE_DEBUG,
     };
 
-    enum ControlModes {
-        CONTROLMODE_NONE = -1,
-        CONTROLMODE_PLAYER1,
-        CONTROLMODE_DELAY,
+    enum PlayerControlModes {
+        CONTROLMODE_NONE     = -1,
+        CONTROLMODE_NORMAL   = 0,
+        CONTROLMODE_SIDEKICK = 1,
     };
 
     enum PlayerAni {
@@ -84,12 +84,12 @@ struct Player : RSDK::GameObject::Entity {
     // ==============================
 
     struct Static : RSDK::GameObject::Static {
-        uint16 upBuffer;
-        uint16 downBuffer;
-        uint16 leftBuffer;
-        uint16 rightBuffer;
-        uint16 jumpPressBuffer;
-        uint16 jumpHoldBuffer;
+        uint16 delayUp;
+        uint16 delayDown;
+        uint16 delayLeft;
+        uint16 delayRight;
+        uint16 delayJumpPress;
+        uint16 delayJumpHold;
         RSDK::SpriteAnimation sonicFrames;
         RSDK::SoundFX sfxJump;
         RSDK::SoundFX sfxLoseRings;
@@ -179,12 +179,12 @@ struct Player : RSDK::GameObject::Entity {
     // General Player Functions (ported from RSDKv2)
     static void ProcessPlayerControl(Player *player);
     static void SetMovementStats(PlayerMovementStats *stats);
-    static void DefaultAirMovement(Player *player);
-    static void DefaultGravityFalse(Player *player);
-    static void DefaultGravityTrue(Player *player);
-    static void DefaultGroundMovement(Player *player);
-    static void DefaultJumpAction(Player *player);
-    static void DefaultRollingMovement(Player *player);
+    static void ProcessDefaultAirMovement(Player *player);
+    static void ProcessDefaultGravityFalse(Player *player);
+    static void ProcessDefaultGravityTrue(Player *player);
+    static void ProcessDefaultGroundMovement(Player *player);
+    static void ProcessDefaultJumpAction(Player *player);
+    static void ProcessDefaultRollingMovement(Player *player);
     static void ProcessDebugMode(Player *player);
     static void ProcessPlayerAnimation(Player *player);
 

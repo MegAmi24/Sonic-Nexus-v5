@@ -15,16 +15,16 @@ RSDK_REGISTER_OBJECT(SwingPlat);
 
 void SwingPlat::Update(void)
 {
-    this->angle = (sin512(StageSetup::sVars->oscillation << 1) >> 2) + 128;
+    this->angle = (Sin512(StageSetup::sVars->oscillation << 1) >> 2) + 128;
 
     int32 height = (this->height + 1) << 4;
 
-    this->changePos.x = (cos512(this->angle) * height) << 7;
+    this->changePos.x = (Cos512(this->angle) * height) << 7;
     this->changePos.x += this->position.x;
     this->changePos.x &= 4294901760;
     this->changePos.x -= this->platformPos.x;
 
-    this->changePos.y = (sin512(this->angle) * height) << 7;
+    this->changePos.y = (Sin512(this->angle) * height) << 7;
     this->changePos.y += this->position.y;
     this->changePos.y &= 4294901760;
     this->changePos.y -= this->platformPos.y;
@@ -42,11 +42,11 @@ void SwingPlat::Update(void)
 
     this->position = posStore;
 
-    this->platformPos.x = (cos512(this->angle) * height) << 7;
+    this->platformPos.x = (Cos512(this->angle) * height) << 7;
     this->platformPos.x += this->position.x;
     this->platformPos.x &= 4294901760;
 
-    this->platformPos.y = (sin512(this->angle) * height) << 7;
+    this->platformPos.y = (Sin512(this->angle) * height) << 7;
     this->platformPos.y += this->position.y;
     this->platformPos.y &= 4294901760;
 }
@@ -63,10 +63,10 @@ void SwingPlat::Draw(void)
     int32 height           = 16;
     for (int32 s = 0; s < this->height; s++) {
         RSDK::Vector2 pos;
-        pos.x = (cos512(this->angle) * height) << 7;
+        pos.x = (Cos512(this->angle) * height) << 7;
         pos.x += this->position.x;
 
-        pos.y = (sin512(this->angle) * height) << 7;
+        pos.y = (Sin512(this->angle) * height) << 7;
         pos.y += this->position.y;
 
         this->animator.DrawSprite(&pos, false);

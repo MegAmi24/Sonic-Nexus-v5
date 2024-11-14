@@ -48,9 +48,8 @@ struct Camera : RSDK::GameObject::Entity {
     RSDK::Vector2 scrollOffset;
     RSDK::Vector2 scrollA;
     RSDK::Vector2 scrollB;
-    int32 yScrollMove;
+    RSDK::Vector2 scrollMove;
     RSDK::Vector2 earthquake;
-    int32 lag;
     int32 waterDrawPos;
 
     // ==============================

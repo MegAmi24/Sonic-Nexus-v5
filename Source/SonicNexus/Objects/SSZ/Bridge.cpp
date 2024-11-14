@@ -27,7 +27,7 @@ void Bridge::Update(void)
             int32 diff     = this->right - this->left;
             midPoint /= FROM_FIXED(diff);
 
-            this->midHeight = sin512(midPoint) * (diff >> 13);
+            this->midHeight = Sin512(midPoint) * (diff >> 13);
 
             if (player->position.y > (this->position.y - 3145728) && player->velocity.y >= 0) {
                 this->walkedOn++;
@@ -51,7 +51,7 @@ void Bridge::Update(void)
             else
                 angle = (playerDiff << 7) / this->midPoint;
 
-            int32 midYPos = ((sin512(angle) * this->midYPos) >> 9) - 524288;
+            int32 midYPos = ((Sin512(angle) * this->midYPos) >> 9) - 524288;
 
             RSDK::Hitbox hitbox;
             hitbox.left  = -1024;
@@ -109,7 +109,7 @@ void Bridge::Draw(void)
     pos.x    = this->left + 524288;
     int32 sc = 524288;
     while (s < (this->midPoint >> 20)) {
-        pos.y = ((sin512((sc << 7) / this->midPoint) * this->midYPos) >> 9) + this->position.y;
+        pos.y = ((Sin512((sc << 7) / this->midPoint) * this->midYPos) >> 9) + this->position.y;
         this->animator.DrawSprite(&pos, false);
         pos.x += 1048576;
         sc += 1048576;
@@ -127,7 +127,7 @@ void Bridge::Draw(void)
     sc    = 524288;
 
     while (s < this->length) {
-        pos.y = ((sin512((sc << 7) / midPoint) * this->midYPos) >> 9) + this->position.y;
+        pos.y = ((Sin512((sc << 7) / midPoint) * this->midYPos) >> 9) + this->position.y;
         this->animator.DrawSprite(&pos, false);
         pos.x -= 1048576;
         sc += 1048576;

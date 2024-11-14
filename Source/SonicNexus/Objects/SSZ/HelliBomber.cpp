@@ -20,7 +20,7 @@ void HelliBomber::Update(void)
     if (this->isBullet)
         return;
 
-    this->velocity.y = sin512(StageSetup::sVars->oscillation << 2) << 6;
+    this->velocity.y = Sin512(StageSetup::sVars->oscillation << 2) << 6;
 
     this->position.x += this->velocity.x;
     this->position.y += this->velocity.y;
