@@ -4,23 +4,19 @@
 using namespace RSDK;
 
 #if RETRO_USE_MOD_LOADER
-namespace RSDK
-{
-namespace Mod
-{
-
-template <typename NS, typename Type> inline static void AddPublicFunction(const char *functionName, Type(NS::*functionPtr))
-{
-    modTable->AddPublicFunction(functionName, reinterpret_cast<void *&>(functionPtr));
-}
-
-} // namespace Mod
-} // namespace RSDK
-
-#define ADD_PUBLIC_FUNC(func) RSDK::Mod::AddPublicFunction(#func, &func)
+#define ADD_PUBLIC_FUNC(func) GameLogic::AddPublicFunction(#func, &func)
 
 namespace GameLogic
 {
+
+template <typename X, typename Type> inline static void AddPublicFunction(const char *functionName, Type(X::*functionPtr))
+{
+    modTable->AddPublicFunction(functionName, reinterpret_cast<void *&>(functionPtr));
+}
+template <typename Type> inline static void AddPublicFunction(const char *functionName, Type(*functionPtr))
+{
+    modTable->AddPublicFunction(functionName, reinterpret_cast<void *&>(functionPtr));
+}
 
 static void InitPublicFunctions()
 {
