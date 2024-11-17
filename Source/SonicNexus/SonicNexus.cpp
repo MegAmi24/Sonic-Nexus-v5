@@ -25,7 +25,9 @@ void GlobalVariables::Init(void *g)
 }
 
 #if RETRO_USE_MOD_LOADER
-void InitModAPI(void) {}
+#include "PublicFunctions.hpp"
+
+void InitModAPI(void) { GameLogic::InitPublicFunctions(); }
 
 void InitModAPI(void);
 #endif

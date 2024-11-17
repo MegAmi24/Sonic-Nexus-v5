@@ -259,6 +259,7 @@
     <ClInclude Include="Objects\SSZ\TubeSwitch.hpp" />
     <ClInclude Include="Objects\SSZ\ZipLine.hpp" />
     <ClInclude Include="Objects\SSZ\ZipTrack.hpp" />
+    <ClInclude Include="PublicFunctions.hpp" />
     <ClInclude Include="SonicNexus.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

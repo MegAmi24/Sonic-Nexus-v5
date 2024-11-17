@@ -246,3 +246,7 @@ RSDKv5/
 .idea/
 android/key/
 android/local.properties
+
+# gameapi_util
+__pycache__/
+gameapi_util_cpp.py
