@@ -10,6 +10,9 @@
 #define RSDK_PI 3.1415927f
 #endif
 
+namespace GameLogic
+{
+
 int32 SinValue512[512];
 int32 CosValue512[512];
 
@@ -41,3 +44,5 @@ void CalculateTrigAngles()
         CosValue256[i] = (CosValue512[i * 2] >> 1);
     }
 }
+
+} // namespace GameLogic

@@ -68,7 +68,7 @@ void Corkscrew::Update(void)
             else
                 player->rotation = 0;
 
-            player->position.y = this->position.y + TO_FIXED(-32 - player->outerbox->bottom + (Math::Cos512(positionDiff) >> 4));
+            player->position.y = this->position.y + TO_FIXED(-32 - player->outerbox->bottom + (Cos512(positionDiff) >> 4));
 
             if (this->CheckCollisionTouchBox(&sVars->hitbox, player, player->outerbox)) {
                 if (player->groundVel > 0) {
@@ -94,7 +94,7 @@ void Corkscrew::Update(void)
             else
                 positionDiff = ((this->position.x - player->position.x) >> 8) / 192;
 
-            player->position.y = this->position.y + TO_FIXED(-32 - player->outerbox->bottom + (Math::Cos512(positionDiff) >> 4));
+            player->position.y = this->position.y + TO_FIXED(-32 - player->outerbox->bottom + (Cos512(positionDiff) >> 4));
 
             if (this->CheckCollisionTouchBox(&sVars->hitbox, player, player->outerbox)) {
                 if (player->groundVel > 0) {

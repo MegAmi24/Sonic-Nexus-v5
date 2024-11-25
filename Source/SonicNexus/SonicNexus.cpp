@@ -21,7 +21,7 @@ void GlobalVariables::Init(void *g)
 
     sceneInfo->debugMode = false;
 
-    CalculateTrigAngles();
+    GameLogic::CalculateTrigAngles();
 }
 
 #if RETRO_USE_MOD_LOADER

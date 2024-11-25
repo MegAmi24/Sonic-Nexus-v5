@@ -94,8 +94,8 @@ void StarPost::State_Flashing(void)
 void StarPost::Draw_Swinging(void)
 {
     RSDK::Vector2 pos;
-    pos.x = Math::Cos512(this->timer) * 1280 + this->position.x;
-    pos.y = Math::Sin512(this->timer) * 1280 + this->position.y - 917504;
+    pos.x = Cos512(this->timer) * 1280 + this->position.x;
+    pos.y = Sin512(this->timer) * 1280 + this->position.y - 917504;
 
     this->starAnim.DrawSprite(&pos, false);
 }

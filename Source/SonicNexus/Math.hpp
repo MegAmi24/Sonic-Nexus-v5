@@ -5,6 +5,9 @@
 #define MEM_ZERO(x)  memset(&(x), 0, sizeof((x)))
 #define MEM_ZEROP(x) memset((x), 0, sizeof(*(x)))
 
+namespace GameLogic
+{
+
 extern int32 SinValue512[0x200];
 extern int32 CosValue512[0x200];
 
@@ -45,3 +48,5 @@ inline int32 Cos256(int32 angle)
     angle &= 0xFF;
     return CosValue256[angle];
 }
+
+} // namespace GameLogic

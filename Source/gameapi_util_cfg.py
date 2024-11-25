@@ -10,9 +10,7 @@ import os
 # app.add_option("Update All.cpp/hpp & CMake Project", app.project_update)
 skipDefaultTools = True
 
-# Path configurations. By default, these are used for
-# generating All.cpp/hpp & Objects.cmake, generating
-# public functions, creating new objects, etc
+# Path configuration
 GAME_PATH        = 'SonicNexus'
 OBJECT_PATH_NAME = 'Objects'
 ALL_CODE_NAME    = 'All.cpp'
@@ -26,8 +24,6 @@ CMAKE_PATH = 'Objects.cmake'
 GAME_NAME  = '${MOD_NAME}' # The game directory to look into
 
 OBJECT_PATH = f'{GAME_PATH}/{OBJECT_PATH_NAME}'
-ALL_CPP_PATH = f'{OBJECT_PATH}/{ALL_CODE_NAME}'
-ALL_HPP_PATH = f'{OBJECT_PATH}/{ALL_HEADER_NAME}'
 
 # Function/Variable definitions
 app = None
@@ -51,7 +47,7 @@ def project_update():
         obj_forward_decl = [f'typedef struct {os.path.splitext(os.path.basename(f))[0]} {os.path.splitext(os.path.basename(f))[0]};\n' for f in filenames if f.endswith(".hpp") and not f.endswith(ALL_HEADER_NAME)]
         obj_includes = [f'#include "{f}"\n' for f in filenames if f.endswith(".hpp") and not f.endswith(ALL_HEADER_NAME)]
 
-        with open(ALL_HPP_PATH, "w") as f:
+        with open(f'{OBJECT_PATH}/{ALL_HEADER_NAME}', "w") as f:
             f.write('#pragma once\n\n')
             f.write(f'namespace {OBJECT_NAMESPACE}\n{{\n\n')
             f.writelines(obj_forward_decl)
