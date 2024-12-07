@@ -291,5 +291,8 @@
     <ClInclude Include="Objects\NexusTitle\PressStart.hpp">
       <Filter>Source Files\Objects\NexusTitle</Filter>
     </ClInclude>
+    <ClInclude Include="PublicFunctions.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
