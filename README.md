@@ -3,6 +3,8 @@ This is the Summer 2008 Demo of [Sonic Nexus](https://info.sonicretro.org/Sonic_
 
 This is a direct port of the game, using little to no code from other RSDKv5 projects. There are also no enhancments made to the original game, save for widescreen support.
 
+You can find the Drop Dash add-on [here](https://github.com/MegAmi24/Nexus-v5-DropDash).
+
 # How to Build
 
 ## Get the source code
