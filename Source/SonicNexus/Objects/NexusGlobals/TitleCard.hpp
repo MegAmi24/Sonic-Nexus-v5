@@ -32,7 +32,9 @@ struct TitleCard : RSDK::GameObject::Entity {
 
     struct Static : RSDK::GameObject::Static {
         RSDK::SpriteAnimation aniFrames;
+#if RETRO_REV02
         uint16 tintLookupTable[0x10000];
+#endif
         uint8 actID;
     };
 

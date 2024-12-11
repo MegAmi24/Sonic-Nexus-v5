@@ -103,22 +103,17 @@ void TitleCard::StageLoad(void)
 {
     sVars->aniFrames.Load("NexusGlobals/TitleCard.bin", SCOPE_GLOBAL);
 
-    // I have to do this instead of just loading because v5's LoadPalette function sucks
-    paletteBank[1].Load("TCardTint.act", 0b0000010000000000);
     paletteBank[0].Copy(1, 80, 80, 16);
 
-    // This is the same code from Mania Plus's pause menu
+#if RETRO_REV02
+    // This is the same tint code from RSDKv5 REV01
     // I could modify it so the tint matches Nexus better but I'm too dumb to know how to do that LOL
     for (int32 i = 0; i < 0x10000; ++i) {
-        uint32 r = (0x20F * (i >> 11) + 23) >> 6;
-        uint32 g = (0x103 * ((i >> 5) & 0x3F) + 33) >> 6;
-        uint32 b = (0x20F * (i & 0x1F) + 23) >> 6;
-
-        int32 brightness = MIN(((b + g + r) << 8) / 680, 0xFF);
-
-        sVars->tintLookupTable[i] = (brightness >> 3) | ((brightness >> 2) << 5) | ((brightness >> 3) << 11);
+        int32 tintValue           = (((uint32)i & 0x1F) + ((i >> 6) & 0x1F) + (((uint16)i >> 11) & 0x1F)) / 3 + 6;
+        sVars->tintLookupTable[i] = 0x841 * MIN(0x1F, tintValue);
     }
     Palette::SetTintLookupTable(sVars->tintLookupTable);
+#endif
 
     // SetBlendTable(128, 1, 16, 80);
 
@@ -292,9 +287,7 @@ void TitleCard::State_Zone_Exit(void)
 
     this->position.x += TO_FIXED(8);
     if (this->position.x > TO_FIXED(screenInfo->size.x + 64)) {
-        // I have to do this instead of just loading because v5's LoadPalette function sucks
-        paletteBank[1].Load("BShieldTint.act", 0b0000010000000000);
-        paletteBank[0].Copy(1, 80, 80, 16);
+        paletteBank[0].Copy(2, 80, 80, 16);
         // SetBlendTable(128, 1, 16, 80);
 
         foreach_active(Player, player) player->controlMode = Player::CONTROLMODE_NORMAL;

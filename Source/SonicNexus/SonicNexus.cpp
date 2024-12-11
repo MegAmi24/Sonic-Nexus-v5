@@ -9,11 +9,13 @@ using namespace RSDK;
 GlobalVariables::Constructor c;
 GlobalVariables *globals = nullptr;
 
+#if RETRO_REV0U
 void GlobalVariables::Init(void *g)
 {
     GlobalVariables *globals = (GlobalVariables *)g;
     memset(globals, 0, sizeof(GlobalVariables));
 }
+#endif
 
 void LinkGameLogic(RSDK::EngineInfo *info)
 {

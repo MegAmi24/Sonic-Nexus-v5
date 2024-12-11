@@ -181,7 +181,9 @@ void Player::Create(void *data)
 
 void Player::StageLoad(void)
 {
+#if RETRO_REV02
     Dev::AddViewableVariable("Debug Mode", &sceneInfo->debugMode, Dev::VIEWVAR_BOOL, false, true);
+#endif
 
     sVars->active = ACTIVE_ALWAYS;
 
@@ -240,10 +242,17 @@ void Player::ProcessPlayerControl(Player *player)
         ControllerState *controller = &controllerInfo[player->Slot() + 1];
         AnalogState *stick          = &analogStickInfoL[player->Slot() + 1];
 
+#if RETRO_REV02
         player->up    = controller->keyUp.down || stick->keyUp.down || stick->vDelta > 0.3;
         player->down  = controller->keyDown.down || stick->keyDown.down || stick->vDelta < -0.3;
         player->left  = controller->keyLeft.down || stick->keyLeft.down || stick->hDelta < -0.3;
         player->right = controller->keyRight.down || stick->keyRight.down || stick->hDelta > 0.3;
+#else
+        player->up    = controller->keyUp.down || stick->keyUp.down;
+        player->down  = controller->keyDown.down || stick->keyDown.down;
+        player->left  = controller->keyLeft.down || stick->keyLeft.down;
+        player->right = controller->keyRight.down || stick->keyRight.down;
+#endif
 
         if (player->left && player->right) {
             player->left  = false;
@@ -524,10 +533,17 @@ void Player::ProcessDebugMode(Player *player)
     ControllerState *controller = &controllerInfo[player->Slot() + 1];
     AnalogState *stick          = &analogStickInfoL[player->Slot() + 1];
 
+#if RETRO_REV02
     bool32 up    = controller->keyUp.down || stick->keyUp.down || stick->vDelta > 0.3;
     bool32 down  = controller->keyDown.down || stick->keyDown.down || stick->vDelta < -0.3;
     bool32 left  = controller->keyLeft.down || stick->keyLeft.down || stick->hDelta < -0.3;
     bool32 right = controller->keyRight.down || stick->keyRight.down || stick->hDelta > 0.3;
+#else
+    bool32 up    = controller->keyUp.down || stick->keyUp.down;
+    bool32 down  = controller->keyDown.down || stick->keyDown.down;
+    bool32 left  = controller->keyLeft.down || stick->keyLeft.down;
+    bool32 right = controller->keyRight.down || stick->keyRight.down;
+#endif
 
     if (left)
         player->position.x -= player->groundVel;
