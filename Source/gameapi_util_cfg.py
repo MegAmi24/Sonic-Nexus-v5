@@ -35,8 +35,8 @@ def init(app_in):
     app.add_label('[Sonic Nexus v5 Tools]')
     app.add_option('Project Update', project_update)
     app.add_option('Generate Public Functions', lambda: app.gen_pub_fns(0))
-    app.add_option('New Object [default]', lambda: app.create_object(0, objectutil_modes.default))
-    app.add_option('New Object [clean]', lambda: app.create_object(0, objectutil_modes.clean))
+    app.add_option('New Object [default]', lambda: app.create_object(0, 0))
+    app.add_option('New Object [clean]', lambda: app.create_object(0, 1))
     app.spacer()
 
 def project_update():
