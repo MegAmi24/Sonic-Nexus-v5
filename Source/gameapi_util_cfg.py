@@ -31,20 +31,24 @@ app = None
 def init(app_in):
     global app
     app = app_in
+
+    app.add_label('[Sonic Nexus v5 Tools]')
     app.add_option('Project Update', project_update)
-    app.add_option('Generate Public Functions', app.gen_pub_fns)
-    app.add_option('Create Object', app.create_object)
-# init -> (app_in)
+    app.add_option('Generate Public Functions', lambda: app.gen_pub_fns(0))
+    app.add_option('New Object [default]', lambda: app.create_object(0, objectutil_modes.default))
+    app.add_option('New Object [clean]', lambda: app.create_object(0, objectutil_modes.clean))
+    app.spacer()
 
 def project_update():
     filenames = []
     app.add_line(f'Generating {ALL_HEADER_NAME}')
+
     for dir_, _, files in os.walk(OBJECT_PATH):
         for file_name in files:
             rel_dir = os.path.relpath(dir_, OBJECT_PATH)
             filenames.append(f"{rel_dir}/{file_name}")
 
-        obj_forward_decl = [f'typedef struct {os.path.splitext(os.path.basename(f))[0]} {os.path.splitext(os.path.basename(f))[0]};\n' for f in filenames if f.endswith(".hpp") and not f.endswith(ALL_HEADER_NAME)]
+        obj_forward_decl = [f'struct {os.path.splitext(os.path.basename(f))[0]};\n' for f in filenames if f.endswith(".hpp") and not f.endswith(ALL_HEADER_NAME)]
         obj_includes = [f'#include "{f}"\n' for f in filenames if f.endswith(".hpp") and not f.endswith(ALL_HEADER_NAME)]
 
         with open(f'{OBJECT_PATH}/{ALL_HEADER_NAME}', "w") as f:
@@ -55,4 +59,3 @@ def project_update():
             f.writelines(obj_includes)
 
     app.success_msg_generic()
-# project_update -> (self)

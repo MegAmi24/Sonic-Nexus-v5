@@ -250,3 +250,4 @@ android/local.properties
 # gameapi_util
 __pycache__/
 gameapi_util_cpp.py
+gameapi_util.py
