@@ -37,16 +37,16 @@ void FrogOmatic::Update(void)
                 case Player::ANI_JUMPING:
                     CREATE_ENTITY(Explosion, NULL, this->position.x, this->position.y);
                     this->Destroy();
-                    Player::sVars->sfxDestroy.Play();
+                    $(Player)->sfxDestroy.Play();
                     if (player->velocity.y > 0)
                         player->velocity.y = -player->velocity.y;
                     globals->score += 100;
                     break;
                 default:
-                    if (RSDK_GET_ENTITY_GEN(SLOT_POWERUP1)->classID == Invincibility::sVars->classID) {
+                    if (RSDK_GET_ENTITY_GEN(SLOT_POWERUP1)->classID == $(Invincibility)->classID) {
                         CREATE_ENTITY(Explosion, NULL, this->position.x, this->position.y);
                         this->Destroy();
-                        Player::sVars->sfxDestroy.Play();
+                        $(Player)->sfxDestroy.Play();
                         if (player->velocity.y > 0)
                             player->velocity.y = -player->velocity.y;
                         globals->score += 100;
@@ -94,7 +94,7 @@ void FrogOmatic::Create(void *data)
         this->updateRange.x   = TO_FIXED(64);
         this->updateRange.y   = TO_FIXED(128);
         this->drawGroup       = 3;
-        this->collisionLayers = StageSetup::sVars->collisionLayers;
+        this->collisionLayers = $(StageSetup)->collisionLayers;
         this->velocity.x      = -65536;
     }
 }

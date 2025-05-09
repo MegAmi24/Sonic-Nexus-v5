@@ -96,7 +96,7 @@ void DeathEvent::State_GameOver(void)
     }
 
     if (this->timer > 0)
-        Music::SetVolume(Music::sVars->volume - 0.02f);
+        Music::SetVolume($(Music)->volume - 0.02f);
     else {
         ControllerState *controller = &controllerInfo[Input::CONT_ANY];
         if (controller->keyA.press || controller->keyB.press || controller->keyC.press)
@@ -109,7 +109,7 @@ void DeathEvent::State_FadeToBlack(void)
     SET_CURRENT_STATE();
 
     if (this->timer < 288) {
-        Music::SetVolume(Music::sVars->volume - 0.02f);
+        Music::SetVolume($(Music)->volume - 0.02f);
         this->timer += 4;
     }
     else

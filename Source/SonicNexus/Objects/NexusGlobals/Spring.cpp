@@ -193,11 +193,11 @@ void Spring::EditorLoad(void)
 {
     sVars->aniFrames.Load("NexusGlobals/Spring.bin", SCOPE_STAGE);
 
-    RSDK_ACTIVE_VAR(Spring::sVars, type);
+    RSDK_ACTIVE_VAR($(Spring), type);
     RSDK_ENUM_VAR("Yellow", SPRING_YELLOW);
     RSDK_ENUM_VAR("Red", SPRING_RED);
 
-    RSDK_ACTIVE_VAR(Spring::sVars, flipFlags);
+    RSDK_ACTIVE_VAR($(Spring), flipFlags);
     RSDK_ENUM_VAR("Up", SPRING_UP);
     RSDK_ENUM_VAR("Right", SPRING_RIGHT);
     RSDK_ENUM_VAR("Left", SPRING_LEFT);

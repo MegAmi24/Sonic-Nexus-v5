@@ -293,7 +293,7 @@ void TitleCard::State_Zone_Exit(void)
         foreach_active(Player, player) player->controlMode = Player::CONTROLMODE_NORMAL;
 
         for (int32 e = SLOT_TITLECARD; e < SLOT_TITLECARD_ACTBALL; e++) RSDK_GET_ENTITY_GEN(e)->Destroy();
-        GameObject::Reset(SLOT_HUD, HUD::sVars->classID, 1);
+        GameObject::Reset(SLOT_HUD, $(HUD)->classID, 1);
     }
 }
 
@@ -397,7 +397,7 @@ void TitleCard::EditorLoad(void)
 {
     sVars->aniFrames.Load("NexusGlobals/Editor.bin", SCOPE_STAGE);
 
-    RSDK_ACTIVE_VAR(TitleCard::sVars, actID);
+    RSDK_ACTIVE_VAR($(TitleCard), actID);
     RSDK_ENUM_VAR("Act 1", ACT_1);
     RSDK_ENUM_VAR("Act 2", ACT_2);
     RSDK_ENUM_VAR("Act 3", ACT_3);

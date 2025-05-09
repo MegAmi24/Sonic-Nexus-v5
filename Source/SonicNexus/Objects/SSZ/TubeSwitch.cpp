@@ -22,7 +22,7 @@ void TubeSwitch::Update(void)
                 case TUBESWITCH_R_ENTRY:
                     if (player->groundVel > 0) {
                         if (!player->state.Matches(&Player::State_Tube_Rolling))
-                            Player::sVars->sfxSpin.Play();
+                            $(Player)->sfxSpin.Play();
                         player->state.Set(&Player::State_Tube_Rolling);
                         player->animator.SetAnimation(player->aniFrames, Player::ANI_JUMPING, false, 0);
                         player->minRollSpeed = 786432;
@@ -35,7 +35,7 @@ void TubeSwitch::Update(void)
                 case TUBESWITCH_L_ENTRY:
                     if (player->groundVel < 0) {
                         if (!player->state.Matches(&Player::State_Tube_Rolling))
-                            Player::sVars->sfxSpin.Play();
+                            $(Player)->sfxSpin.Play();
                         player->state.Set(&Player::State_Tube_Rolling);
                         player->animator.SetAnimation(player->aniFrames, Player::ANI_JUMPING, false, 0);
                         player->minRollSpeed = 786432;
@@ -47,7 +47,7 @@ void TubeSwitch::Update(void)
                     break;
                 case TUBESWITCH_BOOST:
                     if (!player->state.Matches(&Player::State_Tube_Rolling))
-                        Player::sVars->sfxSpin.Play();
+                        $(Player)->sfxSpin.Play();
                     player->state.Set(&Player::State_Tube_Rolling);
                     player->animator.SetAnimation(player->aniFrames, Player::ANI_JUMPING, false, 0);
                     player->minRollSpeed  = 786432;
@@ -62,7 +62,7 @@ void TubeSwitch::Update(void)
                 case TUBESWITCH_EXIT: player->collisionPlane = 0; break;
                 case TUBESWITCH_ENTRY:
                     if (!player->state.Matches(&Player::State_Tube_Rolling))
-                        Player::sVars->sfxSpin.Play();
+                        $(Player)->sfxSpin.Play();
                     player->state.Set(&Player::State_Tube_Rolling);
                     player->animator.SetAnimation(player->aniFrames, Player::ANI_JUMPING, false, 0);
                     player->minRollSpeed = 786432;
@@ -106,7 +106,7 @@ void TubeSwitch::EditorLoad(void)
 {
     sVars->aniFrames.Load("NexusGlobals/Editor.bin", SCOPE_STAGE);
 
-    RSDK_ACTIVE_VAR(TubeSwitch::sVars, type);
+    RSDK_ACTIVE_VAR($(TubeSwitch), type);
     RSDK_ENUM_VAR("Right Entry", TUBESWITCH_R_ENTRY);
     RSDK_ENUM_VAR("Left Entry", TUBESWITCH_L_ENTRY);
     RSDK_ENUM_VAR("Boost", TUBESWITCH_BOOST);

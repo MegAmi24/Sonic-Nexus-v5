@@ -16,7 +16,7 @@ RSDK_REGISTER_OBJECT(Platform);
 void Platform::Update(void)
 {
     if (this->type != PLATFORM_FLOAT) {
-        this->angle = StageSetup::sVars->oscillation << 1;
+        this->angle = $(StageSetup)->oscillation << 1;
         if (this->flippedOsc)
             this->angle += 256;
 
@@ -146,7 +146,7 @@ void Platform::EditorLoad(void)
 {
     sVars->aniFrames.Load("SSZ/Platform.bin", SCOPE_STAGE);
 
-    RSDK_ACTIVE_VAR(Platform::sVars, type);
+    RSDK_ACTIVE_VAR($(Platform), type);
     RSDK_ENUM_VAR("Floating", PLATFORM_FLOAT);
     RSDK_ENUM_VAR("Horizontal", PLATFORM_HORIZONTAL);
     RSDK_ENUM_VAR("Vertical", PLATFORM_VERTICAL);

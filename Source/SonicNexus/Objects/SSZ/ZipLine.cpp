@@ -57,7 +57,7 @@ void ZipLine::Update(void)
                     player->groundVel = this->groundVel;
                     Player::ProcessDefaultJumpAction(player);
                     player->state.Set(&Player::State_Air_Movement);
-                    Player::sVars->sfxJump.Play();
+                    $(Player)->sfxJump.Play();
                     this->state.Set(&ZipLine::State_Return);
                     this->target = nullptr;
                     player->velocity.y += (posStore.y - this->lastY) >> 1;

@@ -105,7 +105,7 @@ void Spikes::EditorLoad(void)
 {
     sVars->aniFrames.Load("NexusGlobals/Spikes.bin", SCOPE_STAGE);
 
-    RSDK_ACTIVE_VAR(Spikes::sVars, flipFlags);
+    RSDK_ACTIVE_VAR($(Spikes), flipFlags);
     RSDK_ENUM_VAR("Up", SPIKES_UP);
     RSDK_ENUM_VAR("Right", SPIKES_RIGHT);
     RSDK_ENUM_VAR("Left", SPIKES_LEFT);

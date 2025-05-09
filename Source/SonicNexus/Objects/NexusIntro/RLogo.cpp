@@ -71,7 +71,7 @@ void RLogo::State_FadeToBlack(void)
     if (this->timer < 256)
         this->timer += 4;
     else
-        this->Reset(Intro::sVars->classID, nullptr);
+        this->Reset($(Intro)->classID, nullptr);
 }
 
 #if GAME_INCLUDE_EDITOR

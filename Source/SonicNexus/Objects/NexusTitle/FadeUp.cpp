@@ -18,7 +18,7 @@ void FadeUp::Update(void)
     if (this->blackFade)
         this->blackFade -= 4;
     else {
-        this->Reset(PressStart::sVars->classID, 0);
+        this->Reset($(PressStart)->classID, 0);
         return;
     }
 
@@ -56,7 +56,7 @@ void FadeUp::Create(void *data)
 
 void FadeUp::StageLoad(void)
 {
-    GameObject::Reset(1, Logo::sVars->classID, Logo::LOGO_BOUNCING_SCALE);
+    GameObject::Reset(1, $(Logo)->classID, Logo::LOGO_BOUNCING_SCALE);
     Music::SetTrack("Nexus/TitleScreen.ogg", Music::TRACK_STAGE, false);
 }
 

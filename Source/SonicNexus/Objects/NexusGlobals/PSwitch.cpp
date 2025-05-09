@@ -68,7 +68,7 @@ void PSwitch::EditorLoad(void)
 {
     sVars->aniFrames.Load("NexusGlobals/Editor.bin", SCOPE_STAGE);
 
-    RSDK_ACTIVE_VAR(PSwitch::sVars, type);
+    RSDK_ACTIVE_VAR($(PSwitch), type);
     RSDK_ENUM_VAR("Plane A", PSWITCH_A);
     RSDK_ENUM_VAR("Plane B", PSWITCH_B);
     RSDK_ENUM_VAR("Loop Top", PSWITCH_LOOP);

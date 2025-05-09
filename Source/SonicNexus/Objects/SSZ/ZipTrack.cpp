@@ -46,7 +46,7 @@ void ZipTrack::EditorLoad(void)
 {
     sVars->aniFrames.Load("SSZ/ZipLine.bin", SCOPE_STAGE);
 
-    RSDK_ACTIVE_VAR(ZipTrack::sVars, track);
+    RSDK_ACTIVE_VAR($(ZipTrack), track);
     RSDK_ENUM_VAR("Track 1", ZIPTRACK_TRACK1);
     RSDK_ENUM_VAR("Track 2", ZIPTRACK_TRACK2);
     RSDK_ENUM_VAR("Track 3", ZIPTRACK_TRACK3);

@@ -20,7 +20,7 @@ void StageSetup::Update(void)
         sceneInfo->seconds      = 59;
         sceneInfo->milliseconds = 99;
 
-        Player::sVars->sfxHurt.Play();
+        $(Player)->sfxHurt.Play();
         sceneInfo->timeEnabled = false;
 
         Player *player1     = RSDK_GET_ENTITY(SLOT_PLAYER1, Player);
@@ -38,10 +38,10 @@ void StageSetup::LateUpdate(void)
 {
     foreach_active(Player, player)
     {
-        if ((TO_FIXED(player->outerbox->left) + player->position.x) < TO_FIXED(Camera::sVars->boundary1.x)) {
+        if ((TO_FIXED(player->outerbox->left) + player->position.x) < TO_FIXED($(Camera)->boundary1.x)) {
             player->velocity.x = 0;
             player->groundVel  = 0;
-            player->position.x = TO_FIXED(Camera::sVars->boundary1.x) - TO_FIXED(player->outerbox->left);
+            player->position.x = TO_FIXED($(Camera)->boundary1.x) - TO_FIXED(player->outerbox->left);
         }
     }
 }
@@ -62,9 +62,9 @@ void StageSetup::Create(void *data)
 
 void StageSetup::StageLoad(void)
 {
-    Player::sVars->pauseEnabled = true;
+    $(Player)->pauseEnabled = true;
     foreach_all(StageSetup, stageSetup) { stageSetup->Destroy(); }
-    GameObject::Reset(SLOT_STAGESETUP, StageSetup::sVars->classID, NULL);
+    GameObject::Reset(SLOT_STAGESETUP, sVars->classID, NULL);
 
     RSDK::SceneLayer fgLow;
     fgLow.Get("FG Low");

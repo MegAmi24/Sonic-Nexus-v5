@@ -20,7 +20,7 @@ void HelliBomber::Update(void)
     if (this->isBullet)
         return;
 
-    this->velocity.y = Sin512(StageSetup::sVars->oscillation << 2) << 6;
+    this->velocity.y = Sin512($(StageSetup)->oscillation << 2) << 6;
 
     this->position.x += this->velocity.x;
     this->position.y += this->velocity.y;
@@ -49,16 +49,16 @@ void HelliBomber::Update(void)
                 case Player::ANI_JUMPING:
                     CREATE_ENTITY(Explosion, NULL, this->position.x, this->position.y);
                     this->Destroy();
-                    Player::sVars->sfxDestroy.Play();
+                    $(Player)->sfxDestroy.Play();
                     if (player->velocity.y > 0)
                         player->velocity.y = -player->velocity.y;
                     globals->score += 100;
                     break;
                 default:
-                    if (RSDK_GET_ENTITY_GEN(SLOT_POWERUP1)->classID == Invincibility::sVars->classID) {
+                    if (RSDK_GET_ENTITY_GEN(SLOT_POWERUP1)->classID == $(Invincibility)->classID) {
                         CREATE_ENTITY(Explosion, NULL, this->position.x, this->position.y);
                         this->Destroy();
-                        Player::sVars->sfxDestroy.Play();
+                        $(Player)->sfxDestroy.Play();
                         if (player->velocity.y > 0)
                             player->velocity.y = -player->velocity.y;
                         globals->score += 100;

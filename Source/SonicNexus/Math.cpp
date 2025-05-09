@@ -1,14 +1,10 @@
 // Although v5 has its own sin/cos lookup tables, it uses different formulas for setting the values, and thus some of those are different from v2
 // This causes issues when using Math::SinXXX or Math::CosXXX with certain objects such as platforms
-// As such, I decided to bring over v2's lookup tables and Sin/Cos functions
+// There's probably a better way to fix this, but instead I decided to bring over v2's lookup tables and Sin/Cos functions
 
 #include "Math.hpp"
 #include <math.h>
 #include <time.h>
-
-#ifndef RSDK_PI
-#define RSDK_PI 3.1415927f
-#endif
 
 namespace GameLogic
 {

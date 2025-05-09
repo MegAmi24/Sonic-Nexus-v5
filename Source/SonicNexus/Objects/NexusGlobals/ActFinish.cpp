@@ -97,7 +97,7 @@ void ActFinish::Create(void *data)
 
     if (!sceneInfo->inEditor) {
         this->gotThroughAnim.SetAnimation(sVars->aniFrames, 2, true, 3);
-        this->actNumAnim.SetAnimation(sVars->aniFrames, 3, true, TitleCard::sVars->actID);
+        this->actNumAnim.SetAnimation(sVars->aniFrames, 3, true, $(TitleCard)->actID);
         this->resultsAnim.SetAnimation(sVars->aniFrames, 4, true, 0);
         this->numbersAnim.SetAnimation(sVars->aniFrames, 0, true, 0);
         this->active    = ACTIVE_NORMAL;

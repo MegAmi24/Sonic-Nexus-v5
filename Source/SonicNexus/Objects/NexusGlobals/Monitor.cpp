@@ -35,7 +35,7 @@ void Monitor::Create(void *data)
         this->updateRange.x   = TO_FIXED(64);
         this->updateRange.y   = TO_FIXED(128);
         this->drawGroup       = 3;
-        this->collisionLayers = StageSetup::sVars->collisionLayers;
+        this->collisionLayers = $(StageSetup)->collisionLayers;
         this->state.Set(&Monitor::State_Idle);
     }
 }
@@ -126,25 +126,25 @@ void Monitor::State_Powerup_Rise(void)
             case MONITOR_RINGS:
                 this->target->rings += 10;
 
-                if (Ring::sVars->pan) {
-                    RSDK::Channel channel = Ring::sVars->sfxRing.Play();
+                if ($(Ring)->pan) {
+                    RSDK::Channel channel = $(Ring)->sfxRing.Play();
                     channel.SetAttributes(1.0, -1.0, 1.0);
-                    Ring::sVars->pan = 0;
+                    $(Ring)->pan = 0;
                 }
                 else {
-                    RSDK::Channel channel = Ring::sVars->sfxRing.Play();
+                    RSDK::Channel channel = $(Ring)->sfxRing.Play();
                     channel.SetAttributes(1.0, 1.0, 1.0);
-                    Ring::sVars->pan = 1;
+                    $(Ring)->pan = 1;
                 }
                 break;
             case MONITOR_BLUESHIELD:
                 sVars->sfxBlueShield.Play();
                 this->target->shield = Player::SHIELD_BLUE;
-                if (RSDK_GET_ENTITY_GEN(SLOT_POWERUP1)->classID != Invincibility::sVars->classID && GameObject::Find("BlueShield"))
-                    GameObject::Reset(SLOT_POWERUP1, BlueShield::sVars->classID, this->target->Slot());
+                if (RSDK_GET_ENTITY_GEN(SLOT_POWERUP1)->classID != $(Invincibility)->classID && GameObject::Find("BlueShield"))
+                    GameObject::Reset(SLOT_POWERUP1, $(BlueShield)->classID, this->target->Slot());
                 break;
             case MONITOR_INVINCIBILITY:
-                GameObject::Reset(SLOT_POWERUP1, Invincibility::sVars->classID, this->target->Slot());
+                GameObject::Reset(SLOT_POWERUP1, $(Invincibility)->classID, this->target->Slot());
                 this->target->invincibility = 1080;
                 Music::Play(Music::TRACK_INVINCIBILITY);
                 break;
@@ -157,7 +157,7 @@ void Monitor::State_Powerup_Rise(void)
                 break;
             case MONITOR_EXTRALIFE:
                 globals->lives++;
-                Player::sVars->sfxYes.Play();
+                $(Player)->sfxYes.Play();
                 break;
             case MONITOR_ROBOTNIK:
                 if (!this->target->invincibility) {
@@ -197,7 +197,7 @@ void Monitor::EditorLoad(void)
 {
     sVars->aniFrames.Load("NexusGlobals/Monitor.bin", SCOPE_STAGE);
 
-    RSDK_ACTIVE_VAR(Monitor::sVars, type);
+    RSDK_ACTIVE_VAR($(Monitor), type);
     RSDK_ENUM_VAR("Blank", MONITOR_BLANK);
     RSDK_ENUM_VAR("Rings", MONITOR_RINGS);
     RSDK_ENUM_VAR("Blue Shield", MONITOR_BLUESHIELD);

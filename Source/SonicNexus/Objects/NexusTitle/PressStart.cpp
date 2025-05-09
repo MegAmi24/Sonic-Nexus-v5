@@ -70,7 +70,7 @@ void PressStart::State_FadeToBlack(void)
 {
     SET_CURRENT_STATE();
 
-    Music::SetVolume(Music::sVars->volume - 0.02f);
+    Music::SetVolume($(Music)->volume - 0.02f);
     this->fadeTimer += 4;
     if (this->fadeTimer == 384) {
         globals->lives = 3;

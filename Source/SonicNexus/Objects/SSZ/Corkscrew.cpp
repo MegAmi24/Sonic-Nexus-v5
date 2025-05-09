@@ -146,7 +146,7 @@ void Corkscrew::EditorLoad(void)
 {
     sVars->aniFrames.Load("SSZ/Corkscrew.bin", SCOPE_STAGE);
 
-    RSDK_ACTIVE_VAR(Corkscrew::sVars, direction);
+    RSDK_ACTIVE_VAR($(Corkscrew), direction);
     RSDK_ENUM_VAR("Right", CORKSCREW_RIGHT);
     RSDK_ENUM_VAR("Left", CORKSCREW_LEFT);
     RSDK_ENUM_VAR("Center", CORKSCREW_CENTER);

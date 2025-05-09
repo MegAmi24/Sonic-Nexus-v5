@@ -15,7 +15,7 @@ RSDK_REGISTER_OBJECT(SwingPlat);
 
 void SwingPlat::Update(void)
 {
-    this->angle = (Sin512(StageSetup::sVars->oscillation << 1) >> 2) + 128;
+    this->angle = (Sin512($(StageSetup)->oscillation << 1) >> 2) + 128;
 
     int32 height = (this->height + 1) << 4;
 

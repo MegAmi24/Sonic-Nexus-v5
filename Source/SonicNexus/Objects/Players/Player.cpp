@@ -161,7 +161,7 @@ void Player::Create(void *data)
         this->drawGroup      = 4;
         SetMovementStats(&this->stats);
 
-        this->collisionLayers = StageSetup::sVars->collisionLayers;
+        this->collisionLayers = $(StageSetup)->collisionLayers;
 
         // v2 stores these in the animation files??????? wtf???????
         this->animator.SetAnimation(this->aniFrames, ANI_WALKING, true, 0);
@@ -622,12 +622,12 @@ void Player::Main(void)
             if (Music::CurrentTrack() == Music::TRACK_INVINCIBILITY)
                 Music::Play(Music::TRACK_STAGE);
             Entity *powerUp = RSDK_GET_ENTITY_GEN(this->Slot() + 2);
-            if (powerUp->classID == Invincibility::sVars->classID) {
+            if (powerUp->classID == $(Invincibility)->classID) {
                 switch (this->shield) {
                     case SHIELD_NONE: powerUp->Destroy(); break;
                     case SHIELD_BLUE:
                         if (GameObject::Find("BlueShield"))
-                            GameObject::Reset(powerUp->Slot(), BlueShield::sVars->classID, this->Slot());
+                            GameObject::Reset(powerUp->Slot(), $(BlueShield)->classID, this->Slot());
                         break;
                 }
             }
@@ -1056,17 +1056,17 @@ void Player::State_Dying(void)
         if (!globals->lives) {
             deathType = DeathEvent::DEATHEVENT_GAMEOVER;
             Music::Play(Music::TRACK_GAMEOVER);
-            Player::sVars->pauseEnabled = false;
+            sVars->pauseEnabled = false;
         }
         else if (sceneInfo->minutes == 9 && sceneInfo->seconds == 59) {
             deathType = DeathEvent::DEATHEVENT_TIMEOVER;
             Music::Play(Music::TRACK_GAMEOVER);
-            Player::sVars->pauseEnabled = false;
+            sVars->pauseEnabled = false;
         }
         else
             deathType = DeathEvent::DEATHEVENT_FADETOBLACK;
 
-        GameObject::Reset(this->Slot(), DeathEvent::sVars->classID, deathType);
+        GameObject::Reset(this->Slot(), $(DeathEvent)->classID, deathType);
     }
 }
 

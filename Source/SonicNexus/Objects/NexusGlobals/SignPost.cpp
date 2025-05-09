@@ -51,11 +51,11 @@ void SignPost::State_Waiting(void)
 
     this->signAnim.frameID = 0;
 
-    Camera::sVars->newBoundary1.x = FROM_FIXED(this->position.x) - screenInfo->center.x;
-    Camera::sVars->newBoundary2.x = Camera::sVars->newBoundary1.x + screenInfo->size.x;
+    $(Camera)->newBoundary1.x = FROM_FIXED(this->position.x) - screenInfo->center.x;
+    $(Camera)->newBoundary2.x = $(Camera)->newBoundary1.x + screenInfo->size.x;
 
-    Camera::sVars->newBoundary2.y = FROM_FIXED(this->position.y) + 80;
-    Camera::sVars->newBoundary1.y = Camera::sVars->newBoundary2.y - screenInfo->size.y;
+    $(Camera)->newBoundary2.y = FROM_FIXED(this->position.y) + 80;
+    $(Camera)->newBoundary1.y = $(Camera)->newBoundary2.y - screenInfo->size.y;
 
     foreach_active(Player, player)
     {
@@ -73,7 +73,7 @@ void SignPost::State_Spinning(void)
 {
     SET_CURRENT_STATE();
 
-    Music::SetVolume(Music::sVars->volume - 0.01f);
+    Music::SetVolume($(Music)->volume - 0.01f);
 
     int32 prevFrame = this->signAnim.frameID;
     this->signAnim.Process();
@@ -99,7 +99,7 @@ void SignPost::State_Spinning(void)
                 }
 
                 this->state.Set(&SignPost::State_Exit);
-                GameObject::Reset(SLOT_ACTFINISH, ActFinish::sVars->classID, NULL);
+                GameObject::Reset(SLOT_ACTFINISH, $(ActFinish)->classID, NULL);
             }
             if (this->signAnim.frameID == 0) {
                 RSDK::Vector2 sparklePos;

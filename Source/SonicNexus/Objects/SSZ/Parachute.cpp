@@ -139,7 +139,7 @@ void Parachute::State_Glide(void)
         this->velocity.y = player->velocity.y;
 
     if (player->jumpPress) {
-        Player::sVars->sfxJump.Play();
+        $(Player)->sfxJump.Play();
         player->state.Set(&Player::State_Air_Movement);
         player->animator.SetAnimation(&player->aniFrames, Player::ANI_JUMPING, false, 0);
         player->velocity.y = -262144;

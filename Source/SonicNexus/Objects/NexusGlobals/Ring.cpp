@@ -41,7 +41,7 @@ void Ring::Create(void *data)
             case RING_NORMAL: this->state.Set(&Ring::State_Normal); break;
             case RING_LOSE:
                 this->state.Set(&Ring::State_Lose);
-                this->collisionLayers = StageSetup::sVars->collisionLayers;
+                this->collisionLayers = $(StageSetup)->collisionLayers;
                 break;
             case RING_SPARKLE:
                 this->state.Set(&Ring::State_Sparkle);
@@ -82,7 +82,7 @@ void Ring::State_Normal(void)
 
             if (player->rings >= player->ringExtraLife) {
                 globals->lives++;
-                Player::sVars->sfxYes.Play();
+                $(Player)->sfxYes.Play();
                 player->ringExtraLife += 100;
                 // literally 1984
                 if (player->ringExtraLife > 300)
@@ -184,7 +184,7 @@ void Ring::EditorLoad(void)
 {
     sVars->aniFrames.Load("NexusGlobals/Ring.bin", SCOPE_STAGE);
 
-    RSDK_ACTIVE_VAR(Ring::sVars, type);
+    RSDK_ACTIVE_VAR($(Ring), type);
     RSDK_ENUM_VAR("Normal", RING_NORMAL);
     RSDK_ENUM_VAR("Lose", RING_LOSE);
     RSDK_ENUM_VAR("Sparkle", RING_SPARKLE);

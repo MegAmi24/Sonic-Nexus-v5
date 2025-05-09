@@ -17,7 +17,7 @@ void Camera::Update(void) {}
 
 void Camera::LateUpdate(void)
 {
-    if (this->target->classID == Player::sVars->classID) {
+    if (this->target->classID == $(Player)->classID) {
         if (this->enabled) {
             switch (this->style) {
                 case CAMERASTYLE_FOLLOW: SetPlayerScreenPosition((Player *)this->target); break;
