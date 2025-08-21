@@ -1179,6 +1179,39 @@ void Player::HandleMovement(void)
         this->ProcessMovement(this->outerbox, this->innerbox);
 
     if (this->onGround) {
+        switch (this->collisionMode) {
+            case CMODE_LWALL: {
+                if (this->groundVel < 0x20000 && this->groundVel > -1) {
+                    this->onGround      = false;
+                    this->angle         = 0;
+                    this->collisionMode = CMODE_FLOOR;
+                    this->groundVel     = this->velocity.x;
+                }
+                break;
+            }
+            case CMODE_ROOF: {
+                if (abs(this->groundVel) < 0x20000) {
+                    this->onGround      = false;
+                    this->angle         = 0;
+                    this->collisionMode = CMODE_FLOOR;
+                    this->groundVel     = this->velocity.x;
+                }
+                break;
+            }
+            case CMODE_RWALL: {
+                if (this->groundVel > -0x20000 && this->groundVel < 1) {
+                    this->onGround      = false;
+                    this->angle         = 0;
+                    this->collisionMode = CMODE_FLOOR;
+                    this->groundVel     = this->velocity.x;
+                }
+                break;
+            }
+            default: break;
+        }
+    }
+
+    if (this->onGround) {
         RSDK::Vector2 posStore = this->position;
 
         this->flailing[0] = this->TileGrip(this->collisionLayers, RSDK::CMODE_FLOOR, this->collisionPlane, TO_FIXED(this->normalbox->left - 5),
