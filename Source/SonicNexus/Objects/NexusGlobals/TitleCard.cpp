@@ -106,12 +106,17 @@ void TitleCard::StageLoad(void)
     paletteBank[0].Copy(1, 80, 80, 16);
 
 #if RETRO_REV02
+    uint16 *tintTable = sVars->tintLookupTable;
+#else
+    uint16 *tintTable = Palette::GetTintLookupTable();
+#endif
     // This is the same tint code from RSDKv5 REV01
     // I could modify it so the tint matches Nexus better but I'm too dumb to know how to do that LOL
     for (int32 i = 0; i < 0x10000; ++i) {
-        int32 tintValue           = (((uint32)i & 0x1F) + ((i >> 6) & 0x1F) + (((uint16)i >> 11) & 0x1F)) / 3 + 6;
-        sVars->tintLookupTable[i] = 0x841 * MIN(0x1F, tintValue);
+        int32 tintValue = (((uint32)i & 0x1F) + ((i >> 6) & 0x1F) + (((uint16)i >> 11) & 0x1F)) / 3 + 6;
+        tintTable[i]    = 0x841 * MIN(0x1F, tintValue);
     }
+#if RETRO_REV02
     Palette::SetTintLookupTable(sVars->tintLookupTable);
 #endif
 
