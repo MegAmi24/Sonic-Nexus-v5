@@ -6,6 +6,10 @@
 // ---------------------------------------------------------------------
 
 #include "MRally.hpp"
+#include "NexusGlobals/Explosion.hpp"
+#include "NexusGlobals/Invincibility.hpp"
+#include "NexusGlobals/StageSetup.hpp"
+#include "Players/Player.hpp"
 
 using namespace RSDK;
 

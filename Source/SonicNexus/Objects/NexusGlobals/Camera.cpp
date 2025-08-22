@@ -6,6 +6,7 @@
 // ---------------------------------------------------------------------
 
 #include "Camera.hpp"
+#include "Players/Player.hpp"
 
 using namespace RSDK;
 
@@ -20,13 +21,13 @@ void Camera::LateUpdate(void)
     if (this->target->classID == $(Player)->classID) {
         if (this->enabled) {
             switch (this->style) {
-                case CAMERASTYLE_FOLLOW: SetPlayerScreenPosition((Player *)this->target); break;
-                case CAMERASTYLE_EXTENDED: SetPlayerScreenPositionCDStyle((Player *)this->target); break;
+                case CAMERASTYLE_FOLLOW: SetPlayerScreenPosition(this->target); break;
+                case CAMERASTYLE_EXTENDED: SetPlayerScreenPositionCDStyle(this->target); break;
                 default: break;
             }
         }
         else {
-            SetPlayerLockedScreenPosition((Player *)this->target);
+            SetPlayerLockedScreenPosition(this->target);
         }
     }
 
@@ -77,8 +78,10 @@ void Camera::StageLoad(void)
     sVars->newBoundary2 = sVars->boundary2;
 }
 
-void Camera::SetPlayerScreenPosition(Player *player)
+void Camera::SetPlayerScreenPosition(Entity *entity)
 {
+    Player *player = (Player *)entity;
+
     int32 playerXPos = player->position.x >> 16;
     int32 playerYPos = player->position.y >> 16;
     if (sVars->newBoundary1.y > sVars->boundary1.y) {
@@ -247,8 +250,10 @@ void Camera::SetPlayerScreenPosition(Player *player)
     player->screenPos.y += hitboxDiff;
 }
 
-void Camera::SetPlayerScreenPositionCDStyle(Player *player)
+void Camera::SetPlayerScreenPositionCDStyle(Entity *entity)
 {
+    Player *player = (Player *)entity;
+
     int32 playerXPos = player->position.x >> 16;
     int32 playerYPos = player->position.y >> 16;
     if (sVars->newBoundary1.y > sVars->boundary1.y) {
@@ -412,8 +417,10 @@ void Camera::SetPlayerScreenPositionCDStyle(Player *player)
     player->screenPos.y += hitboxDiff;
 }
 
-void Camera::SetPlayerLockedScreenPosition(Player *player)
+void Camera::SetPlayerLockedScreenPosition(Entity *entity)
 {
+    Player *player = (Player *)entity;
+
     int32 playerXPos = player->position.x >> 16;
     int32 playerYPos = player->position.y >> 16;
     switch (this->style) {

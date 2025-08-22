@@ -6,6 +6,7 @@
 // ---------------------------------------------------------------------
 
 #include "Fan.hpp"
+#include "Players/Player.hpp"
 
 using namespace RSDK;
 

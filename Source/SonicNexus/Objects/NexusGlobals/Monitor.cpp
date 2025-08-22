@@ -6,6 +6,13 @@
 // ---------------------------------------------------------------------
 
 #include "Monitor.hpp"
+#include "StageSetup.hpp"
+#include "Explosion.hpp"
+#include "Ring.hpp"
+#include "Music.hpp"
+#include "Invincibility.hpp"
+#include "Players/Player.hpp"
+#include "SSZ/BlueShield.hpp"
 
 using namespace RSDK;
 

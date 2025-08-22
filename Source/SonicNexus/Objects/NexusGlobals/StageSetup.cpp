@@ -6,6 +6,9 @@
 // ---------------------------------------------------------------------
 
 #include "StageSetup.hpp"
+#include "Camera.hpp"
+#include "StarPost.hpp"
+#include "Players/Player.hpp"
 
 using namespace RSDK;
 

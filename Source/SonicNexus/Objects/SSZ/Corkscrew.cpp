@@ -6,6 +6,8 @@
 // ---------------------------------------------------------------------
 
 #include "Corkscrew.hpp"
+#include "Math.hpp"
+#include "Players/Player.hpp"
 
 using namespace RSDK;
 

@@ -6,6 +6,11 @@
 // ---------------------------------------------------------------------
 
 #include "SignPost.hpp"
+#include "Camera.hpp"
+#include "Music.hpp"
+#include "Ring.hpp"
+#include "ActFinish.hpp"
+#include "Players/Player.hpp"
 
 using namespace RSDK;
 

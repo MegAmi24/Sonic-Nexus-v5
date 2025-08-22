@@ -6,6 +6,7 @@
 // ---------------------------------------------------------------------
 
 #include "RLogo.hpp"
+#include "Intro.hpp"
 
 using namespace RSDK;
 

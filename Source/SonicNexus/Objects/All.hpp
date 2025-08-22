@@ -1,5 +1,4 @@
 #pragma once
-
 namespace GameLogic
 {
 
@@ -45,8 +44,6 @@ struct ZipTrack;
 
 } // namespace GameLogic
 
-#include "SonicNexus.hpp"
-#include "Math.hpp"
 #include "NexusGlobals/ActFinish.hpp"
 #include "NexusGlobals/Camera.hpp"
 #include "NexusGlobals/DeathEvent.hpp"

@@ -6,6 +6,7 @@
 // ---------------------------------------------------------------------
 
 #include "Logo.hpp"
+#include "Math.hpp"
 
 using namespace RSDK;
 

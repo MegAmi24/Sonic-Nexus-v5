@@ -1,6 +1,6 @@
 #pragma once
 
-#include "All.hpp"
+#include "SonicNexus.hpp"
 
 namespace GameLogic
 {

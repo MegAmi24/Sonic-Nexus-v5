@@ -6,6 +6,9 @@
 // ---------------------------------------------------------------------
 
 #include "TitleCard.hpp"
+#include "Music.hpp"
+#include "HUD.hpp"
+#include "Players/Player.hpp"
 
 using namespace RSDK;
 

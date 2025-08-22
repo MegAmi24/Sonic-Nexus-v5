@@ -6,6 +6,7 @@
 // ---------------------------------------------------------------------
 
 #include "RotatePalette.hpp"
+#include "NexusGlobals/Music.hpp"
 
 using namespace RSDK;
 

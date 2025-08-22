@@ -6,6 +6,7 @@
 // ---------------------------------------------------------------------
 
 #include "PressStart.hpp"
+#include "NexusGlobals/Music.hpp"
 
 using namespace RSDK;
 

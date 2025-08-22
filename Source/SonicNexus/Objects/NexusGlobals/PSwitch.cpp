@@ -6,6 +6,7 @@
 // ---------------------------------------------------------------------
 
 #include "PSwitch.hpp"
+#include "Players/Player.hpp"
 
 using namespace RSDK;
 

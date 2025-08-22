@@ -6,6 +6,9 @@
 // ---------------------------------------------------------------------
 
 #include "ActFinish.hpp"
+#include "HUD.hpp"
+#include "TitleCard.hpp"
+#include "Players/Player.hpp"
 
 using namespace RSDK;
 

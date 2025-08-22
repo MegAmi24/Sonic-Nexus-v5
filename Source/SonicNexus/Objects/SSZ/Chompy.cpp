@@ -6,6 +6,9 @@
 // ---------------------------------------------------------------------
 
 #include "Chompy.hpp"
+#include "NexusGlobals/Explosion.hpp"
+#include "NexusGlobals/Invincibility.hpp"
+#include "Players/Player.hpp"
 
 using namespace RSDK;
 

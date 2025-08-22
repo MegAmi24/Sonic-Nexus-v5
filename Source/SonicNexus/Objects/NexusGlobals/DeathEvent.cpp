@@ -6,6 +6,7 @@
 // ---------------------------------------------------------------------
 
 #include "DeathEvent.hpp"
+#include "Music.hpp"
 
 using namespace RSDK;
 

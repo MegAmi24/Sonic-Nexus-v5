@@ -6,6 +6,8 @@
 // ---------------------------------------------------------------------
 
 #include "StarPost.hpp"
+#include "Math.hpp"
+#include "Players/Player.hpp"
 
 using namespace RSDK;
 

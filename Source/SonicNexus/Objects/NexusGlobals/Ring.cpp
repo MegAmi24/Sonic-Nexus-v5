@@ -6,6 +6,8 @@
 // ---------------------------------------------------------------------
 
 #include "Ring.hpp"
+#include "StageSetup.hpp"
+#include "Players/Player.hpp"
 
 using namespace RSDK;
 

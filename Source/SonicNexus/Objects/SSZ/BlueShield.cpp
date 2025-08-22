@@ -6,6 +6,7 @@
 // ---------------------------------------------------------------------
 
 #include "BlueShield.hpp"
+#include "Players/Player.hpp"
 
 using namespace RSDK;
 

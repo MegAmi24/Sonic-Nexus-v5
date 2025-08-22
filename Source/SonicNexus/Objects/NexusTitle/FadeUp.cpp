@@ -6,6 +6,9 @@
 // ---------------------------------------------------------------------
 
 #include "FadeUp.hpp"
+#include "PressStart.hpp"
+#include "Logo.hpp"
+#include "NexusGlobals/Music.hpp"
 
 using namespace RSDK;
 

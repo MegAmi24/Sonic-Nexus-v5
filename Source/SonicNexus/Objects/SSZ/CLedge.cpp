@@ -6,6 +6,7 @@
 // ---------------------------------------------------------------------
 
 #include "CLedge.hpp"
+#include "Players/Player.hpp"
 
 using namespace RSDK;
 

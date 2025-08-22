@@ -6,6 +6,14 @@
 // ---------------------------------------------------------------------
 
 #include "Player.hpp"
+#include "Math.hpp"
+#include "NexusGlobals/Camera.hpp"
+#include "NexusGlobals/Music.hpp"
+#include "NexusGlobals/StageSetup.hpp"
+#include "NexusGlobals/Invincibility.hpp"
+#include "NexusGlobals/Ring.hpp"
+#include "NexusGlobals/DeathEvent.hpp"
+#include "SSZ/BlueShield.hpp"
 
 using namespace RSDK;
 

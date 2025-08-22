@@ -159,9 +159,6 @@
     <ClInclude Include="SonicNexus.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Objects\All.hpp">
-      <Filter>Source Files\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="..\RSDKv5-GameAPI\CPP\GameAPI\Game.hpp">
       <Filter>GameAPI</Filter>
     </ClInclude>

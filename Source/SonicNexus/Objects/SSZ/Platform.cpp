@@ -6,6 +6,9 @@
 // ---------------------------------------------------------------------
 
 #include "Platform.hpp"
+#include "Math.hpp"
+#include "NexusGlobals/StageSetup.hpp"
+#include "Players/Player.hpp"
 
 using namespace RSDK;
 

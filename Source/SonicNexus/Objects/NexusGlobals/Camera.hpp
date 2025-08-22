@@ -1,6 +1,6 @@
 #pragma once
 
-#include "All.hpp"
+#include "SonicNexus.hpp"
 
 #define SCREEN_SCROLL_LEFT  (screenInfo->center.x - 8)
 #define SCREEN_SCROLL_RIGHT (screenInfo->center.x + 8)
@@ -77,9 +77,9 @@ struct Camera : RSDK::GameObject::Entity {
     // FUNCTIONS
     // ==============================
 
-    void SetPlayerScreenPosition(Player *player);
-    void SetPlayerScreenPositionCDStyle(Player *player);
-    void SetPlayerLockedScreenPosition(Player *player);
+    void SetPlayerScreenPosition(Entity *entity);
+    void SetPlayerScreenPositionCDStyle(Entity *entity);
+    void SetPlayerLockedScreenPosition(Entity *entity);
 
     // ==============================
     // DECLARATION
