@@ -3,10 +3,12 @@
 #include "SonicNexus.hpp"
 #include "NexusGlobals/Camera.hpp"
 
+using namespace RSDK;
+
 namespace GameLogic
 {
 
-struct Player : RSDK::GameObject::Entity {
+struct Player : GameObject::Entity {
 
     // ==============================
     // ENUMS
@@ -84,24 +86,24 @@ struct Player : RSDK::GameObject::Entity {
     // STATIC VARS
     // ==============================
 
-    struct Static : RSDK::GameObject::Static {
+    struct Static : GameObject::Static {
         uint16 delayUp;
         uint16 delayDown;
         uint16 delayLeft;
         uint16 delayRight;
         uint16 delayJumpPress;
         uint16 delayJumpHold;
-        RSDK::SpriteAnimation sonicFrames;
-        RSDK::SoundFX sfxJump;
-        RSDK::SoundFX sfxLoseRings;
-        RSDK::SoundFX sfxHurt;
-        RSDK::SoundFX sfxSpin;
-        RSDK::SoundFX sfxCharge;
-        RSDK::SoundFX sfxRelease;
-        RSDK::SoundFX sfxSkidding;
-        RSDK::SoundFX sfxDestroy;
-        RSDK::SoundFX sfxBossHit;
-        RSDK::SoundFX sfxYes;
+        SpriteAnimation sonicFrames;
+        SoundFX sfxJump;
+        SoundFX sfxLoseRings;
+        SoundFX sfxHurt;
+        SoundFX sfxSpin;
+        SoundFX sfxCharge;
+        SoundFX sfxRelease;
+        SoundFX sfxSkidding;
+        SoundFX sfxDestroy;
+        SoundFX sfxBossHit;
+        SoundFX sfxYes;
         bool32 pauseEnabled;
         bool32 frameAdvance;
     };
@@ -111,13 +113,13 @@ struct Player : RSDK::GameObject::Entity {
     // ==============================
     uint8 mode;
     Camera *camera;
-    RSDK::Vector2 screenPos;
+    Vector2 screenPos;
     int32 timer;
-    RSDK::StateMachine<Player> state;
-    RSDK::Animator animator;
-    RSDK::SpriteAnimation aniFrames;
-    RSDK::Hitbox *outerbox;
-    RSDK::Hitbox *innerbox;
+    StateMachine<Player> state;
+    Animator animator;
+    SpriteAnimation aniFrames;
+    Hitbox *outerbox;
+    Hitbox *innerbox;
     uint8 skidding;
     uint8 pushing;
     int8 controlMode;
@@ -146,8 +148,8 @@ struct Player : RSDK::GameObject::Entity {
     int32 flashing;
     int32 minRollSpeed;
     int32 ringExtraLife;
-    RSDK::Hitbox *normalbox;
-    RSDK::Hitbox *jumpbox;
+    Hitbox *normalbox;
+    Hitbox *jumpbox;
     int32 animCheck;
     int16 jumpAnimSpeed;
     uint8 shield;
@@ -210,8 +212,8 @@ struct Player : RSDK::GameObject::Entity {
 
     // Helper functions
     void HandleMovement(void);
-    uint8 BoxCollision(Entity *thisEntity, RSDK::Hitbox *thisHitbox);
-    bool32 PlatformCollision(Entity *thisEntity, RSDK::Hitbox *thisHitbox);
+    uint8 BoxCollision(Entity *thisEntity, Hitbox *thisHitbox);
+    bool32 PlatformCollision(Entity *thisEntity, Hitbox *thisHitbox);
 
     // ==============================
     // DECLARATION

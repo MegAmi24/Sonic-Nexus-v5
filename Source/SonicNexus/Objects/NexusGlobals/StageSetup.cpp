@@ -69,9 +69,9 @@ void StageSetup::StageLoad(void)
     foreach_all(StageSetup, stageSetup) { stageSetup->Destroy(); }
     GameObject::Reset(SLOT_STAGESETUP, sVars->classID, NULL);
 
-    RSDK::SceneLayer fgLow;
+    SceneLayer fgLow;
     fgLow.Get("FG Low");
-    RSDK::SceneLayer fgHigh;
+    SceneLayer fgHigh;
     fgHigh.Get("FG High");
     sVars->collisionLayers = (1 << fgLow.id) | (1 << fgHigh.id);
 

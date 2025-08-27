@@ -2,10 +2,12 @@
 
 #include "SonicNexus.hpp"
 
+using namespace RSDK;
+
 namespace GameLogic
 {
 
-struct ActFinish : RSDK::GameObject::Entity {
+struct ActFinish : GameObject::Entity {
 
     // ==============================
     // ENUMS
@@ -19,25 +21,25 @@ struct ActFinish : RSDK::GameObject::Entity {
     // STATIC VARS
     // ==============================
 
-    struct Static : RSDK::GameObject::Static {
-        RSDK::SpriteAnimation aniFrames;
-        RSDK::SoundFX sfxScoreAdd;
-        RSDK::SoundFX sfxScoreTotal;
+    struct Static : GameObject::Static {
+        SpriteAnimation aniFrames;
+        SoundFX sfxScoreAdd;
+        SoundFX sfxScoreTotal;
     };
 
     // ==============================
     // INSTANCE VARS
     // ==============================
-    RSDK::StateMachine<ActFinish> state;
-    RSDK::Animator gotThroughAnim;
-    RSDK::Animator actNumAnim;
-    RSDK::Animator resultsAnim;
-    RSDK::Animator numbersAnim;
-    RSDK::Vector2 line0Pos;
-    RSDK::Vector2 line1Pos;
-    RSDK::Vector2 line2Pos;
-    RSDK::Vector2 line3Pos;
-    RSDK::Vector2 line4Pos;
+    StateMachine<ActFinish> state;
+    Animator gotThroughAnim;
+    Animator actNumAnim;
+    Animator resultsAnim;
+    Animator numbersAnim;
+    Vector2 line0Pos;
+    Vector2 line1Pos;
+    Vector2 line2Pos;
+    Vector2 line3Pos;
+    Vector2 line4Pos;
     int32 timer;
     int32 timeBonus;
     int32 ringBonus;

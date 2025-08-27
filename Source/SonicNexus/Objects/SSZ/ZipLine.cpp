@@ -46,8 +46,8 @@ void ZipLine::Update(void)
 
     foreach_active(Player, player)
     {
-        RSDK::Vector2 posStore = this->position;
-        this->position         = this->handlePos;
+        Vector2 posStore = this->position;
+        this->position   = this->handlePos;
 
         if (player->state.Matches(&Player::State_Hanging)) {
             if (this->target == player) {
@@ -104,7 +104,7 @@ void ZipLine::Draw(void)
 
     int32 height = 8;
     for (int32 s = 0; s < 3; s++) {
-        RSDK::Vector2 pos;
+        Vector2 pos;
         pos.x = (Cos512(this->angle) * height) << 7;
         pos.x += this->position.x;
 

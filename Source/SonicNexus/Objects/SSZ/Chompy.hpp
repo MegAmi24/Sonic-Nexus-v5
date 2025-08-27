@@ -2,10 +2,12 @@
 
 #include "SonicNexus.hpp"
 
+using namespace RSDK;
+
 namespace GameLogic
 {
 
-struct Chompy : RSDK::GameObject::Entity {
+struct Chompy : GameObject::Entity {
 
     // ==============================
     // ENUMS
@@ -25,18 +27,18 @@ struct Chompy : RSDK::GameObject::Entity {
     // STATIC VARS
     // ==============================
 
-    struct Static : RSDK::GameObject::Static {
-        RSDK::SpriteAnimation aniFrames;
-        RSDK::Hitbox hitbox;
+    struct Static : GameObject::Static {
+        SpriteAnimation aniFrames;
+        Hitbox hitbox;
     };
 
     // ==============================
     // INSTANCE VARS
     // ==============================
     ChompyJumpDirs jumpDir;
-    RSDK::StateMachine<Chompy> state;
-    RSDK::Animator animator;
-    RSDK::Vector2 oldPos;
+    StateMachine<Chompy> state;
+    Animator animator;
+    Vector2 oldPos;
     int32 timer;
 
     // ==============================

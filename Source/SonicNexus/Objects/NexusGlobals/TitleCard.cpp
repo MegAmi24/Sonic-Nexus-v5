@@ -338,7 +338,7 @@ void TitleCard::Draw_ColourCircle(void)
     Graphics::DrawRect(scaleTemp1, 0, scaleTemp5, scaleTemp3, 0x000000, 0xFF, INK_TINT, true);
     Graphics::DrawRect(scaleTemp1, scaleTemp4, scaleTemp5, screenInfo->size.y, 0x000000, 0xFF, INK_TINT, true);
 
-    RSDK::Vector2 pos;
+    Vector2 pos;
     pos.x = TO_FIXED(screenInfo->center.x);
     pos.y = TO_FIXED(screenInfo->center.y);
     this->animator.DrawSprite(&pos, true);
@@ -348,8 +348,8 @@ void TitleCard::Draw_Word(void)
 {
     SET_CURRENT_STATE();
 
-    RSDK::Vector2 pos = this->position;
-    RSDK::String *word;
+    Vector2 pos = this->position;
+    String *word;
     if (this->type == TITLECARD_FIRSTWORD)
         word = &RSDK_GET_ENTITY(SLOT_TITLECARD, TitleCard)->word1;
     else
@@ -379,7 +379,7 @@ void TitleCard::Draw_VertText(void)
 {
     SET_CURRENT_STATE();
 
-    RSDK::Vector2 pos = this->position;
+    Vector2 pos = this->position;
 
     this->animator.animationID = 0;
     this->animator.DrawSprite(&pos, true);

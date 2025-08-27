@@ -2,10 +2,12 @@
 
 #include "SonicNexus.hpp"
 
+using namespace RSDK;
+
 namespace GameLogic
 {
 
-struct Spring : RSDK::GameObject::Entity {
+struct Spring : GameObject::Entity {
 
     // ==============================
     // ENUMS
@@ -35,9 +37,9 @@ struct Spring : RSDK::GameObject::Entity {
     // STATIC VARS
     // ==============================
 
-    struct Static : RSDK::GameObject::Static {
-        RSDK::SpriteAnimation aniFrames;
-        RSDK::SoundFX sfxSpring;
+    struct Static : GameObject::Static {
+        SpriteAnimation aniFrames;
+        SoundFX sfxSpring;
     };
 
     // ==============================
@@ -45,10 +47,10 @@ struct Spring : RSDK::GameObject::Entity {
     // ==============================
     SpringTypes type;
     SpringDirections flipFlags;
-    RSDK::Animator animator;
-    RSDK::Animator baseAnim;
-    RSDK::Hitbox boxHitbox;
-    RSDK::Hitbox touchHitbox;
+    Animator animator;
+    Animator baseAnim;
+    Hitbox boxHitbox;
+    Hitbox touchHitbox;
     int32 timer;
 
     // ==============================

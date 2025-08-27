@@ -32,8 +32,8 @@ void SwingPlat::Update(void)
     this->changePos.y &= 4294901760;
     this->changePos.y -= this->platformPos.y;
 
-    RSDK::Vector2 posStore = this->position;
-    this->position         = this->platformPos;
+    Vector2 posStore = this->position;
+    this->position   = this->platformPos;
 
     foreach_active(Player, player)
     {
@@ -65,7 +65,7 @@ void SwingPlat::Draw(void)
     this->animator.frameID = 1;
     int32 height           = 16;
     for (int32 s = 0; s < this->height; s++) {
-        RSDK::Vector2 pos;
+        Vector2 pos;
         pos.x = (Cos512(this->angle) * height) << 7;
         pos.x += this->position.x;
 

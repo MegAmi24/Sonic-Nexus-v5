@@ -66,7 +66,7 @@ void Platform::Update(void)
 
     foreach_active(Player, player)
     {
-        RSDK::Vector2 posStore = this->position;
+        Vector2 posStore = this->position;
         if (this->type == PLATFORM_HORIZONTAL)
             this->position.x = this->platformPos.x;
         else if (this->type == PLATFORM_VERTICAL)
@@ -104,7 +104,7 @@ void Platform::StaticUpdate(void) {}
 
 void Platform::Draw(void)
 {
-    RSDK::Vector2 pos = this->position;
+    Vector2 pos = this->position;
     if (this->type == PLATFORM_HORIZONTAL)
         pos.x = this->platformPos.x;
     else if (this->type == PLATFORM_VERTICAL)

@@ -2,12 +2,14 @@
 
 #include "SonicNexus.hpp"
 
+using namespace RSDK;
+
 #define LOGO_YPOS (108)
 
 namespace GameLogic
 {
 
-struct Logo : RSDK::GameObject::Entity {
+struct Logo : GameObject::Entity {
 
     // ==============================
     // ENUMS
@@ -27,20 +29,20 @@ struct Logo : RSDK::GameObject::Entity {
     // STATIC VARS
     // ==============================
 
-    struct Static : RSDK::GameObject::Static {
-        RSDK::SpriteAnimation aniFrames;
-        RSDK::SoundFX sfxLand;
+    struct Static : GameObject::Static {
+        SpriteAnimation aniFrames;
+        SoundFX sfxLand;
     };
 
     // ==============================
     // INSTANCE VARS
     // ==============================
-    RSDK::Animator animator;
-    RSDK::Animator handAnim;
-    RSDK::Animator sonicBlinkAnim;
-    RSDK::Animator tailsBlinkAnim;
-    RSDK::StateMachine<Logo> state;
-    RSDK::StateMachine<Logo> stateDraw;
+    Animator animator;
+    Animator handAnim;
+    Animator sonicBlinkAnim;
+    Animator tailsBlinkAnim;
+    StateMachine<Logo> state;
+    StateMachine<Logo> stateDraw;
     int32 bounceCount;
     int32 scaleSpeed;
     int32 timer;

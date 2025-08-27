@@ -3,10 +3,12 @@
 #include "SonicNexus.hpp"
 #include "Players/Player.hpp"
 
+using namespace RSDK;
+
 namespace GameLogic
 {
 
-struct HelliBomber : RSDK::GameObject::Entity {
+struct HelliBomber : GameObject::Entity {
 
     // ==============================
     // ENUMS
@@ -20,20 +22,20 @@ struct HelliBomber : RSDK::GameObject::Entity {
     // STATIC VARS
     // ==============================
 
-    struct Static : RSDK::GameObject::Static {
-        RSDK::SpriteAnimation aniFrames;
-        RSDK::Hitbox hitbox;
-        RSDK::Hitbox aggroHitbox;
-        RSDK::Hitbox bulletHitbox;
+    struct Static : GameObject::Static {
+        SpriteAnimation aniFrames;
+        Hitbox hitbox;
+        Hitbox aggroHitbox;
+        Hitbox bulletHitbox;
     };
 
     // ==============================
     // INSTANCE VARS
     // ==============================
     bool32 isBullet;
-    RSDK::StateMachine<HelliBomber> state;
-    RSDK::Animator animator;
-    RSDK::Animator bladesAnim;
+    StateMachine<HelliBomber> state;
+    Animator animator;
+    Animator bladesAnim;
     int32 destX;
     int32 timer;
     Player *target;

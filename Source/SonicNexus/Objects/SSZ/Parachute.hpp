@@ -3,10 +3,12 @@
 #include "SonicNexus.hpp"
 #include "Players/Player.hpp"
 
+using namespace RSDK;
+
 namespace GameLogic
 {
 
-struct Parachute : RSDK::GameObject::Entity {
+struct Parachute : GameObject::Entity {
 
     // ==============================
     // ENUMS
@@ -20,19 +22,19 @@ struct Parachute : RSDK::GameObject::Entity {
     // STATIC VARS
     // ==============================
 
-    struct Static : RSDK::GameObject::Static {
-        RSDK::SpriteAnimation aniFrames;
-        RSDK::Hitbox hitbox;
-        RSDK::SoundFX sfxCatch;
+    struct Static : GameObject::Static {
+        SpriteAnimation aniFrames;
+        Hitbox hitbox;
+        SoundFX sfxCatch;
     };
 
     // ==============================
     // INSTANCE VARS
     // ==============================
-    RSDK::StateMachine<Parachute> state;
-    RSDK::Animator animator;
+    StateMachine<Parachute> state;
+    Animator animator;
     Player *target;
-    RSDK::Vector2 startPos;
+    Vector2 startPos;
 
     // ==============================
     // EVENTS

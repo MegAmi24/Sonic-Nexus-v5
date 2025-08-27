@@ -3,10 +3,12 @@
 #include "SonicNexus.hpp"
 #include "Players/Player.hpp"
 
+using namespace RSDK;
+
 namespace GameLogic
 {
 
-struct ZipLine : RSDK::GameObject::Entity {
+struct ZipLine : GameObject::Entity {
 
     // ==============================
     // ENUMS
@@ -20,20 +22,20 @@ struct ZipLine : RSDK::GameObject::Entity {
     // STATIC VARS
     // ==============================
 
-    struct Static : RSDK::GameObject::Static {
-        RSDK::SpriteAnimation aniFrames;
-        RSDK::Hitbox hitbox;
-        RSDK::SoundFX sfxCatch;
+    struct Static : GameObject::Static {
+        SpriteAnimation aniFrames;
+        Hitbox hitbox;
+        SoundFX sfxCatch;
     };
 
     // ==============================
     // INSTANCE VARS
     // ==============================
-    RSDK::StateMachine<ZipLine> state;
-    RSDK::Animator animator;
-    RSDK::Vector2 handlePos;
+    StateMachine<ZipLine> state;
+    Animator animator;
+    Vector2 handlePos;
     int32 trackPos;
-    RSDK::Vector2 originPos;
+    Vector2 originPos;
     Player *target;
     int32 lastY;
 

@@ -159,7 +159,7 @@ void Logo::Draw_Normal(void)
     this->animator.frameID = 2;
     this->animator.DrawSprite(NULL, true);
 
-    RSDK::Vector2 pos = { TO_FIXED(screenInfo->center.x - 52), TO_FIXED(LOGO_YPOS - 13) };
+    Vector2 pos = { TO_FIXED(screenInfo->center.x - 52), TO_FIXED(LOGO_YPOS - 13) };
     this->handAnim.DrawSprite(&pos, true);
 
     if (this->sonicBlink < 19)

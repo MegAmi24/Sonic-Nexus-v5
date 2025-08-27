@@ -134,12 +134,12 @@ void Monitor::State_Powerup_Rise(void)
                 this->target->rings += 10;
 
                 if ($(Ring)->pan) {
-                    RSDK::Channel channel = $(Ring)->sfxRing.Play();
+                    Channel channel = $(Ring)->sfxRing.Play();
                     channel.SetAttributes(1.0, -1.0, 1.0);
                     $(Ring)->pan = 0;
                 }
                 else {
-                    RSDK::Channel channel = $(Ring)->sfxRing.Play();
+                    Channel channel = $(Ring)->sfxRing.Play();
                     channel.SetAttributes(1.0, 1.0, 1.0);
                     $(Ring)->pan = 1;
                 }

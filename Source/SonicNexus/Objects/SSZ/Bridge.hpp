@@ -3,10 +3,12 @@
 #include "SonicNexus.hpp"
 #include "Players/Player.hpp"
 
+using namespace RSDK;
+
 namespace GameLogic
 {
 
-struct Bridge : RSDK::GameObject::Entity {
+struct Bridge : GameObject::Entity {
 
     // ==============================
     // ENUMS
@@ -20,15 +22,15 @@ struct Bridge : RSDK::GameObject::Entity {
     // STATIC VARS
     // ==============================
 
-    struct Static : RSDK::GameObject::Static {
-        RSDK::SpriteAnimation aniFrames;
+    struct Static : GameObject::Static {
+        SpriteAnimation aniFrames;
     };
 
     // ==============================
     // INSTANCE VARS
     // ==============================
     int32 length;
-    RSDK::Animator animator;
+    Animator animator;
     int32 walkedOn;
     int32 depress;
     int32 midPoint;

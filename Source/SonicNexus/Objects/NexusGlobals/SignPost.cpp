@@ -84,7 +84,7 @@ void SignPost::State_Spinning(void)
     this->signAnim.Process();
     if (this->signAnim.frameID != prevFrame) {
         if (this->signAnim.frameID == 4) {
-            RSDK::Vector2 sparklePos;
+            Vector2 sparklePos;
             sparklePos.x = TO_FIXED(Math::Rand(0, 48)) + this->position.x - 1572864;
             sparklePos.y = TO_FIXED(Math::Rand(0, 32)) + this->position.y - 1835008;
 
@@ -107,7 +107,7 @@ void SignPost::State_Spinning(void)
                 GameObject::Reset(SLOT_ACTFINISH, $(ActFinish)->classID, NULL);
             }
             if (this->signAnim.frameID == 0) {
-                RSDK::Vector2 sparklePos;
+                Vector2 sparklePos;
                 sparklePos.x = TO_FIXED(Math::Rand(0, 48)) + this->position.x - 1572864;
                 sparklePos.y = TO_FIXED(Math::Rand(0, 32)) + this->position.y - 1835008;
 

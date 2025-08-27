@@ -22,7 +22,7 @@ void ActFinish::StaticUpdate(void) {}
 
 void ActFinish::Draw(void)
 {
-    RSDK::Vector2 pos = this->line0Pos;
+    Vector2 pos = this->line0Pos;
 
     // Draw Sonic Text
     this->gotThroughAnim.frameID = 3;

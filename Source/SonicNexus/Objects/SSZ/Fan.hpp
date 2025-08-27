@@ -2,10 +2,12 @@
 
 #include "SonicNexus.hpp"
 
+using namespace RSDK;
+
 namespace GameLogic
 {
 
-struct Fan : RSDK::GameObject::Entity {
+struct Fan : GameObject::Entity {
 
     // ==============================
     // ENUMS
@@ -28,15 +30,15 @@ struct Fan : RSDK::GameObject::Entity {
     // STATIC VARS
     // ==============================
 
-    struct Static : RSDK::GameObject::Static {
-        RSDK::SpriteAnimation aniFrames;
-        RSDK::Hitbox hitbox;
+    struct Static : GameObject::Static {
+        SpriteAnimation aniFrames;
+        Hitbox hitbox;
     };
 
     // ==============================
     // INSTANCE VARS
     // ==============================
-    RSDK::Animator animator;
+    Animator animator;
 
     // ==============================
     // EVENTS

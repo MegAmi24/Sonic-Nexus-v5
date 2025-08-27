@@ -2,10 +2,12 @@
 
 #include "SonicNexus.hpp"
 
+using namespace RSDK;
+
 namespace GameLogic
 {
 
-struct TitleCard : RSDK::GameObject::Entity {
+struct TitleCard : GameObject::Entity {
 
     // ==============================
     // ENUMS
@@ -30,8 +32,8 @@ struct TitleCard : RSDK::GameObject::Entity {
     // STATIC VARS
     // ==============================
 
-    struct Static : RSDK::GameObject::Static {
-        RSDK::SpriteAnimation aniFrames;
+    struct Static : GameObject::Static {
+        SpriteAnimation aniFrames;
 #if RETRO_REV02
         uint16 tintLookupTable[0x10000];
 #endif
@@ -42,11 +44,11 @@ struct TitleCard : RSDK::GameObject::Entity {
     // INSTANCE VARS
     // ==============================
     TitleCardTypes type;
-    RSDK::Animator animator;
-    RSDK::StateMachine<TitleCard> state;
-    RSDK::StateMachine<TitleCard> stateDraw;
-    RSDK::String word1;
-    RSDK::String word2;
+    Animator animator;
+    StateMachine<TitleCard> state;
+    StateMachine<TitleCard> stateDraw;
+    String word1;
+    String word2;
     ActIDs actID;
     uint8 offset;
     int32 timer;

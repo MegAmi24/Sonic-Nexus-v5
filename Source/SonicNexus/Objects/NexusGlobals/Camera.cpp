@@ -68,7 +68,7 @@ void Camera::StageLoad(void)
     GameObject::Reset(SLOT_CAMERA1, sVars->classID, SLOT_PLAYER1);
 
     // Get Layer size and setup default bounds
-    RSDK::SceneLayer fgLayer;
+    SceneLayer fgLayer;
     fgLayer.Get("FG Low");
     fgLayer.Size(&sVars->boundary2, true);
 

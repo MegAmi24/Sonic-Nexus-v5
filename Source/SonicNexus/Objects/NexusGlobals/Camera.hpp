@@ -2,6 +2,8 @@
 
 #include "SonicNexus.hpp"
 
+using namespace RSDK;
+
 #define SCREEN_SCROLL_LEFT  (screenInfo->center.x - 8)
 #define SCREEN_SCROLL_RIGHT (screenInfo->center.x + 8)
 #define SCREEN_SCROLL_UP    (screenInfo->center.y - 16)
@@ -10,7 +12,7 @@
 namespace GameLogic
 {
 
-struct Camera : RSDK::GameObject::Entity {
+struct Camera : GameObject::Entity {
 
     // ==============================
     // ENUMS
@@ -29,27 +31,27 @@ struct Camera : RSDK::GameObject::Entity {
     // STATIC VARS
     // ==============================
 
-    struct Static : RSDK::GameObject::Static {
-        RSDK::Vector2 boundary1;
-        RSDK::Vector2 newBoundary1;
-        RSDK::Vector2 boundary2;
-        RSDK::Vector2 newBoundary2;
+    struct Static : GameObject::Static {
+        Vector2 boundary1;
+        Vector2 newBoundary1;
+        Vector2 boundary2;
+        Vector2 newBoundary2;
         int32 waterLevel;
     };
 
     // ==============================
     // INSTANCE VARS
     // ==============================
-    RSDK::Vector2 center;
+    Vector2 center;
     Entity *target;
     int32 style;
     int32 enabled;
     int32 adjustY;
-    RSDK::Vector2 scrollOffset;
-    RSDK::Vector2 scrollA;
-    RSDK::Vector2 scrollB;
-    RSDK::Vector2 scrollMove;
-    RSDK::Vector2 earthquake;
+    Vector2 scrollOffset;
+    Vector2 scrollA;
+    Vector2 scrollB;
+    Vector2 scrollMove;
+    Vector2 earthquake;
     int32 waterDrawPos;
 
     // ==============================

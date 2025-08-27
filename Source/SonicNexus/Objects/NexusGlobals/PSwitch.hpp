@@ -2,10 +2,12 @@
 
 #include "SonicNexus.hpp"
 
+using namespace RSDK;
+
 namespace GameLogic
 {
 
-struct PSwitch : RSDK::GameObject::Entity {
+struct PSwitch : GameObject::Entity {
 
     // ==============================
     // ENUMS
@@ -25,8 +27,8 @@ struct PSwitch : RSDK::GameObject::Entity {
     // STATIC VARS
     // ==============================
 
-    struct Static : RSDK::GameObject::Static {
-        RSDK::SpriteAnimation aniFrames;
+    struct Static : GameObject::Static {
+        SpriteAnimation aniFrames;
     };
 
     // ==============================
@@ -34,8 +36,8 @@ struct PSwitch : RSDK::GameObject::Entity {
     // ==============================
     PSwitchTypes type;
     int32 height;
-    RSDK::Hitbox hitbox;
-    RSDK::Animator animator;
+    Hitbox hitbox;
+    Animator animator;
 
     // ==============================
     // EVENTS

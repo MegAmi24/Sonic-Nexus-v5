@@ -2,10 +2,12 @@
 
 #include "SonicNexus.hpp"
 
+using namespace RSDK;
+
 namespace GameLogic
 {
 
-struct Music : RSDK::GameObject::Entity {
+struct Music : GameObject::Entity {
 
     // ==============================
     // ENUMS
@@ -35,7 +37,7 @@ struct Music : RSDK::GameObject::Entity {
     // STATIC VARS
     // ==============================
 
-    struct Static : RSDK::GameObject::Static {
+    struct Static : GameObject::Static {
         TrackInfo musicTracks[CHANNEL_COUNT];
         int32 currentTrack;
         uint8 channelID;

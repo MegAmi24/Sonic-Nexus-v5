@@ -2,10 +2,12 @@
 
 #include "SonicNexus.hpp"
 
+using namespace RSDK;
+
 namespace GameLogic
 {
 
-struct DeathEvent : RSDK::GameObject::Entity {
+struct DeathEvent : GameObject::Entity {
 
     // ==============================
     // ENUMS
@@ -25,18 +27,18 @@ struct DeathEvent : RSDK::GameObject::Entity {
     // STATIC VARS
     // ==============================
 
-    struct Static : RSDK::GameObject::Static {
-        RSDK::SpriteAnimation aniFrames;
+    struct Static : GameObject::Static {
+        SpriteAnimation aniFrames;
     };
 
     // ==============================
     // INSTANCE VARS
     // ==============================
     DeathEventTypes type;
-    RSDK::StateMachine<DeathEvent> state;
-    RSDK::Animator animator;
-    RSDK::Vector2 leftPos;
-    RSDK::Vector2 rightPos;
+    StateMachine<DeathEvent> state;
+    Animator animator;
+    Vector2 leftPos;
+    Vector2 rightPos;
     int32 timer;
 
     // ==============================

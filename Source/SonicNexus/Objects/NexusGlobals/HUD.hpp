@@ -3,10 +3,12 @@
 #include "SonicNexus.hpp"
 #include "Players/Player.hpp"
 
+using namespace RSDK;
+
 namespace GameLogic
 {
 
-struct HUD : RSDK::GameObject::Entity {
+struct HUD : GameObject::Entity {
 
     // ==============================
     // ENUMS
@@ -20,23 +22,23 @@ struct HUD : RSDK::GameObject::Entity {
     // STATIC VARS
     // ==============================
 
-    struct Static : RSDK::GameObject::Static {
-        RSDK::SpriteAnimation aniFrames;
+    struct Static : GameObject::Static {
+        SpriteAnimation aniFrames;
     };
 
     // ==============================
     // INSTANCE VARS
     // ==============================
-    RSDK::StateMachine<HUD> state;
-    RSDK::Vector2 scorePos;
-    RSDK::Vector2 timePos;
-    RSDK::Vector2 ringPos;
-    RSDK::Vector2 lifePos;
+    StateMachine<HUD> state;
+    Vector2 scorePos;
+    Vector2 timePos;
+    Vector2 ringPos;
+    Vector2 lifePos;
     int32 flashingTimer;
     Player *parent;
-    RSDK::Animator textAnim;
-    RSDK::Animator numbersAnim;
-    RSDK::Animator lifeAnim;
+    Animator textAnim;
+    Animator numbersAnim;
+    Animator lifeAnim;
 
     // ==============================
     // EVENTS
@@ -66,7 +68,7 @@ struct HUD : RSDK::GameObject::Entity {
     void State_Normal(void);
     void State_Enter(void);
 
-    static void DrawNumbers(RSDK::Animator *animator, RSDK::Vector2 drawPos, int32 value, uint8 digitCount, bool32 allDigits);
+    static void DrawNumbers(Animator *animator, Vector2 drawPos, int32 value, uint8 digitCount, bool32 allDigits);
 
     // ==============================
     // DECLARATION

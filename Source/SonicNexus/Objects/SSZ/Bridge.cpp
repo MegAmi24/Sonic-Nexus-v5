@@ -55,7 +55,7 @@ void Bridge::Update(void)
 
             int32 midYPos = ((Sin512(angle) * this->midYPos) >> 9) - 524288;
 
-            RSDK::Hitbox hitbox;
+            Hitbox hitbox;
             hitbox.left  = -1024;
             hitbox.right = 1024;
 
@@ -107,7 +107,7 @@ void Bridge::StaticUpdate(void) {}
 void Bridge::Draw(void)
 {
     int32 s = 0;
-    RSDK::Vector2 pos;
+    Vector2 pos;
     pos.x    = this->left + 524288;
     int32 sc = 524288;
     while (s < (this->midPoint >> 20)) {
@@ -164,8 +164,8 @@ void Bridge::EditorDraw(void)
 {
     this->animator.SetAnimation(sVars->aniFrames, 2, true, 0);
 
-    RSDK::Vector2 pos = this->position;
-    int32 xOffset     = TO_FIXED(-(this->animator.GetFrame(sVars->aniFrames)->width * (this->length / 2)));
+    Vector2 pos   = this->position;
+    int32 xOffset = TO_FIXED(-(this->animator.GetFrame(sVars->aniFrames)->width * (this->length / 2)));
     if (this->length % 2 != 1)
         xOffset -= TO_FIXED(this->animator.GetFrame(sVars->aniFrames)->pivotX);
     pos.x += xOffset;

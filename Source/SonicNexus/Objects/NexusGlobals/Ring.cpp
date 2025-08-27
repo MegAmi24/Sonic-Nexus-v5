@@ -92,12 +92,12 @@ void Ring::State_Normal(void)
             }
 
             if (sVars->pan) {
-                RSDK::Channel channel = sVars->sfxRing.Play();
+                Channel channel = sVars->sfxRing.Play();
                 channel.SetAttributes(1.0, -1.0, 1.0);
                 sVars->pan = 0;
             }
             else {
-                RSDK::Channel channel = sVars->sfxRing.Play();
+                Channel channel = sVars->sfxRing.Play();
                 channel.SetAttributes(1.0, 1.0, 1.0);
                 sVars->pan = 1;
             }
@@ -153,12 +153,12 @@ void Ring::State_Lose(void)
             }
 
             if (sVars->pan) {
-                RSDK::Channel channel = sVars->sfxRing.Play();
+                Channel channel = sVars->sfxRing.Play();
                 channel.SetAttributes(1.0, -1.0, 1.0);
                 sVars->pan = 0;
             }
             else {
-                RSDK::Channel channel = sVars->sfxRing.Play();
+                Channel channel = sVars->sfxRing.Play();
                 channel.SetAttributes(1.0, 1.0, 1.0);
                 sVars->pan = 1;
             }

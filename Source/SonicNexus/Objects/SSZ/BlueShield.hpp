@@ -3,10 +3,12 @@
 #include "SonicNexus.hpp"
 #include "Players/Player.hpp"
 
+using namespace RSDK;
+
 namespace GameLogic
 {
 
-struct BlueShield : RSDK::GameObject::Entity {
+struct BlueShield : GameObject::Entity {
 
     // ==============================
     // ENUMS
@@ -20,14 +22,14 @@ struct BlueShield : RSDK::GameObject::Entity {
     // STATIC VARS
     // ==============================
 
-    struct Static : RSDK::GameObject::Static {
-        RSDK::SpriteAnimation aniFrames;
+    struct Static : GameObject::Static {
+        SpriteAnimation aniFrames;
     };
 
     // ==============================
     // INSTANCE VARS
     // ==============================
-    RSDK::Animator animator;
+    Animator animator;
     Player *parent;
     uint8 shieldValue;
 

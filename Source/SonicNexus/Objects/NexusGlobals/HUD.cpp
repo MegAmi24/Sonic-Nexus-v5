@@ -32,7 +32,7 @@ void HUD::Draw(void)
 
     // Draw Seconds Markings
     this->textAnim.frameID = 5;
-    RSDK::Vector2 pos      = this->timePos;
+    Vector2 pos            = this->timePos;
     pos.x += TO_FIXED(50);
     this->textAnim.DrawSprite(&pos, true);
 
@@ -133,7 +133,7 @@ void HUD::State_Enter(void)
     }
 }
 
-void HUD::DrawNumbers(RSDK::Animator *animator, RSDK::Vector2 drawPos, int32 value, uint8 digitCount, bool32 allDigits)
+void HUD::DrawNumbers(Animator *animator, Vector2 drawPos, int32 value, uint8 digitCount, bool32 allDigits)
 {
     int32 i = 10;
     if (allDigits) {

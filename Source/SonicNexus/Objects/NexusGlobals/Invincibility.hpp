@@ -3,10 +3,12 @@
 #include "SonicNexus.hpp"
 #include "Players/Player.hpp"
 
+using namespace RSDK;
+
 namespace GameLogic
 {
 
-struct Invincibility : RSDK::GameObject::Entity {
+struct Invincibility : GameObject::Entity {
 
     // ==============================
     // ENUMS
@@ -20,16 +22,16 @@ struct Invincibility : RSDK::GameObject::Entity {
     // STATIC VARS
     // ==============================
 
-    struct Static : RSDK::GameObject::Static {
-        RSDK::SpriteAnimation aniFrames;
-        RSDK::Animator animator;
+    struct Static : GameObject::Static {
+        SpriteAnimation aniFrames;
+        Animator animator;
     };
 
     // ==============================
     // INSTANCE VARS
     // ==============================
     Player *parent;
-    RSDK::StateMachine<Invincibility> state;
+    StateMachine<Invincibility> state;
     int32 timer;
 
     // ==============================

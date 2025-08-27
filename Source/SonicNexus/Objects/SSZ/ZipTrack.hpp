@@ -2,10 +2,12 @@
 
 #include "SonicNexus.hpp"
 
+using namespace RSDK;
+
 namespace GameLogic
 {
 
-struct ZipTrack : RSDK::GameObject::Entity {
+struct ZipTrack : GameObject::Entity {
 
     // ==============================
     // ENUMS
@@ -28,15 +30,15 @@ struct ZipTrack : RSDK::GameObject::Entity {
     // STATIC VARS
     // ==============================
 
-    struct Static : RSDK::GameObject::Static {
-        RSDK::SpriteAnimation aniFrames;
+    struct Static : GameObject::Static {
+        SpriteAnimation aniFrames;
     };
 
     // ==============================
     // INSTANCE VARS
     // ==============================
     ZipTrackTypes track;
-    RSDK::Animator animator;
+    Animator animator;
 
     // ==============================
     // EVENTS

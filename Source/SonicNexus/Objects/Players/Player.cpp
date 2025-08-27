@@ -1220,12 +1220,12 @@ void Player::HandleMovement(void)
     }
 
     if (this->onGround) {
-        RSDK::Vector2 posStore = this->position;
+        Vector2 posStore = this->position;
 
-        this->flailing[0] = this->TileGrip(this->collisionLayers, RSDK::CMODE_FLOOR, this->collisionPlane, TO_FIXED(this->normalbox->left - 5),
+        this->flailing[0] = this->TileGrip(this->collisionLayers, CMODE_FLOOR, this->collisionPlane, TO_FIXED(this->normalbox->left - 5),
                                            TO_FIXED(this->normalbox->bottom), 10);
-        this->flailing[1] = this->TileGrip(this->collisionLayers, RSDK::CMODE_FLOOR, this->collisionPlane, 0, TO_FIXED(this->normalbox->bottom), 10);
-        this->flailing[2] = this->TileGrip(this->collisionLayers, RSDK::CMODE_FLOOR, this->collisionPlane, TO_FIXED(this->normalbox->right + 5),
+        this->flailing[1] = this->TileGrip(this->collisionLayers, CMODE_FLOOR, this->collisionPlane, 0, TO_FIXED(this->normalbox->bottom), 10);
+        this->flailing[2] = this->TileGrip(this->collisionLayers, CMODE_FLOOR, this->collisionPlane, TO_FIXED(this->normalbox->right + 5),
                                            TO_FIXED(this->normalbox->bottom), 10);
 
         this->position = posStore;
@@ -1237,7 +1237,7 @@ void Player::HandleMovement(void)
     }
 }
 
-uint8 Player::BoxCollision(Entity *thisEntity, RSDK::Hitbox *thisHitbox)
+uint8 Player::BoxCollision(Entity *thisEntity, Hitbox *thisHitbox)
 {
     if (!this->interaction)
         return C_NONE;
@@ -1245,7 +1245,7 @@ uint8 Player::BoxCollision(Entity *thisEntity, RSDK::Hitbox *thisHitbox)
     uint8 boxCol = thisEntity->CheckCollisionBox(thisHitbox, this, this->outerbox);
 
     if (boxCol == C_TOP && this->onGround) {
-        RSDK::Hitbox sensor;
+        Hitbox sensor;
         sensor.top    = this->normalbox->bottom - 1;
         sensor.bottom = this->normalbox->bottom + 1;
 
@@ -1265,7 +1265,7 @@ uint8 Player::BoxCollision(Entity *thisEntity, RSDK::Hitbox *thisHitbox)
     return boxCol;
 }
 
-bool32 Player::PlatformCollision(Entity *thisEntity, RSDK::Hitbox *thisHitbox)
+bool32 Player::PlatformCollision(Entity *thisEntity, Hitbox *thisHitbox)
 {
     if (!this->interaction)
         return false;
@@ -1273,7 +1273,7 @@ bool32 Player::PlatformCollision(Entity *thisEntity, RSDK::Hitbox *thisHitbox)
     bool32 platCol = thisEntity->CheckCollisionPlatform(thisHitbox, this, this->outerbox);
 
     if (platCol && this->onGround) {
-        RSDK::Hitbox sensor;
+        Hitbox sensor;
         sensor.top    = this->normalbox->bottom - 1;
         sensor.bottom = this->normalbox->bottom + 1;
 

@@ -2,10 +2,12 @@
 
 #include "SonicNexus.hpp"
 
+using namespace RSDK;
+
 namespace GameLogic
 {
 
-struct StageSetup : RSDK::GameObject::Entity {
+struct StageSetup : GameObject::Entity {
 
     // ==============================
     // ENUMS
@@ -19,8 +21,8 @@ struct StageSetup : RSDK::GameObject::Entity {
     // STATIC VARS
     // ==============================
 
-    struct Static : RSDK::GameObject::Static {
-        RSDK::SpriteAnimation aniFrames; // For the editor
+    struct Static : GameObject::Static {
+        SpriteAnimation aniFrames; // For the editor
         int32 oscillation;
         uint8 collisionLayers;
     };
@@ -28,7 +30,7 @@ struct StageSetup : RSDK::GameObject::Entity {
     // ==============================
     // INSTANCE VARS
     // ==============================
-    RSDK::Animator animator; // For the editor
+    Animator animator; // For the editor
 
     // ==============================
     // EVENTS

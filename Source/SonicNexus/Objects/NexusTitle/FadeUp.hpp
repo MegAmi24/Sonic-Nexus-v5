@@ -2,10 +2,12 @@
 
 #include "SonicNexus.hpp"
 
+using namespace RSDK;
+
 namespace GameLogic
 {
 
-struct FadeUp : RSDK::GameObject::Entity {
+struct FadeUp : GameObject::Entity {
 
     // ==============================
     // ENUMS
@@ -19,14 +21,14 @@ struct FadeUp : RSDK::GameObject::Entity {
     // STATIC VARS
     // ==============================
 
-    struct Static : RSDK::GameObject::Static {
-        RSDK::SpriteAnimation aniFrames;
+    struct Static : GameObject::Static {
+        SpriteAnimation aniFrames;
     };
 
     // ==============================
     // INSTANCE VARS
     // ==============================
-    RSDK::Animator animator;
+    Animator animator;
     int32 blackFade;
     int32 whiteFade;
 

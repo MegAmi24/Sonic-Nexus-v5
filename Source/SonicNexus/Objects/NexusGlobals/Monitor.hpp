@@ -3,10 +3,12 @@
 #include "SonicNexus.hpp"
 #include "Players/Player.hpp"
 
+using namespace RSDK;
+
 namespace GameLogic
 {
 
-struct Monitor : RSDK::GameObject::Entity {
+struct Monitor : GameObject::Entity {
 
     // ==============================
     // ENUMS
@@ -30,21 +32,21 @@ struct Monitor : RSDK::GameObject::Entity {
     // STATIC VARS
     // ==============================
 
-    struct Static : RSDK::GameObject::Static {
-        RSDK::SpriteAnimation aniFrames;
-        RSDK::Hitbox hitbox;
-        RSDK::SoundFX sfxDestroy;
-        RSDK::SoundFX sfxBlueShield;
+    struct Static : GameObject::Static {
+        SpriteAnimation aniFrames;
+        Hitbox hitbox;
+        SoundFX sfxDestroy;
+        SoundFX sfxBlueShield;
     };
 
     // ==============================
     // INSTANCE VARS
     // ==============================
     MonitorTypes type;
-    RSDK::StateMachine<Monitor> state;
-    RSDK::Vector2 iconPos;
-    RSDK::Animator animator;
-    RSDK::Animator iconAnim;
+    StateMachine<Monitor> state;
+    Vector2 iconPos;
+    Animator animator;
+    Animator iconAnim;
     bool32 falling;
     int32 timer;
     int32 pSpeed;

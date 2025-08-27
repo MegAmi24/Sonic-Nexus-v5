@@ -18,7 +18,7 @@ void CLedge::Update(void)
 {
     this->state.Run(this);
 
-    RSDK::Hitbox hitbox;
+    Hitbox hitbox;
     hitbox.left   = this->left;
     hitbox.top    = -16;
     hitbox.right  = this->right;
@@ -120,7 +120,7 @@ void CLedge::State_Crumble_Left(void)
             this->noBlocks--;
             this->left += 16;
 
-            RSDK::Vector2 blockPos;
+            Vector2 blockPos;
             blockPos.x = TO_FIXED(this->left - 8) + this->position.x;
             blockPos.y = this->position.y - 655360;
 
@@ -147,7 +147,7 @@ void CLedge::State_Crumble_Right(void)
             this->noBlocks--;
             this->right -= 16;
 
-            RSDK::Vector2 blockPos;
+            Vector2 blockPos;
             blockPos.x = TO_FIXED(this->right + 8) + this->position.x;
             blockPos.y = this->position.y - 655360;
 
@@ -195,7 +195,7 @@ void CLedge::Draw_Ledge(void)
 {
     SET_CURRENT_STATE();
 
-    RSDK::Vector2 pos;
+    Vector2 pos;
     pos.x = TO_FIXED(this->left) + 524288 + this->position.x;
     pos.y = this->position.y;
 
@@ -209,7 +209,7 @@ void CLedge::Draw_Crumble_Left(void)
 {
     SET_CURRENT_STATE();
 
-    RSDK::Vector2 pos;
+    Vector2 pos;
     pos.x = TO_FIXED(this->right) - 524288 + this->position.x;
     pos.y = this->position.y;
 
@@ -230,8 +230,8 @@ void CLedge::EditorDraw(void)
 {
     this->animator.SetAnimation(sVars->aniFrames, 3, true, 0);
 
-    RSDK::Vector2 pos = this->position;
-    int32 xOffset     = TO_FIXED(-(this->animator.GetFrame(sVars->aniFrames)->width * (this->length / 2)));
+    Vector2 pos   = this->position;
+    int32 xOffset = TO_FIXED(-(this->animator.GetFrame(sVars->aniFrames)->width * (this->length / 2)));
     if (this->length % 2 != 1)
         xOffset -= TO_FIXED(this->animator.GetFrame(sVars->aniFrames)->pivotX);
     pos.x += xOffset;
