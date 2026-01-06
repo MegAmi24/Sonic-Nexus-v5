@@ -53,8 +53,6 @@ void Music::Pause() { channels[sVars->channelID].Pause(); }
 
 void Music::Resume() { channels[sVars->channelID].Resume(); }
 
-int32 Music::CurrentTrack(void) { return sVars->currentTrack; }
-
 void Music::SetVolume(float volume)
 {
     sVars->volume = CLAMP(volume, 0.0f, 1.0f);

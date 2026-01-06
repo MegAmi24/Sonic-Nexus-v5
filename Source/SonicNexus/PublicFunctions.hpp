@@ -57,7 +57,6 @@ static void InitPublicFunctions()
     ADD_PUBLIC_FUNC(Music::Stop);
     ADD_PUBLIC_FUNC(Music::Pause);
     ADD_PUBLIC_FUNC(Music::Resume);
-    ADD_PUBLIC_FUNC(Music::CurrentTrack);
     ADD_PUBLIC_FUNC(Music::SetVolume);
 
     // NexusGlobals/Ring

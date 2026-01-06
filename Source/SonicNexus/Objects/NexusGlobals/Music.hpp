@@ -78,7 +78,6 @@ struct Music : GameObject::Entity {
     static void Stop(void);
     static void Pause(void);
     static void Resume(void);
-    static int32 CurrentTrack(void);
     static void SetVolume(float volume);
 
     // ==============================

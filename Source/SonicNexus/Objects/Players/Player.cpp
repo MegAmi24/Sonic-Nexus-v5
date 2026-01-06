@@ -606,7 +606,7 @@ void Player::Main(void)
             this->stats.acceleration >>= 1;
             this->stats.airAcceleration >>= 1;
             this->stats.topSpeed >>= 1;
-            if (Music::CurrentTrack() == Music::TRACK_SPEEDSHOES)
+            if ($(Music)->currentTrack == Music::TRACK_SPEEDSHOES)
                 Music::Play(Music::TRACK_STAGE);
         }
     }
@@ -626,7 +626,7 @@ void Player::Main(void)
         if (--this->invincibility == 0) {
             this->flashing = false;
             this->visible  = true;
-            if (Music::CurrentTrack() == Music::TRACK_INVINCIBILITY)
+            if ($(Music)->currentTrack == Music::TRACK_INVINCIBILITY)
                 Music::Play(Music::TRACK_STAGE);
             Entity *powerUp = RSDK_GET_ENTITY_GEN(this->Slot() + 2);
             if (powerUp->classID == $(Invincibility)->classID) {
