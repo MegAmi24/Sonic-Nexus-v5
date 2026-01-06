@@ -6,7 +6,6 @@
 // ---------------------------------------------------------------------
 
 #include "Player.hpp"
-#include "Math.hpp"
 #include "NexusGlobals/Camera.hpp"
 #include "NexusGlobals/Music.hpp"
 #include "NexusGlobals/StageSetup.hpp"
@@ -321,8 +320,8 @@ void Player::ProcessDefaultAirMovement(Player *player)
 void Player::ProcessDefaultGravityFalse(Player *player)
 {
     player->trackScroll = false;
-    player->velocity.x  = (player->groundVel * Cos256(player->angle)) >> 8;
-    player->velocity.y  = (player->groundVel * Sin256(player->angle)) >> 8;
+    player->velocity.x  = (player->groundVel * Math::Cos256(player->angle)) >> 8;
+    player->velocity.y  = (player->groundVel * Math::Sin256(player->angle)) >> 8;
 }
 
 void Player::ProcessDefaultGravityTrue(Player *player)
@@ -398,33 +397,33 @@ void Player::ProcessDefaultGroundMovement(Player *player)
 
         if (player->left || player->right) {
             switch (player->collisionMode) {
-                case CMODE_FLOOR: player->groundVel += Sin256(player->angle) << 13 >> 8; break;
+                case CMODE_FLOOR: player->groundVel += Math::Sin256(player->angle) << 13 >> 8; break;
                 case CMODE_LWALL:
                     if (player->angle >= 176) {
-                        player->groundVel += (Sin256(player->angle) << 13 >> 8);
+                        player->groundVel += (Math::Sin256(player->angle) << 13 >> 8);
                     }
                     else {
                         if (player->groundVel < -0x60000 || player->groundVel > 0x60000)
-                            player->groundVel += Sin256(player->angle) << 13 >> 8;
+                            player->groundVel += Math::Sin256(player->angle) << 13 >> 8;
                         else
-                            player->groundVel += 0x1400 * Sin256(player->angle) >> 8;
+                            player->groundVel += 0x1400 * Math::Sin256(player->angle) >> 8;
                     }
                     break;
                 case CMODE_ROOF:
                     if (player->groundVel < -0x60000 || player->groundVel > 0x60000)
-                        player->groundVel += Sin256(player->angle) << 13 >> 8;
+                        player->groundVel += Math::Sin256(player->angle) << 13 >> 8;
                     else
-                        player->groundVel += 0x1400 * Sin256(player->angle) >> 8;
+                        player->groundVel += 0x1400 * Math::Sin256(player->angle) >> 8;
                     break;
                 case CMODE_RWALL:
                     if (player->angle <= 80) {
-                        player->groundVel += Sin256(player->angle) << 13 >> 8;
+                        player->groundVel += Math::Sin256(player->angle) << 13 >> 8;
                     }
                     else {
                         if (player->groundVel < -0x60000 || player->groundVel > 0x60000)
-                            player->groundVel += Sin256(player->angle) << 13 >> 8;
+                            player->groundVel += Math::Sin256(player->angle) << 13 >> 8;
                         else
-                            player->groundVel += 0x1400 * Sin256(player->angle) >> 8;
+                            player->groundVel += 0x1400 * Math::Sin256(player->angle) >> 8;
                     }
                     break;
                 default: break;
@@ -459,7 +458,7 @@ void Player::ProcessDefaultGroundMovement(Player *player)
                     player->groundVel = 0;
             }
             if (player->groundVel < -0x4000 || player->groundVel > 0x4000)
-                player->groundVel += Sin256(player->angle) << 13 >> 8;
+                player->groundVel += Math::Sin256(player->angle) << 13 >> 8;
             if ((player->angle > 30 && player->angle < 64) || (player->angle > 192 && player->angle < 226)) {
                 if (player->groundVel > -0x10000 && player->groundVel < 0x10000)
                     player->frictionLoss = 30;
@@ -468,7 +467,7 @@ void Player::ProcessDefaultGroundMovement(Player *player)
     }
     else {
         --player->frictionLoss;
-        player->groundVel = (Sin256(player->angle) << 13 >> 8) + player->groundVel;
+        player->groundVel = (Math::Sin256(player->angle) << 13 >> 8) + player->groundVel;
     }
 }
 
@@ -476,8 +475,8 @@ void Player::ProcessDefaultJumpAction(Player *player)
 {
     player->frictionLoss = 0;
     player->onGround     = false;
-    player->velocity.x   = (player->groundVel * Cos256(player->angle) + player->stats.jumpStrength * Sin256(player->angle)) >> 8;
-    player->velocity.y   = (player->groundVel * Sin256(player->angle) + -player->stats.jumpStrength * Cos256(player->angle)) >> 8;
+    player->velocity.x   = (player->groundVel * Math::Cos256(player->angle) + player->stats.jumpStrength * Math::Sin256(player->angle)) >> 8;
+    player->velocity.y   = (player->groundVel * Math::Sin256(player->angle) + -player->stats.jumpStrength * Math::Cos256(player->angle)) >> 8;
     player->groundVel    = player->velocity.x;
     player->trackScroll  = true;
     player->animator.SetAnimation(player->aniFrames, ANI_JUMPING, false, 0);
@@ -507,18 +506,18 @@ void Player::ProcessDefaultRollingMovement(Player *player)
         player->state.Set(&Player::State_Normal_Ground_Movement);
 
     if (player->groundVel <= 0) {
-        if (Sin256(player->angle) >= 0) {
-            player->groundVel += (player->stats.rollingDeceleration * Sin256(player->angle) >> 8);
+        if (Math::Sin256(player->angle) >= 0) {
+            player->groundVel += (player->stats.rollingDeceleration * Math::Sin256(player->angle) >> 8);
         }
         else {
-            player->groundVel += 0x5000 * Sin256(player->angle) >> 8;
+            player->groundVel += 0x5000 * Math::Sin256(player->angle) >> 8;
         }
     }
-    else if (Sin256(player->angle) <= 0) {
-        player->groundVel += (player->stats.rollingDeceleration * Sin256(player->angle) >> 8);
+    else if (Math::Sin256(player->angle) <= 0) {
+        player->groundVel += (player->stats.rollingDeceleration * Math::Sin256(player->angle) >> 8);
     }
     else {
-        player->groundVel += 0x5000 * Sin256(player->angle) >> 8;
+        player->groundVel += 0x5000 * Math::Sin256(player->angle) >> 8;
     }
 
     if (player->groundVel > 0x180000)
@@ -991,8 +990,8 @@ void Player::State_Getting_Hurt(void)
 
             for (int32 r = 0; r < ringPool2; r++) {
                 Ring *ring       = CREATE_ENTITY(Ring, Ring::RING_LOSE, this->position.x, this->position.y);
-                ring->velocity.x = Cos256(angle) << 8;
-                ring->velocity.y = Sin256(angle) << 8;
+                ring->velocity.x = Math::Cos256(angle) << 8;
+                ring->velocity.y = Math::Sin256(angle) << 8;
 
                 angle += 32;
             }
@@ -1007,8 +1006,8 @@ void Player::State_Getting_Hurt(void)
 
             for (int32 r = 0; r < ringPool1; r++) {
                 Ring *ring       = CREATE_ENTITY(Ring, Ring::RING_LOSE, this->position.x, this->position.y);
-                ring->velocity.x = Cos256(angle) << 9;
-                ring->velocity.y = Sin256(angle) << 9;
+                ring->velocity.x = Math::Cos256(angle) << 9;
+                ring->velocity.y = Math::Sin256(angle) << 9;
 
                 angle += 32;
             }

@@ -178,7 +178,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\RSDKv5-GameAPI\CPP\GameAPI\Game.cpp" />
-    <ClCompile Include="Math.cpp" />
     <ClCompile Include="Objects\NexusGlobals\ActFinish.cpp" />
     <ClCompile Include="Objects\NexusGlobals\Camera.cpp" />
     <ClCompile Include="Objects\NexusGlobals\DeathEvent.cpp" />
@@ -224,7 +223,6 @@
     <ClInclude Include="..\RSDKv5-GameAPI\CPP\GameAPI\Game.hpp" />
     <ClInclude Include="..\RSDKv5-GameAPI\CPP\GameAPI\GameObjects.hpp" />
     <ClInclude Include="..\RSDKv5-GameAPI\CPP\GameAPI\GameVariables.hpp" />
-    <ClInclude Include="Math.hpp" />
     <ClInclude Include="Objects\NexusGlobals\ActFinish.hpp" />
     <ClInclude Include="Objects\NexusGlobals\Camera.hpp" />
     <ClInclude Include="Objects\NexusGlobals\DeathEvent.hpp" />

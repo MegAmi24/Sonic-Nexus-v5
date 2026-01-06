@@ -20,13 +20,6 @@ template <typename Type> inline static void AddPublicFunction(const char *functi
 
 static void InitPublicFunctions()
 {
-    // Math
-    ADD_PUBLIC_FUNC(CalculateTrigAngles);
-    ADD_PUBLIC_FUNC(Sin512);
-    ADD_PUBLIC_FUNC(Cos512);
-    ADD_PUBLIC_FUNC(Sin256);
-    ADD_PUBLIC_FUNC(Cos256);
-
     // NexusGlobals/ActFinish
     ADD_PUBLIC_FUNC(ActFinish::State_MoveIn);
     ADD_PUBLIC_FUNC(ActFinish::State_Wait);

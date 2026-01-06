@@ -6,7 +6,6 @@
 // ---------------------------------------------------------------------
 
 #include "HelliBomber.hpp"
-#include "Math.hpp"
 #include "NexusGlobals/Explosion.hpp"
 #include "NexusGlobals/Invincibility.hpp"
 #include "NexusGlobals/StageSetup.hpp"
@@ -25,7 +24,7 @@ void HelliBomber::Update(void)
     if (this->isBullet)
         return;
 
-    this->velocity.y = Sin512($(StageSetup)->oscillation << 2) << 6;
+    this->velocity.y = Math::Sin512($(StageSetup)->oscillation << 2) << 6;
 
     this->position.x += this->velocity.x;
     this->position.y += this->velocity.y;

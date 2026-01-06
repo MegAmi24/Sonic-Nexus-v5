@@ -24,7 +24,6 @@ endif()
 add_library(${GAME_NAME} SHARED
     RSDKv5-GameAPI/CPP/GameAPI/Game.cpp
     ${GAME_NAME}/SonicNexus.cpp
-    ${GAME_NAME}/Math.cpp
     ${GAME_SOURCES}
 )
 

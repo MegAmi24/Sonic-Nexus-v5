@@ -6,7 +6,6 @@
 // ---------------------------------------------------------------------
 
 #include "Logo.hpp"
-#include "Math.hpp"
 
 using namespace RSDK;
 
@@ -74,7 +73,7 @@ void Logo::State_BouncingDown(void)
     if (this->timer > 511)
         this->timer -= 512;
 
-    this->rotation = Sin512(this->timer) >> 4;
+    this->rotation = Math::Sin512(this->timer) >> 4;
 
     if (--this->sonicBlink < 19) {
         if (this->sonicBlink == 18)
@@ -131,7 +130,7 @@ void Logo::State_Static(void)
     if (this->timer > 511)
         this->timer -= 512;
 
-    this->rotation = Sin512(this->timer) >> 4;
+    this->rotation = Math::Sin512(this->timer) >> 4;
 
     if (--this->sonicBlink < 19) {
         if (this->sonicBlink == 18)

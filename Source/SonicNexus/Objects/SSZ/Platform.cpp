@@ -6,7 +6,6 @@
 // ---------------------------------------------------------------------
 
 #include "Platform.hpp"
-#include "Math.hpp"
 #include "NexusGlobals/StageSetup.hpp"
 #include "Players/Player.hpp"
 
@@ -24,13 +23,13 @@ void Platform::Update(void)
             this->angle += 256;
 
         if (this->type == PLATFORM_HORIZONTAL) {
-            this->changePos.x = Cos512(this->angle) << 13;
+            this->changePos.x = Math::Cos512(this->angle) << 13;
             this->changePos.x += this->position.x;
             this->changePos.x &= 4294901760;
             this->changePos.x -= this->platformPos.x;
         }
         else if (this->type == PLATFORM_VERTICAL) {
-            this->changePos.y = Sin512(this->angle) << 13;
+            this->changePos.y = Math::Sin512(this->angle) << 13;
             this->changePos.y += this->position.y;
             this->changePos.y &= 4294901760;
             this->changePos.y -= this->platformPos.y;
@@ -86,13 +85,13 @@ void Platform::Update(void)
     switch (this->type) {
         case PLATFORM_FLOAT: this->position.y += this->changePos.y; break;
         case PLATFORM_HORIZONTAL:
-            this->platformPos.x = Cos512(this->angle) << 13;
+            this->platformPos.x = Math::Cos512(this->angle) << 13;
             this->platformPos.x += this->position.x;
             this->platformPos.x &= 4294901760;
             this->position.y += this->changePos.y;
             break;
         case PLATFORM_VERTICAL:
-            this->platformPos.y = Sin512(this->angle) << 13;
+            this->platformPos.y = Math::Sin512(this->angle) << 13;
             this->platformPos.y += this->position.y;
             this->platformPos.y &= 4294901760;
             break;

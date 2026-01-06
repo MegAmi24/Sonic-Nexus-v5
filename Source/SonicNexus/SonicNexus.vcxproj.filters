@@ -100,9 +100,6 @@
     <ClCompile Include="Objects\SSZ\SwingPlat.cpp">
       <Filter>Source Files\Objects\SSZ</Filter>
     </ClCompile>
-    <ClCompile Include="Math.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Objects\SSZ\TubeSwitch.cpp">
       <Filter>Source Files\Objects\SSZ</Filter>
     </ClCompile>
@@ -233,9 +230,6 @@
     </ClInclude>
     <ClInclude Include="Objects\SSZ\SwingPlat.hpp">
       <Filter>Source Files\Objects\SSZ</Filter>
-    </ClInclude>
-    <ClInclude Include="Math.hpp">
-      <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Objects\SSZ\TubeSwitch.hpp">
       <Filter>Source Files\Objects\SSZ</Filter>

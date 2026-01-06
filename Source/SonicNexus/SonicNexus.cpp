@@ -1,5 +1,4 @@
 #include "SonicNexus.hpp"
-#include "Math.hpp"
 #if RETRO_USE_MOD_LOADER
 #include "PublicFunctions.hpp"
 #endif
@@ -20,7 +19,6 @@ void GlobalVariables::Init(void *g)
 void LinkGameLogic(RSDK::EngineInfo *info)
 {
     sceneInfo->debugMode = false;
-    GameLogic::CalculateTrigAngles();
 #if RETRO_USE_MOD_LOADER
     GameLogic::InitPublicFunctions();
 #endif

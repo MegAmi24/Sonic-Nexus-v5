@@ -6,7 +6,6 @@
 // ---------------------------------------------------------------------
 
 #include "SwingPlat.hpp"
-#include "Math.hpp"
 #include "NexusGlobals/StageSetup.hpp"
 #include "Players/Player.hpp"
 
@@ -18,16 +17,16 @@ RSDK_REGISTER_OBJECT(SwingPlat);
 
 void SwingPlat::Update(void)
 {
-    this->angle = (Sin512($(StageSetup)->oscillation << 1) >> 2) + 128;
+    this->angle = (Math::Sin512($(StageSetup)->oscillation << 1) >> 2) + 128;
 
     int32 height = (this->height + 1) << 4;
 
-    this->changePos.x = (Cos512(this->angle) * height) << 7;
+    this->changePos.x = (Math::Cos512(this->angle) * height) << 7;
     this->changePos.x += this->position.x;
     this->changePos.x &= 4294901760;
     this->changePos.x -= this->platformPos.x;
 
-    this->changePos.y = (Sin512(this->angle) * height) << 7;
+    this->changePos.y = (Math::Sin512(this->angle) * height) << 7;
     this->changePos.y += this->position.y;
     this->changePos.y &= 4294901760;
     this->changePos.y -= this->platformPos.y;
@@ -45,11 +44,11 @@ void SwingPlat::Update(void)
 
     this->position = posStore;
 
-    this->platformPos.x = (Cos512(this->angle) * height) << 7;
+    this->platformPos.x = (Math::Cos512(this->angle) * height) << 7;
     this->platformPos.x += this->position.x;
     this->platformPos.x &= 4294901760;
 
-    this->platformPos.y = (Sin512(this->angle) * height) << 7;
+    this->platformPos.y = (Math::Sin512(this->angle) * height) << 7;
     this->platformPos.y += this->position.y;
     this->platformPos.y &= 4294901760;
 }
@@ -66,10 +65,10 @@ void SwingPlat::Draw(void)
     int32 height           = 16;
     for (int32 s = 0; s < this->height; s++) {
         Vector2 pos;
-        pos.x = (Cos512(this->angle) * height) << 7;
+        pos.x = (Math::Cos512(this->angle) * height) << 7;
         pos.x += this->position.x;
 
-        pos.y = (Sin512(this->angle) * height) << 7;
+        pos.y = (Math::Sin512(this->angle) * height) << 7;
         pos.y += this->position.y;
 
         this->animator.DrawSprite(&pos, false);

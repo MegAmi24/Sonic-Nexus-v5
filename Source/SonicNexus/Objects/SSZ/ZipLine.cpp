@@ -6,7 +6,6 @@
 // ---------------------------------------------------------------------
 
 #include "ZipLine.hpp"
-#include "Math.hpp"
 #include "Players/Player.hpp"
 
 using namespace RSDK;
@@ -33,14 +32,14 @@ void ZipLine::Update(void)
         this->angle = (this->angle << 3) + 512;
     }
 
-    this->position.x = Cos512(angle) * 25856 + this->originPos.x;
-    this->position.y = Sin512(angle) * 53760 + this->originPos.y;
+    this->position.x = Math::Cos512(angle) * 25856 + this->originPos.x;
+    this->position.y = Math::Sin512(angle) * 53760 + this->originPos.y;
 
-    this->handlePos.x = Cos512(this->angle) * 4608;
+    this->handlePos.x = Math::Cos512(this->angle) * 4608;
     this->handlePos.x += this->position.x;
     this->handlePos.x &= 4294901760;
 
-    this->handlePos.y = Sin512(this->angle) * 4608;
+    this->handlePos.y = Math::Sin512(this->angle) * 4608;
     this->handlePos.y += this->position.y;
     this->handlePos.y &= 4294901760;
 
@@ -105,10 +104,10 @@ void ZipLine::Draw(void)
     int32 height = 8;
     for (int32 s = 0; s < 3; s++) {
         Vector2 pos;
-        pos.x = (Cos512(this->angle) * height) << 7;
+        pos.x = (Math::Cos512(this->angle) * height) << 7;
         pos.x += this->position.x;
 
-        pos.y = (Sin512(this->angle) * height) << 7;
+        pos.y = (Math::Sin512(this->angle) * height) << 7;
         pos.y += this->position.y;
 
         this->animator.DrawSprite(&pos, false);
