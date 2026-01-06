@@ -35,7 +35,7 @@ void Music::StageLoad(void)
 void Music::SetTrack(const char *filePath, uint8 trackID, uint32 loop)
 {
     TrackInfo *track = &sVars->musicTracks[trackID];
-    strcpy_s(track->fileName, filePath);
+    strcpy(track->fileName, filePath);
     track->trackLoop = loop;
 }
 
