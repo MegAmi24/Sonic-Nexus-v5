@@ -381,16 +381,16 @@ void TitleCard::Draw_VertText(void)
 
     Vector2 pos = this->position;
 
-    this->animator.animationID = 0;
+    this->animator.frameID = 0;
     this->animator.DrawSprite(&pos, true);
-    this->animator.animationID = 1;
+    this->animator.frameID = 1;
     this->animator.DrawSprite(&pos, true);
 
     pos.y += TO_FIXED(516);
 
-    this->animator.animationID = 0;
+    this->animator.frameID = 0;
     this->animator.DrawSprite(&pos, true);
-    this->animator.animationID = 1;
+    this->animator.frameID = 1;
     this->animator.DrawSprite(&pos, true);
 }
 
