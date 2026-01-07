@@ -1,3 +1,3 @@
-[submodule "Source/RSDKv5-GameAPI"]
-	path = Source/RSDKv5-GameAPI
+[submodule "RSDKv5-GameAPI"]
+	path = RSDKv5-GameAPI
 	url = https://github.com/RSDKModding/RSDKv5-GameAPI.git

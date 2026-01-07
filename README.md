@@ -22,7 +22,7 @@ git submodule update --remote --init --recursive
 ## Building
 
 ### Building with CMake
-No external dependencies are required; simply type the following commands in the `Source` folder in the repository:
+No external dependencies are required; simply type the following commands in the root repository directory:
 ```
 cmake -B build
 cmake --build build --config release
@@ -39,13 +39,13 @@ The following CMake arguments are available when compiling:
 - `GAME_INCLUDE_EDITOR`: Whether or not to include functions for use in certain RSDKv5 scene editors. Takes a boolean, defaults to `on`.
 
 ### Building in Visual Studio
-Simply open the solution in the `Source` folder and build the project. Make sure that the architecture, engine revision, and mod loader version match with the target engine binary.
+Simply open the solution and build the project. Make sure that the architecture, engine revision, and mod loader version match with the target engine binary.
 
 ### Building for Android
 After [setting up the RSDKv5(U) decompilation for building](https://github.com/Rubberduckycooly/RSDKv5-Decompilation#how-to-build), you will need to add a symbolic link for the directory to the repository so that the game will be built as part of the APK.
 To add the symlink, write the appropriate command in `[RSDKv5-decompilation-root]/android/app/jni`:
-  * Windows: `mklink /d Game "[path-to-game-repo]/Source"`
-  * Linux: `ln -s "[path-to-game-repo]/Source" Game`
+  * Windows: `mklink /d Game "[path-to-game-repo]"`
+  * Linux: `ln -s "[path-to-game-repo]" Game`
 
 After adding the symlink, build the RSDKv5(U) decompilation in Android Studio.
 
