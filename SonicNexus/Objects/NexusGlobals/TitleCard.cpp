@@ -413,7 +413,12 @@ void TitleCard::EditorLoad(void)
 #endif
 
 #if RETRO_REV0U
-void TitleCard::StaticLoad(Static *sVars) { RSDK_INIT_STATIC_VARS(TitleCard); }
+void TitleCard::StaticLoad(Static *sVars)
+{
+    RSDK_INIT_STATIC_VARS(TitleCard);
+
+    sVars->aniFrames.Init();
+}
 #endif
 
 void TitleCard::Serialize(void)

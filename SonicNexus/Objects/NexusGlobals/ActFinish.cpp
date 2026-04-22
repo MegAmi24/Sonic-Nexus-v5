@@ -277,7 +277,14 @@ void ActFinish::EditorLoad(void) { sVars->aniFrames.Load("NexusGlobals/Editor.bi
 #endif
 
 #if RETRO_REV0U
-void ActFinish::StaticLoad(Static *sVars) { RSDK_INIT_STATIC_VARS(ActFinish); }
+void ActFinish::StaticLoad(Static *sVars)
+{
+    RSDK_INIT_STATIC_VARS(ActFinish);
+
+    sVars->aniFrames.Init();
+    sVars->sfxScoreAdd.Init();
+    sVars->sfxScoreTotal.Init();
+}
 #endif
 
 void ActFinish::Serialize(void) {}

@@ -86,7 +86,12 @@ void RLogo::EditorLoad(void) { sVars->aniFrames.Load("NexusTitle/RetroLogo.bin",
 #endif
 
 #if RETRO_REV0U
-void RLogo::StaticLoad(Static *sVars) { RSDK_INIT_STATIC_VARS(RLogo); }
+void RLogo::StaticLoad(Static *sVars)
+{
+    RSDK_INIT_STATIC_VARS(RLogo);
+
+    sVars->aniFrames.Init();
+}
 #endif
 
 void RLogo::Serialize(void) {}

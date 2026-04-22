@@ -156,7 +156,12 @@ void Platform::EditorLoad(void)
 #endif
 
 #if RETRO_REV0U
-void Platform::StaticLoad(Static *sVars) { RSDK_INIT_STATIC_VARS(Platform); }
+void Platform::StaticLoad(Static *sVars)
+{
+    RSDK_INIT_STATIC_VARS(Platform);
+
+    sVars->aniFrames.Init();
+}
 #endif
 
 void Platform::Serialize(void)

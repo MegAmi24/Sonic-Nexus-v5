@@ -51,7 +51,12 @@ void Explosion::EditorLoad(void) { sVars->aniFrames.Load("NexusGlobals/Explosion
 #endif
 
 #if RETRO_REV0U
-void Explosion::StaticLoad(Static *sVars) { RSDK_INIT_STATIC_VARS(Explosion); }
+void Explosion::StaticLoad(Static *sVars)
+{
+    RSDK_INIT_STATIC_VARS(Explosion);
+
+    sVars->aniFrames.Init();
+}
 #endif
 
 void Explosion::Serialize(void) {}

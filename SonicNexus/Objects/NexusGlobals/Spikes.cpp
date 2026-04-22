@@ -115,7 +115,12 @@ void Spikes::EditorLoad(void)
 #endif
 
 #if RETRO_REV0U
-void Spikes::StaticLoad(Static *sVars) { RSDK_INIT_STATIC_VARS(Spikes); }
+void Spikes::StaticLoad(Static *sVars)
+{
+    RSDK_INIT_STATIC_VARS(Spikes);
+
+    sVars->aniFrames.Init();
+}
 #endif
 
 void Spikes::Serialize(void) { RSDK_EDITABLE_VAR(Spikes, VAR_ENUM, flipFlags); }

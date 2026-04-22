@@ -74,7 +74,12 @@ void FadeUp::EditorLoad(void) { sVars->aniFrames.Load("NexusTitle/Title.bin", SC
 #endif
 
 #if RETRO_REV0U
-void FadeUp::StaticLoad(Static *sVars) { RSDK_INIT_STATIC_VARS(FadeUp); }
+void FadeUp::StaticLoad(Static *sVars)
+{
+    RSDK_INIT_STATIC_VARS(FadeUp);
+
+    sVars->aniFrames.Init();
+}
 #endif
 
 void FadeUp::Serialize(void) {}

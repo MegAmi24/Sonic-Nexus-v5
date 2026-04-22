@@ -57,7 +57,12 @@ void ZipTrack::EditorLoad(void)
 #endif
 
 #if RETRO_REV0U
-void ZipTrack::StaticLoad(Static *sVars) { RSDK_INIT_STATIC_VARS(ZipTrack); }
+void ZipTrack::StaticLoad(Static *sVars)
+{
+    RSDK_INIT_STATIC_VARS(ZipTrack);
+
+    sVars->aniFrames.Init();
+}
 #endif
 
 void ZipTrack::Serialize(void) { RSDK_EDITABLE_VAR(ZipTrack, VAR_ENUM, track); }

@@ -155,7 +155,12 @@ void Corkscrew::EditorLoad(void)
 #endif
 
 #if RETRO_REV0U
-void Corkscrew::StaticLoad(Static *sVars) { RSDK_INIT_STATIC_VARS(Corkscrew); }
+void Corkscrew::StaticLoad(Static *sVars)
+{
+    RSDK_INIT_STATIC_VARS(Corkscrew);
+
+    sVars->aniFrames.Init();
+}
 #endif
 
 void Corkscrew::Serialize(void) { RSDK_EDITABLE_VAR(Corkscrew, VAR_ENUM, direction); }

@@ -216,7 +216,14 @@ void Monitor::EditorLoad(void)
 #endif
 
 #if RETRO_REV0U
-void Monitor::StaticLoad(Static *sVars) { RSDK_INIT_STATIC_VARS(Monitor); }
+void Monitor::StaticLoad(Static *sVars)
+{
+    RSDK_INIT_STATIC_VARS(Monitor);
+
+    sVars->aniFrames.Init();
+    sVars->sfxDestroy.Init();
+    sVars->sfxBlueShield.Init();
+}
 #endif
 
 void Monitor::Serialize(void) { RSDK_EDITABLE_VAR(Monitor, VAR_ENUM, type); }

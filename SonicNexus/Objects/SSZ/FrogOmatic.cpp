@@ -124,7 +124,12 @@ void FrogOmatic::EditorLoad(void) { sVars->aniFrames.Load("SSZ/FrogOmatic.bin", 
 #endif
 
 #if RETRO_REV0U
-void FrogOmatic::StaticLoad(Static *sVars) { RSDK_INIT_STATIC_VARS(FrogOmatic); }
+void FrogOmatic::StaticLoad(Static *sVars)
+{
+    RSDK_INIT_STATIC_VARS(FrogOmatic);
+
+    sVars->aniFrames.Init();
+}
 #endif
 
 void FrogOmatic::Serialize(void) {}

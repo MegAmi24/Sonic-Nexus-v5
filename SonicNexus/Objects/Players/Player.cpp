@@ -1303,7 +1303,22 @@ void Player::EditorLoad(void) { sVars->sonicFrames.Load("Sonic/SonicClassic.bin"
 #endif
 
 #if RETRO_REV0U
-void Player::StaticLoad(Static *sVars) { RSDK_INIT_STATIC_VARS(Player); }
+void Player::StaticLoad(Static *sVars)
+{
+    RSDK_INIT_STATIC_VARS(Player);
+
+    sVars->sonicFrames.Init();
+    sVars->sfxJump.Init();
+    sVars->sfxLoseRings.Init();
+    sVars->sfxHurt.Init();
+    sVars->sfxSpin.Init();
+    sVars->sfxCharge.Init();
+    sVars->sfxRelease.Init();
+    sVars->sfxSkidding.Init();
+    sVars->sfxDestroy.Init();
+    sVars->sfxBossHit.Init();
+    sVars->sfxYes.Init();
+}
 #endif
 
 void Player::Serialize(void) {}

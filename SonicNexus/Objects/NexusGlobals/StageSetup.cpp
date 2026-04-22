@@ -100,7 +100,12 @@ void StageSetup::EditorLoad(void) { sVars->aniFrames.Load("NexusGlobals/Editor.b
 #endif
 
 #if RETRO_REV0U
-void StageSetup::StaticLoad(Static *sVars) { RSDK_INIT_STATIC_VARS(StageSetup); }
+void StageSetup::StaticLoad(Static *sVars)
+{
+    RSDK_INIT_STATIC_VARS(StageSetup);
+
+    sVars->aniFrames.Init();
+}
 #endif
 
 void StageSetup::Serialize(void) {}

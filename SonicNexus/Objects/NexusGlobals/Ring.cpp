@@ -194,7 +194,13 @@ void Ring::EditorLoad(void)
 #endif
 
 #if RETRO_REV0U
-void Ring::StaticLoad(Static *sVars) { RSDK_INIT_STATIC_VARS(Ring); }
+void Ring::StaticLoad(Static *sVars)
+{
+    RSDK_INIT_STATIC_VARS(Ring);
+
+    sVars->aniFrames.Init();
+    sVars->sfxRing.Init();
+}
 #endif
 
 void Ring::Serialize(void) { RSDK_EDITABLE_VAR(Ring, VAR_ENUM, type); }

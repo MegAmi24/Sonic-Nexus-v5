@@ -172,7 +172,12 @@ void HUD::EditorLoad(void) { sVars->aniFrames.Load("NexusGlobals/Editor.bin", SC
 #endif
 
 #if RETRO_REV0U
-void HUD::StaticLoad(Static *sVars) { RSDK_INIT_STATIC_VARS(HUD); }
+void HUD::StaticLoad(Static *sVars)
+{
+    RSDK_INIT_STATIC_VARS(HUD);
+
+    sVars->aniFrames.Init();
+}
 #endif
 
 void HUD::Serialize(void) {}

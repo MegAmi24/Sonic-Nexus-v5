@@ -93,7 +93,13 @@ void PressStart::EditorLoad(void) { sVars->aniFrames.Load("NexusTitle/Title.bin"
 #endif
 
 #if RETRO_REV0U
-void PressStart::StaticLoad(Static *sVars) { RSDK_INIT_STATIC_VARS(PressStart); }
+void PressStart::StaticLoad(Static *sVars)
+{
+    RSDK_INIT_STATIC_VARS(PressStart);
+
+    sVars->aniFrames.Init();
+    sVars->sfxEnter.Init();
+}
 #endif
 
 void PressStart::Serialize(void) {}

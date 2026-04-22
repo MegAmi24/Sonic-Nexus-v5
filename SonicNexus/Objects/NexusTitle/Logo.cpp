@@ -187,7 +187,13 @@ void Logo::EditorLoad(void) { sVars->aniFrames.Load("NexusTitle/Title.bin", SCOP
 #endif
 
 #if RETRO_REV0U
-void Logo::StaticLoad(Static *sVars) { RSDK_INIT_STATIC_VARS(Logo); }
+void Logo::StaticLoad(Static *sVars)
+{
+    RSDK_INIT_STATIC_VARS(Logo);
+
+    sVars->aniFrames.Init();
+    sVars->sfxLand.Init();
+}
 #endif
 
 void Logo::Serialize(void) {}

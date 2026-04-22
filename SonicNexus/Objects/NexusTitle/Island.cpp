@@ -42,7 +42,12 @@ void Island::EditorLoad(void) { sVars->aniFrames.Load("NexusTitle/Island.bin", S
 #endif
 
 #if RETRO_REV0U
-void Island::StaticLoad(Static *sVars) { RSDK_INIT_STATIC_VARS(Island); }
+void Island::StaticLoad(Static *sVars)
+{
+    RSDK_INIT_STATIC_VARS(Island);
+
+    sVars->aniFrames.Init();
+}
 #endif
 
 void Island::Serialize(void) {}

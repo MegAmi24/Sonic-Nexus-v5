@@ -149,7 +149,12 @@ void Chompy::EditorLoad(void)
 #endif
 
 #if RETRO_REV0U
-void Chompy::StaticLoad(Static *sVars) { RSDK_INIT_STATIC_VARS(Chompy); }
+void Chompy::StaticLoad(Static *sVars)
+{
+    RSDK_INIT_STATIC_VARS(Chompy);
+
+    sVars->aniFrames.Init();
+}
 #endif
 
 void Chompy::Serialize(void) { RSDK_EDITABLE_VAR(Chompy, VAR_ENUM, jumpDir); }

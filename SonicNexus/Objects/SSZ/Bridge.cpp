@@ -178,7 +178,12 @@ void Bridge::EditorLoad(void) { sVars->aniFrames.Load("SSZ/Platform.bin", SCOPE_
 #endif
 
 #if RETRO_REV0U
-void Bridge::StaticLoad(Static *sVars) { RSDK_INIT_STATIC_VARS(Bridge); }
+void Bridge::StaticLoad(Static *sVars)
+{
+    RSDK_INIT_STATIC_VARS(Bridge);
+
+    sVars->aniFrames.Init();
+}
 #endif
 
 void Bridge::Serialize(void) { RSDK_EDITABLE_VAR(Bridge, VAR_INT32, length); }

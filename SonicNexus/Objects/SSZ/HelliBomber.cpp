@@ -223,7 +223,12 @@ void HelliBomber::EditorLoad(void) { sVars->aniFrames.Load("SSZ/HelliBomber.bin"
 #endif
 
 #if RETRO_REV0U
-void HelliBomber::StaticLoad(Static *sVars) { RSDK_INIT_STATIC_VARS(HelliBomber); }
+void HelliBomber::StaticLoad(Static *sVars)
+{
+    RSDK_INIT_STATIC_VARS(HelliBomber);
+
+    sVars->aniFrames.Init();
+}
 #endif
 
 void HelliBomber::Serialize(void) { RSDK_EDITABLE_VAR(HelliBomber, VAR_BOOL, isBullet); }

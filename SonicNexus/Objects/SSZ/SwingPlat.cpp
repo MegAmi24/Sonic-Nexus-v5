@@ -115,7 +115,12 @@ void SwingPlat::EditorLoad(void) { sVars->aniFrames.Load("SSZ/Platform.bin", SCO
 #endif
 
 #if RETRO_REV0U
-void SwingPlat::StaticLoad(Static *sVars) { RSDK_INIT_STATIC_VARS(SwingPlat); }
+void SwingPlat::StaticLoad(Static *sVars)
+{
+    RSDK_INIT_STATIC_VARS(SwingPlat);
+
+    sVars->aniFrames.Init();
+}
 #endif
 
 void SwingPlat::Serialize(void) { RSDK_EDITABLE_VAR(SwingPlat, VAR_INT32, height); }

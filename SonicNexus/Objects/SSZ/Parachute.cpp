@@ -195,7 +195,13 @@ void Parachute::EditorLoad(void) { sVars->aniFrames.Load("SSZ/Parachute.bin", SC
 #endif
 
 #if RETRO_REV0U
-void Parachute::StaticLoad(Static *sVars) { RSDK_INIT_STATIC_VARS(Parachute); }
+void Parachute::StaticLoad(Static *sVars)
+{
+    RSDK_INIT_STATIC_VARS(Parachute);
+
+    sVars->aniFrames.Init();
+    sVars->sfxCatch.Init();
+}
 #endif
 
 void Parachute::Serialize(void) {}

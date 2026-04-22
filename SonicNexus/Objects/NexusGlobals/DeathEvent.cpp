@@ -128,7 +128,12 @@ void DeathEvent::EditorLoad(void) { sVars->aniFrames.Load("NexusGlobals/Editor.b
 #endif
 
 #if RETRO_REV0U
-void DeathEvent::StaticLoad(Static *sVars) { RSDK_INIT_STATIC_VARS(DeathEvent); }
+void DeathEvent::StaticLoad(Static *sVars)
+{
+    RSDK_INIT_STATIC_VARS(DeathEvent);
+
+    sVars->aniFrames.Init();
+}
 #endif
 
 void DeathEvent::Serialize(void) {}

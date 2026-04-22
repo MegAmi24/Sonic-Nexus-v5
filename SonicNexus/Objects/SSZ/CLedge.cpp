@@ -245,7 +245,13 @@ void CLedge::EditorLoad(void) { sVars->aniFrames.Load("SSZ/Platform.bin", SCOPE_
 #endif
 
 #if RETRO_REV0U
-void CLedge::StaticLoad(Static *sVars) { RSDK_INIT_STATIC_VARS(CLedge); }
+void CLedge::StaticLoad(Static *sVars)
+{
+    RSDK_INIT_STATIC_VARS(CLedge);
+
+    sVars->aniFrames.Init();
+    sVars->sfxCrumble.Init();
+}
 #endif
 
 void CLedge::Serialize(void) { RSDK_EDITABLE_VAR(CLedge, VAR_INT32, length); }

@@ -211,7 +211,13 @@ void Spring::EditorLoad(void)
 #endif
 
 #if RETRO_REV0U
-void Spring::StaticLoad(Static *sVars) { RSDK_INIT_STATIC_VARS(Spring); }
+void Spring::StaticLoad(Static *sVars)
+{
+    RSDK_INIT_STATIC_VARS(Spring);
+
+    sVars->aniFrames.Init();
+    sVars->sfxSpring.Init();
+}
 #endif
 
 void Spring::Serialize(void)

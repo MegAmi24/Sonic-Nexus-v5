@@ -47,7 +47,12 @@ void BlueShield::EditorLoad(void) { sVars->aniFrames.Load("SSZ/Shield.bin", SCOP
 #endif
 
 #if RETRO_REV0U
-void BlueShield::StaticLoad(Static *sVars) { RSDK_INIT_STATIC_VARS(BlueShield); }
+void BlueShield::StaticLoad(Static *sVars)
+{
+    RSDK_INIT_STATIC_VARS(BlueShield);
+
+    sVars->aniFrames.Init();
+}
 #endif
 
 void BlueShield::Serialize(void) {}

@@ -178,7 +178,12 @@ void MRally::EditorLoad(void) { sVars->aniFrames.Load("SSZ/MRally.bin", SCOPE_ST
 #endif
 
 #if RETRO_REV0U
-void MRally::StaticLoad(Static *sVars) { RSDK_INIT_STATIC_VARS(MRally); }
+void MRally::StaticLoad(Static *sVars)
+{
+    RSDK_INIT_STATIC_VARS(MRally);
+
+    sVars->aniFrames.Init();
+}
 #endif
 
 void MRally::Serialize(void) {}

@@ -77,7 +77,12 @@ void PSwitch::EditorLoad(void)
 #endif
 
 #if RETRO_REV0U
-void PSwitch::StaticLoad(Static *sVars) { RSDK_INIT_STATIC_VARS(PSwitch); }
+void PSwitch::StaticLoad(Static *sVars)
+{
+    RSDK_INIT_STATIC_VARS(PSwitch);
+
+    sVars->aniFrames.Init();
+}
 #endif
 
 void PSwitch::Serialize(void)

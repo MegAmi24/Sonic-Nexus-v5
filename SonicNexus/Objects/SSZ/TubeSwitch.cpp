@@ -118,7 +118,12 @@ void TubeSwitch::EditorLoad(void)
 #endif
 
 #if RETRO_REV0U
-void TubeSwitch::StaticLoad(Static *sVars) { RSDK_INIT_STATIC_VARS(TubeSwitch); }
+void TubeSwitch::StaticLoad(Static *sVars)
+{
+    RSDK_INIT_STATIC_VARS(TubeSwitch);
+
+    sVars->aniFrames.Init();
+}
 #endif
 
 void TubeSwitch::Serialize(void) { RSDK_EDITABLE_VAR(TubeSwitch, VAR_ENUM, type); }

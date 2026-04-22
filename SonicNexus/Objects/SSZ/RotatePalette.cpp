@@ -40,7 +40,12 @@ void RotatePalette::EditorLoad(void) { sVars->aniFrames.Load("NexusGlobals/Edito
 #endif
 
 #if RETRO_REV0U
-void RotatePalette::StaticLoad(Static *sVars) { RSDK_INIT_STATIC_VARS(RotatePalette); }
+void RotatePalette::StaticLoad(Static *sVars)
+{
+    RSDK_INIT_STATIC_VARS(RotatePalette);
+
+    sVars->aniFrames.Init();
+}
 #endif
 
 void RotatePalette::Serialize(void) {}

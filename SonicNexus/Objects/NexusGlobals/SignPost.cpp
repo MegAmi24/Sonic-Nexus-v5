@@ -156,7 +156,13 @@ void SignPost::EditorLoad(void) { sVars->aniFrames.Load("NexusGlobals/SignPost.b
 #endif
 
 #if RETRO_REV0U
-void SignPost::StaticLoad(Static *sVars) { RSDK_INIT_STATIC_VARS(SignPost); }
+void SignPost::StaticLoad(Static *sVars)
+{
+    RSDK_INIT_STATIC_VARS(SignPost);
+
+    sVars->aniFrames.Init();
+    sVars->sfxSignPost.Init();
+}
 #endif
 
 void SignPost::Serialize(void) {}

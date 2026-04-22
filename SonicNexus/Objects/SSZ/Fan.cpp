@@ -65,7 +65,12 @@ void Fan::EditorLoad(void) { sVars->aniFrames.Load("SSZ/Parachute.bin", SCOPE_ST
 #endif
 
 #if RETRO_REV0U
-void Fan::StaticLoad(Static *sVars) { RSDK_INIT_STATIC_VARS(Fan); }
+void Fan::StaticLoad(Static *sVars)
+{
+    RSDK_INIT_STATIC_VARS(Fan);
+
+    sVars->aniFrames.Init();
+}
 #endif
 
 void Fan::Serialize(void) {}

@@ -204,7 +204,13 @@ void ZipLine::EditorLoad(void) { sVars->aniFrames.Load("SSZ/ZipLine.bin", SCOPE_
 #endif
 
 #if RETRO_REV0U
-void ZipLine::StaticLoad(Static *sVars) { RSDK_INIT_STATIC_VARS(ZipLine); }
+void ZipLine::StaticLoad(Static *sVars)
+{
+    RSDK_INIT_STATIC_VARS(ZipLine);
+
+    sVars->aniFrames.Init();
+    sVars->sfxCatch.Init();
+}
 #endif
 
 void ZipLine::Serialize(void) {}

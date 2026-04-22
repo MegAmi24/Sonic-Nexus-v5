@@ -75,7 +75,12 @@ void Invincibility::EditorLoad(void)
 #endif
 
 #if RETRO_REV0U
-void Invincibility::StaticLoad(Static *sVars) { RSDK_INIT_STATIC_VARS(Invincibility); }
+void Invincibility::StaticLoad(Static *sVars)
+{
+    RSDK_INIT_STATIC_VARS(Invincibility);
+
+    sVars->aniFrames.Init();
+}
 #endif
 
 void Invincibility::Serialize(void) {}

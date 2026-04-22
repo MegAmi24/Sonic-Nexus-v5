@@ -120,7 +120,13 @@ void StarPost::EditorLoad(void) { sVars->aniFrames.Load("NexusGlobals/StarPost.b
 #endif
 
 #if RETRO_REV0U
-void StarPost::StaticLoad(Static *sVars) { RSDK_INIT_STATIC_VARS(StarPost); }
+void StarPost::StaticLoad(Static *sVars)
+{
+    RSDK_INIT_STATIC_VARS(StarPost);
+
+    sVars->aniFrames.Init();
+    sVars->sfxLampPost.Init();
+}
 #endif
 
 void StarPost::Serialize(void) {}
