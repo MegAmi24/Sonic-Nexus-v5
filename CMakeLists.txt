@@ -53,5 +53,11 @@ if(MSVC)
     target_link_options(${GAME_NAME} PRIVATE /OPT:NOICF)
 endif()
 
-unset(GAME_NAME CACHE)
-unset(OUTPUT_NAME CACHE)
+# ModAPI: Prevent function inlining so that public functions can be hooked properly
+if(RETRO_MOD_LOADER)
+    if(MSVC)
+        target_compile_options(${GAME_NAME} PRIVATE /Ob0)
+    else() # GCC/Clang
+        target_compile_options(${GAME_NAME} PRIVATE -fno-inline)
+    endif()
+endif()
