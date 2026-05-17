@@ -129,7 +129,7 @@ void Camera::SetPlayerScreenPosition(Entity *entity)
     if (sVars->newBoundary2.x > sVars->boundary2.x) {
         if (this->scrollOffset.x + screenInfo->size.x >= sVars->boundary2.x)
             ++sVars->boundary2.x;
-        else 
+        else
             sVars->boundary2.x = sVars->newBoundary2.x;
     }
     int32 xscrollA     = this->scrollA.x;
@@ -424,35 +424,34 @@ void Camera::SetPlayerLockedScreenPosition(Entity *entity)
     int32 playerXPos = player->position.x >> 16;
     int32 playerYPos = player->position.y >> 16;
     switch (this->style) {
-        case CAMERASTYLE_FOLLOW:
-        {
+        case CAMERASTYLE_FOLLOW: {
             if (playerXPos <= sVars->boundary1.x + this->scrollMove.x + screenInfo->center.x) {
-                player->screenPos.x = this->earthquake.x + playerXPos - sVars->boundary1.x;
+                player->screenPos.x  = this->earthquake.x + playerXPos - sVars->boundary1.x;
                 this->scrollOffset.x = sVars->boundary1.x - this->earthquake.x;
             }
             else {
                 this->scrollOffset.x = playerXPos + this->earthquake.x - screenInfo->center.x - this->scrollMove.x;
-                player->screenPos.x = this->scrollMove.x + screenInfo->center.x - this->earthquake.x;
+                player->screenPos.x  = this->scrollMove.x + screenInfo->center.x - this->earthquake.x;
                 if (playerXPos > sVars->boundary2.x + this->scrollMove.x - screenInfo->center.x) {
-                    player->screenPos.x = this->scrollMove.x + playerXPos - (sVars->boundary2.x - screenInfo->center.x) + this->earthquake.x + screenInfo->center.x;
+                    player->screenPos.x =
+                        this->scrollMove.x + playerXPos - (sVars->boundary2.x - screenInfo->center.x) + this->earthquake.x + screenInfo->center.x;
                     this->scrollOffset.x = sVars->boundary2.x - screenInfo->size.x - this->earthquake.x - this->scrollMove.x;
                 }
             }
             break;
         }
-        case CAMERASTYLE_EXTENDED:
-        {
+        case CAMERASTYLE_EXTENDED: {
             int32 xscrollA = this->scrollA.x;
             int32 xscrollB = this->scrollB.x;
             if (playerXPos <= this->scrollA.x + screenInfo->center.x) {
-                player->screenPos.x = this->earthquake.x + playerXPos - this->scrollA.x;
+                player->screenPos.x  = this->earthquake.x + playerXPos - this->scrollA.x;
                 this->scrollOffset.x = xscrollA - this->earthquake.x;
             }
             else {
                 this->scrollOffset.x = playerXPos + this->earthquake.x - screenInfo->center.x;
-                player->screenPos.x = screenInfo->center.x - this->earthquake.x;
+                player->screenPos.x  = screenInfo->center.x - this->earthquake.x;
                 if (playerXPos > xscrollB - screenInfo->center.x) {
-                    player->screenPos.x = playerXPos - (xscrollB - screenInfo->center.x) + this->earthquake.x + screenInfo->center.x;
+                    player->screenPos.x  = playerXPos - (xscrollB - screenInfo->center.x) + this->earthquake.x + screenInfo->center.x;
                     this->scrollOffset.x = xscrollB - screenInfo->size.x - this->earthquake.x;
                 }
             }

@@ -35,7 +35,6 @@ struct SignPost : GameObject::Entity {
     Animator signAnim;
     int32 noSpins;
 
-
     // ==============================
     // EVENTS
     // ==============================

@@ -73,7 +73,7 @@ struct Logo : GameObject::Entity {
     // ==============================
     // FUNCTIONS
     // ==============================
-    
+
     void State_BouncingDown(void); // Unused
     void State_BouncingScale(void);
     void State_Static(void);

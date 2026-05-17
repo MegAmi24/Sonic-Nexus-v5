@@ -25,7 +25,7 @@ void FadeUp::Update(void)
         return;
     }
 
-	if (this->whiteFade)
+    if (this->whiteFade)
         this->whiteFade -= 4;
 
     if (this->blackFade == 128)

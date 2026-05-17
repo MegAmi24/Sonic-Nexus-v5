@@ -19,7 +19,7 @@ void Spikes::Update(void)
     foreach_active(Player, player)
     {
         player->BoxCollision(this, &sVars->boxHitbox);
-        
+
         if (!player->invincibility && this->CheckCollisionTouchBox(&this->touchHitbox, player, player->outerbox)) {
             player->state.Set(&Player::State_Getting_Hurt);
             switch (this->flipFlags) {
