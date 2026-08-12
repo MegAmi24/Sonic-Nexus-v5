@@ -1,48 +1,4 @@
 #pragma once
-namespace GameLogic
-{
-
-struct ActFinish;
-struct Camera;
-struct DeathEvent;
-struct Explosion;
-struct HUD;
-struct Invincibility;
-struct Monitor;
-struct Music;
-struct PSwitch;
-struct Ring;
-struct SignPost;
-struct Spikes;
-struct Spring;
-struct StageSetup;
-struct StarPost;
-struct TitleCard;
-struct Intro;
-struct RLogo;
-struct FadeUp;
-struct Island;
-struct Logo;
-struct PressStart;
-struct Player;
-struct BlueShield;
-struct Bridge;
-struct Chompy;
-struct CLedge;
-struct Corkscrew;
-struct Fan;
-struct FrogOmatic;
-struct HelliBomber;
-struct MRally;
-struct Parachute;
-struct Platform;
-struct RotatePalette;
-struct SwingPlat;
-struct TubeSwitch;
-struct ZipLine;
-struct ZipTrack;
-
-} // namespace GameLogic
 
 #include "NexusGlobals/ActFinish.hpp"
 #include "NexusGlobals/Camera.hpp"
